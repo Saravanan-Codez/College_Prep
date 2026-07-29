@@ -1,19 +1,40 @@
 @layer base {
+  /* --- LIGHT MODE NEUMORPHISM (DEFAULT) --- */
   :root {
-    --bg-main: #070a12;
-    --bg-card: #0f172a;
-    --bg-sidebar: #090e1a;
-    --border-color: #1e293b;
-    --primary-blue: #3b82f6;
-    --primary-purple: #a855f7;
-    --primary-emerald: #10b981;
+    --bg-base: #e0e5ec;
+    --text-main: #2d3748;
+    --text-muted: #718096;
+    --accent-blue: #4d7cff;
+    
+    /* Raised / Extruded (Cards, Nav Items, Raised Buttons) */
+    --neu-raised: 6px 6px 12px #b8b9be, -6px -6px 12px #ffffff;
+    --neu-raised-hover: 8px 8px 16px #b8b9be, -8px -8px 16px #ffffff;
+    
+    /* Inset / Carved (Inputs, Recessed Panels, Active Pressed State) */
+    --neu-inset: inset 4px 4px 8px #b8b9be, inset -4px -4px 8px #ffffff;
+  }
+
+  /* --- DARK MODE NEUMORPHISM --- */
+  .dark {
+    --bg-base: #1e222b;
+    --text-main: #e2e8f0;
+    --text-muted: #94a3b8;
+    --accent-blue: #5b8def;
+    
+    /* Crisp Dark Shadows - NO BLOWN OUT WHITE GLOWS */
+    --neu-raised: 5px 5px 10px #15181e, -5px -5px 10px #272c38;
+    --neu-raised-hover: 7px 7px 14px #15181e, -7px -7px 14px #272c38;
+    
+    /* Dark Inset */
+    --neu-inset: inset 3px 3px 6px #15181e, inset -3px -3px 6px #272c38;
   }
 }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--bg-main);
-  color: #f8fafc;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  transition: background-color 0.3s ease, color 0.3s ease;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -22,33 +43,102 @@ body {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Scrollbar */
+/* Custom Neumorphic Scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #070a12;
-}
-::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: var(--bg-base);
+  box-shadow: var(--neu-inset);
   border-radius: 9999px;
 }
-::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+::-webkit-scrollbar-thumb {
+  background: var(--bg-base);
+  box-shadow: var(--neu-raised);
+  border-radius: 9999px;
 }
 
-/* App Glass Cards & Elevate Styles */
-.app-card {
-  background-color: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(30, 41, 59, 0.8);
-  border-radius: 1rem;
-  backdrop-filter: blur(12px);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+/* --- REFACTORING CLASSES (MANDATORY CANVAS MATCHING RULE) --- */
+
+/* Raised Card / Container (border-radius: 20px, padding: 24px) */
+.neu-card {
+  background-color: var(--bg-base);
+  box-shadow: var(--neu-raised);
+  border-radius: 20px;
+  padding: 24px;
+  color: var(--text-main);
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
 }
-.app-card:hover {
-  border-color: rgba(59, 130, 246, 0.3);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+.neu-card-hover:hover {
+  box-shadow: var(--neu-raised-hover);
+  transform: translateY(-2px);
+}
+
+/* Inset Container / Panel */
+.neu-panel-inset {
+  background-color: var(--bg-base);
+  box-shadow: var(--neu-inset);
+  border-radius: 16px;
+  color: var(--text-main);
+}
+
+/* Standardized Neumorphic Button */
+.neu-btn {
+  background-color: var(--bg-base);
+  box-shadow: var(--neu-raised);
+  border-radius: 16px;
+  color: var(--text-main);
+  font-weight: 700;
+  height: 44px;
+  padding: 0 16px;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.neu-btn:hover {
+  box-shadow: var(--neu-raised-hover);
+}
+.neu-btn:active, .neu-btn.active {
+  box-shadow: var(--neu-inset);
+  color: var(--accent-blue);
+  transform: scale(0.98);
+}
+
+/* Standardized Inputs & Dropdowns (height: 44px, box-shadow: var(--neu-inset)) */
+.neu-field {
+  background-color: var(--bg-base);
+  box-shadow: var(--neu-inset);
+  border-radius: 14px;
+  color: var(--text-main);
+  height: 44px;
+  padding: 0 16px;
+  outline: none;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.neu-field:focus {
+  border-color: var(--accent-blue);
+}
+
+/* Typographic Lesson Links */
+.lesson-link {
+  color: var(--accent-blue);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease, text-decoration 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lesson-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
 }
 
 /* 3D Flashcard Transforms */
@@ -56,8 +146,3 @@ body {
 .transform-style-3d { transform-style: preserve-3d; }
 .backface-hidden { backface-visibility: hidden; }
 .rotate-y-180 { transform: rotateY(180deg); }
-
-/* Touch Active Animations */
-.active-press:active {
-  transform: scale(0.97);
-}

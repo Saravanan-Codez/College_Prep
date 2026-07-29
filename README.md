@@ -8,61 +8,62 @@
 [![Svelte](https://img.shields.io/badge/Frontend-Svelte-ff3e00?logo=svelte)](https://svelte.dev/)
 [![Vue.js](https://img.shields.io/badge/Frontend-Vue.js-4fc08d?logo=vuedotjs)](https://vuejs.org/)
 [![Tauri v2](https://img.shields.io/badge/Native-Tauri_v2-24c8db?logo=tauri)](https://tauri.app/)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)]()
 
 ---
 
 ## 🌟 Overview
 
-**CS College Prep OS** is a comprehensive, interactive 20-day preparation system designed for incoming Computer Science & Engineering students. It combines daily multi-session study schedules, an interactive C code runner with stack memory inspection, Anki SuperMemo-2 flashcards, offline Web Bluetooth peer-to-peer progress sync, Web Audio focus soundscapes, and a **Context-Aware Gemini AI Assistant**.
+**CS College Prep OS** is an all-in-one preparation operating system designed for incoming Computer Science & Engineering students. It features an adaptive desktop & mobile native app interface, an **all-inclusive Master JSON State system**, an offline Web Bluetooth peer-to-peer sync engine, Anki SM-2 flashcards, an interactive C code runner with stack RAM variable inspection, and a **Context-Aware Gemini AI Assistant**.
 
 ---
 
-## ✨ Key Features
+## 💾 Master JSON State Specification
+
+The application treats the exported JSON backup file as the **Master Source of Truth**. Exporting your progress produces `cs_prep_master_state_YYYY-MM-DD.json` containing:
+
+```json
+{
+  "appVersion": "2.0.0",
+  "exportTimestamp": "2026-07-29T19:34:00.000Z",
+  "currentDay": 1,
+  "completedTasks": { "day1_slot0": true, "day1_slot1": true },
+  "customNotes": { "day1": "Mastered functions domain and range" },
+  "problemLogs": { "day1_p1": "Solved using vector dot product formula" },
+  "quizScores": { "1": 2 },
+  "xp": 350,
+  "streakCount": 3,
+  "unlockedBadges": ["first_step", "code_ninja"],
+  "soundMuted": false,
+  "flashcardsState": { "card_1": { "interval": 4, "easeFactor": 2.5 } },
+  "geminiApiKey": "AIzaSy...",
+  "chatMessages": [
+    { "role": "assistant", "text": "Hello! I am your AI Coach..." },
+    { "role": "user", "text": "Explain limits L'Hôpital rule" }
+  ]
+}
+```
+
+- **1-Click Export**: Save your entire study progress, notes, AI API key, and full AI chat history.
+- **1-Click Import / Load**: Select any backup file and choose between **Overwrite** (replace state) or **Merge** (combine progress).
+
+---
+
+## ✨ Full Feature Suite
 
 - 🤖 **Context-Aware Gemini AI Coach (BYOK)**:
-  - Bring-Your-Own-Key Google AI Studio integration (`aistudio.google.com`).
-  - Automatically aware of your active study day, math/physics topics, XP level, and live C playground code.
+  - Configure your free Google AI Studio API key (`aistudio.google.com`).
+  - Automatically aware of your active study day, math/physics topics, XP level, and live C code.
 - 📶 **Offline Web Bluetooth & QR P2P Sync**:
   - Sync your study progress between phone and desktop completely offline without internet using Web Bluetooth or QR codes.
-- 💻 **Interactive C Playground & Memory Inspector**:
-  - Run C code in-browser, view stdout terminal output, and inspect local stack RAM variables.
+- 💻 **Interactive C Playground & Stack Memory Inspector**:
+  - Write & execute C code in-browser, view stdout terminal output, and inspect local stack RAM variables.
 - 🎴 **Anki SuperMemo-2 (SM-2) Spaced Repetition Flashcards**:
   - Algorithmically calculates review intervals ($I$) and ease factors ($EF$) based on rating performance.
-- 🎧 **Web Audio Focus Soundscapes**:
-  - 100% offline synthesized 10Hz Alpha Binaural Beats, Soft Rain, and Pink Noise.
-- 💾 **JSON Progress Backup & Restore**:
-  - Export progress backup files and import/merge with 1 click.
+- 📚 **20-Day 6-Session Video Study Materials**:
+  - Curated topic notes, reference links (cppreference, MDN, VisuAlgo, MIT OCW), and embedded YouTube video lessons for all 20 days.
 - 📱 **Multi-Platform Native Apps**:
   - Desktop: Windows (`.exe` / `.msi`), Linux (`.deb` / `.rpm`), macOS (`.dmg`).
   - Mobile: Android (`.apk`).
-
----
-
-## 📂 Codebase Architecture
-
-```
-College_Prep_Tasks/
-├── index.html                  # Clean HTML5 Entry Shell
-├── package.json                # Bun & Vite dependencies
-├── bunfig.toml                 # Bun runtime configuration
-├── vite.config.js              # Vite build setup compiling Svelte & Vue components
-├── manifest.json               # Progressive Web App (PWA) Manifest
-├── sw.js                       # 100% Offline Service Worker Cache
-├── tauri_cross_compilation_guide.md # Detailed Windows & Android build guide
-├── .github/workflows/build.yml # Automated CI/CD cross-compilation pipeline
-├── src-tauri/                  # Tauri v2 Rust Native Desktop & Mobile Kernel
-│   ├── Cargo.toml
-│   ├── build.rs
-│   └── tauri.conf.json
-└── src/                        # Frontend Components & Data
-    ├── App.svelte              # Main Svelte App Controller
-    ├── main.js                 # App Entrypoint
-    ├── css/styles.css          # Design Tokens & Tailwind CSS
-    └── js/
-        ├── data/               # Curriculum, Quizzes, C Snippets, Flashcards
-        └── modules/            # Audio SFX, C Runner, SM-2 Engine, P2P Sync, AI Mentor
-```
 
 ---
 
@@ -72,42 +73,21 @@ College_Prep_Tasks/
 - Install **[Bun](https://bun.sh/)** (recommended for ultra-fast installs) or Node.js v18+.
 - Install **Rust** (`rustup`) for native desktop/mobile builds.
 
-### 1. Clone & Install Dependencies
 ```bash
+# 1. Clone & Install Dependencies
 git clone https://github.com/your-username/College_Prep_Tasks.git
 cd College_Prep_Tasks
 bun install
-```
 
-### 2. Run Development Server
-```bash
+# 2. Run Development Server
 bun run dev
-```
-Open `http://localhost:5173` in your browser.
 
-### 3. Build Web Bundle
-```bash
+# 3. Build Vite Web Bundle
 bun run build
-```
 
-### 4. Run Native Tauri Desktop App
-```bash
-bun run tauri dev
-```
-
-### 5. Compile Native Desktop Release Binaries
-```bash
+# 4. Compile Native Desktop App (Linux / Windows / macOS)
 bun run tauri build
 ```
-- **Linux Executable Binary**: `src-tauri/target/release/cs-college-prep-os`
-- **Debian Package**: `src-tauri/target/release/bundle/deb/CS College Prep OS_2.0.0_amd64.deb`
-- **RPM Package**: `src-tauri/target/release/bundle/rpm/CS College Prep OS-2.0.0-1.x86_64.rpm`
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on submitting pull requests and reporting issues.
 
 ---
 

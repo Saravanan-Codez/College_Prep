@@ -1,14 +1,12 @@
-// Prevents additional console window on Windows in release
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
-
-#[tauri::command]
-fn get_system_info() -> String {
-    format!("CS College Prep OS Native Kernel v2.0 - Rust Engine Active")
-}
-
+// Prevents WebKitGTK compositing & DMABUF buffer crashes on Linux distros
 fn main() {
+    #[cfg(target_os = "linux")]
+    {
+        std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
+        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
+    }
+
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![get_system_info])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

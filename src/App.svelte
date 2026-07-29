@@ -1,17 +1,20 @@
 <script>
   import { onMount } from 'svelte';
+  import SplashScreen from './components/SplashScreen.svelte';
   import { CURRICULUM_DATA } from './js/data/curriculum.js';
   import { DAILY_QUIZZES } from './js/data/quizzes.js';
   import { C_SNIPPETS } from './js/data/snippets.js';
   import { FLASHCARDS } from './js/data/flashcards.js';
-  import { playPopSound, playLevelUpSound } from './js/modules/audio.js';
+  import { playPopSound, playLevelUpSound, toggleAmbientSound } from './js/modules/audio.js';
   import { getUserLevelInfo, ACHIEVEMENTS } from './js/modules/gamification.js';
   import { calculateSM2 } from './js/modules/sm2Engine.js';
   import { executeCCode } from './js/modules/cRunner.js';
   import { sendGeminiPrompt } from './js/modules/aiMentor.js';
 
+  let splashFinished = false;
   let currentDay = 1;
   let activeTab = 'dashboard';
+  let theme = 'light'; // 'light' or 'dark'
   let completedTasks = {};
   let customNotes = {};
   let problemLogs = {};
@@ -25,11 +28,19 @@
   let currentFlashcardIndex = 0;
   let isFlashcardFlipped = false;
 
+  // Soundscape State
+  let activeSoundscape = 'off';
+
+  // Spotify Player State
+  let spotifyPlaylistId = '37i9dQZF1DX8Uebhn2wVvT'; // Lofi Beats default
+  let customSpotifyUrl = '';
+
   // Modals
   let showP2PModal = false;
   let showImportModal = false;
   let showVideoModal = false;
   let showAIKeyModal = false;
+  let showMusicModal = false;
 
   let activeVideoTitle = '';
   let activeVideoEmbedId = '';
@@ -55,7 +66,6 @@
 
   onMount(() => {
     loadState();
-    geminiApiKey = localStorage.getItem('gemini_api_key') || '';
   });
 
   function loadState() {
@@ -64,6 +74,7 @@
       try {
         const parsed = JSON.parse(saved);
         currentDay = parsed.currentDay || 1;
+        theme = parsed.theme || 'light';
         completedTasks = parsed.completedTasks || {};
         customNotes = parsed.customNotes || {};
         problemLogs = parsed.problemLogs || {};
@@ -73,19 +84,54 @@
         unlockedBadges = parsed.unlockedBadges || [];
         soundMuted = parsed.soundMuted || false;
         flashcardsState = parsed.flashcardsState || {};
+        spotifyPlaylistId = parsed.spotifyPlaylistId || '37i9dQZF1DX8Uebhn2wVvT';
+        geminiApiKey = parsed.geminiApiKey || localStorage.getItem('gemini_api_key') || '';
+        chatMessages = parsed.chatMessages || [
+          { role: 'assistant', text: "👋 Hello! I am your Context-Aware Gemini AI Study Coach. How can I help you today?" }
+        ];
       } catch(e){}
     }
   }
 
   function saveState() {
     localStorage.setItem('college_prep_state', JSON.stringify({
-      currentDay, completedTasks, customNotes, problemLogs, quizScores,
-      xp, streakCount, unlockedBadges, soundMuted, flashcardsState
+      currentDay, theme, completedTasks, customNotes, problemLogs, quizScores,
+      xp, streakCount, unlockedBadges, soundMuted, flashcardsState, spotifyPlaylistId, geminiApiKey, chatMessages
     }));
+    if (geminiApiKey) {
+      localStorage.setItem('gemini_api_key', geminiApiKey);
+    }
+  }
+
+  function toggleTheme() {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    saveState();
+  }
+
+  function handleToggleSoundscape(type) {
+    activeSoundscape = type;
+    toggleAmbientSound(type, soundMuted);
+  }
+
+  function setSpotifyPlaylist(id) {
+    spotifyPlaylistId = id;
+    saveState();
+  }
+
+  function parseAndSetCustomSpotify() {
+    if (!customSpotifyUrl.trim()) return;
+    try {
+      const match = customSpotifyUrl.match(/playlist\/([a-zA-Z0-9]+)/i);
+      if (match && match[1]) {
+        spotifyPlaylistId = match[1];
+        customSpotifyUrl = '';
+        saveState();
+      }
+    } catch(e){}
   }
 
   function saveGeminiKey() {
-    localStorage.setItem('gemini_api_key', geminiApiKey.trim());
+    saveState();
     showAIKeyModal = false;
   }
 
@@ -145,6 +191,7 @@
     chatMessages = [...chatMessages, { role: 'user', text: promptToSend }];
     aiUserPrompt = '';
     isAiThinking = true;
+    saveState();
 
     try {
       const activeCode = document.getElementById('c-app-editor') ? document.getElementById('c-app-editor').value : '';
@@ -157,9 +204,11 @@
         completedToday: completedTodayCount
       });
       chatMessages = [...chatMessages, { role: 'assistant', text: reply }];
+      saveState();
       addXP(20, "AI Assistant Consulted");
     } catch(err) {
       chatMessages = [...chatMessages, { role: 'assistant', text: `⚠️ Error: ${err.message}` }];
+      saveState();
     } finally {
       isAiThinking = false;
     }
@@ -167,13 +216,29 @@
 
   function exportJSON() {
     addXP(10, "JSON Export");
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
-      currentDay, completedTasks, customNotes, problemLogs, quizScores,
-      xp, streakCount, unlockedBadges, flashcardsState
-    }, null, 2));
+    const fullMasterState = {
+      appVersion: "2.0.0",
+      exportTimestamp: new Date().toISOString(),
+      currentDay,
+      theme,
+      completedTasks,
+      customNotes,
+      problemLogs,
+      quizScores,
+      xp,
+      streakCount,
+      unlockedBadges,
+      soundMuted,
+      flashcardsState,
+      spotifyPlaylistId,
+      geminiApiKey,
+      chatMessages
+    };
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullMasterState, null, 2));
     const dlAnchor = document.createElement('a');
     dlAnchor.setAttribute("href", dataStr);
-    dlAnchor.setAttribute("download", `cs_prep_progress_backup_${new Date().toISOString().slice(0, 10)}.json`);
+    dlAnchor.setAttribute("download", `cs_prep_master_state_${new Date().toISOString().slice(0, 10)}.json`);
     document.body.appendChild(dlAnchor);
     dlAnchor.click();
     dlAnchor.remove();
@@ -196,6 +261,7 @@
     if (!pendingImportData) return;
     if (importStrategy === 'overwrite') {
       currentDay = pendingImportData.currentDay || 1;
+      theme = pendingImportData.theme || theme;
       completedTasks = pendingImportData.completedTasks || {};
       customNotes = pendingImportData.customNotes || {};
       problemLogs = pendingImportData.problemLogs || {};
@@ -204,12 +270,17 @@
       streakCount = pendingImportData.streakCount || 1;
       unlockedBadges = pendingImportData.unlockedBadges || [];
       flashcardsState = pendingImportData.flashcardsState || {};
+      spotifyPlaylistId = pendingImportData.spotifyPlaylistId || spotifyPlaylistId;
+      geminiApiKey = pendingImportData.geminiApiKey || geminiApiKey;
+      chatMessages = pendingImportData.chatMessages || chatMessages;
     } else {
       completedTasks = { ...completedTasks, ...(pendingImportData.completedTasks || {}) };
       customNotes = { ...customNotes, ...(pendingImportData.customNotes || {}) };
       problemLogs = { ...problemLogs, ...(pendingImportData.problemLogs || {}) };
       quizScores = { ...quizScores, ...(pendingImportData.quizScores || {}) };
       xp += (pendingImportData.xp || 0);
+      if (pendingImportData.geminiApiKey) geminiApiKey = pendingImportData.geminiApiKey;
+      if (pendingImportData.chatMessages) chatMessages = [...chatMessages, ...(pendingImportData.chatMessages || [])];
     }
     saveState();
     showImportModal = false;
@@ -223,329 +294,411 @@
   }
 </script>
 
-<!-- Native App Layout Frame -->
-<div class="min-h-screen flex flex-col lg:flex-row bg-[#070a12] text-slate-100 antialiased font-sans">
-  
-  <!-- DESKTOP LEFT SIDEBAR NAVIGATION -->
-  <aside class="hidden lg:flex w-64 flex-col bg-[#090e1a] border-r border-slate-800 p-5 space-y-6 flex-shrink-0">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">
-        <i class="fa-solid fa-graduation-cap text-lg"></i>
-      </div>
-      <div>
-        <h1 class="font-extrabold text-base text-white tracking-tight">CS Prep OS</h1>
-        <span class="text-[10px] font-bold text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-full border border-blue-500/20">Native App v2.0</span>
-      </div>
-    </div>
+<SplashScreen onFinish={() => splashFinished = true} />
 
-    <!-- Navigation Items -->
-    <nav class="space-y-1.5 flex-grow">
-      <button on:click={() => activeTab = 'dashboard'} class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all active-press {activeTab === 'dashboard' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/60'}">
-        <i class="fa-solid fa-calendar-day text-sm"></i> 20-Day Schedule
-      </button>
-      <button on:click={() => activeTab = 'snippets'} class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all active-press {activeTab === 'snippets' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/60'}">
-        <i class="fa-solid fa-terminal text-sm"></i> C Playground
-      </button>
-      <button on:click={() => activeTab = 'flashcards'} class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all active-press {activeTab === 'flashcards' ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/60'}">
-        <i class="fa-solid fa-layer-group text-sm"></i> Anki SM-2
-      </button>
-      <button on:click={() => activeTab = 'ai-mentor'} class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-bold text-xs transition-all active-press {activeTab === 'ai-mentor' ? 'bg-purple-600 text-white shadow-lg shadow-purple-600/30' : 'text-purple-400 hover:text-white hover:bg-purple-950/40 border border-purple-500/20'}">
-        <i class="fa-solid fa-robot text-sm"></i> AI Study Coach
-      </button>
-    </nav>
-
-    <!-- Sidebar Footer Gamification Card -->
-    <div class="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2">
-      <div class="flex items-center justify-between text-xs font-bold text-amber-400">
-        <span><i class="fa-solid fa-trophy mr-1"></i> {levelInfo.title}</span>
-      </div>
-      <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
-        <div class="bg-gradient-to-r from-amber-400 to-yellow-500 h-full transition-all duration-500" style="width: {(xp % 200) / 2}%"></div>
-      </div>
-      <div class="flex justify-between text-[10px] text-slate-400 font-mono">
-        <span>{xp} XP</span>
-        <span>Streak: {streakCount}d 🔥</span>
-      </div>
-    </div>
-  </aside>
-
-  <!-- MAIN APP CONTAINER -->
-  <div class="flex-grow flex flex-col min-w-0 pb-16 lg:pb-0">
-
-    <!-- TOP CONTROL HEADER BAR -->
-    <header class="border-b border-slate-800 bg-[#090e1a]/80 backdrop-blur-md px-4 sm:px-6 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <span class="text-xs font-bold text-slate-400">Day {currentDay} of 20</span>
-        <span class="text-slate-600">•</span>
-        <span class="text-xs font-semibold text-blue-400">{completedTodayCount} / 6 Sessions Done</span>
+<div class={theme === 'dark' ? 'dark' : ''}>
+  <div class="min-h-screen flex flex-col lg:flex-row bg-[var(--bg-base)] text-[var(--text-main)] antialiased font-sans transition-colors duration-300">
+    
+    <!-- SIDEBAR NAVIGATION (NO OUTER GLOWING BORDER) -->
+    <aside class="hidden lg:flex w-64 flex-col bg-[var(--bg-base)] p-6 space-y-6 flex-shrink-0">
+      <!-- App Brand Logo -->
+      <div class="neu-card p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-[var(--accent-blue)] flex items-center justify-center text-white font-extrabold shadow-md">
+          <i class="fa-solid fa-graduation-cap text-lg"></i>
+        </div>
+        <div>
+          <h1 class="font-extrabold text-base tracking-tight text-[var(--text-main)]">CS Prep OS</h1>
+          <span class="text-[10px] font-bold text-[var(--accent-blue)] uppercase tracking-widest">Falkon Labs</span>
+        </div>
       </div>
 
-      <!-- Quick Action Buttons -->
-      <div class="flex items-center gap-2">
-        <button on:click={() => showP2PModal = true} class="px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 text-xs font-bold flex items-center gap-1.5 transition-all active-press">
-          <i class="fa-bluetooth text-cyan-400"></i>
-          <span class="hidden sm:inline">Bluetooth Sync</span>
+      <!-- Navigation Menu Items -->
+      <nav class="space-y-3 flex-grow">
+        <button on:click={() => activeTab = 'dashboard'} class="w-full neu-btn justify-start text-xs {activeTab === 'dashboard' ? 'active' : ''}">
+          <i class="fa-solid fa-calendar-day text-sm mr-3"></i> 20-Day Schedule
         </button>
-
-        <button on:click={() => showImportModal = true} class="px-3 py-1.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 text-xs font-bold flex items-center gap-1.5 transition-all active-press">
-          <i class="fa-solid fa-upload"></i>
-          <span class="hidden sm:inline">Load Progress</span>
+        <button on:click={() => activeTab = 'snippets'} class="w-full neu-btn justify-start text-xs {activeTab === 'snippets' ? 'active' : ''}">
+          <i class="fa-solid fa-terminal text-sm mr-3"></i> C Playground
         </button>
-
-        <button on:click={exportJSON} class="px-3 py-1.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-bold flex items-center gap-1.5 transition-all active-press">
-          <i class="fa-solid fa-download"></i>
-          <span class="hidden sm:inline">Save Progress</span>
+        <button on:click={() => activeTab = 'flashcards'} class="w-full neu-btn justify-start text-xs {activeTab === 'flashcards' ? 'active' : ''}">
+          <i class="fa-solid fa-layer-group text-sm mr-3"></i> Anki SM-2
         </button>
+        <button on:click={() => activeTab = 'gamification'} class="w-full neu-btn justify-start text-xs {activeTab === 'gamification' ? 'active' : ''}">
+          <i class="fa-solid fa-trophy text-sm mr-3"></i> Gamification & XP
+        </button>
+        <button on:click={() => activeTab = 'ai-mentor'} class="w-full neu-btn justify-start text-xs {activeTab === 'ai-mentor' ? 'active' : ''}">
+          <i class="fa-solid fa-robot text-sm mr-3"></i> AI Study Coach
+        </button>
+      </nav>
+
+      <!-- Sidebar Level Box -->
+      <div class="neu-card p-4 space-y-2 text-center">
+        <span class="text-xs font-extrabold text-amber-500 uppercase tracking-wide block"><i class="fa-solid fa-medal mr-1"></i> {levelInfo.title}</span>
+        <div class="w-full neu-panel-inset h-2.5 rounded-full overflow-hidden p-0.5">
+          <div class="bg-gradient-to-r from-amber-400 to-yellow-500 h-full rounded-full transition-all duration-500" style="width: {(xp % 200) / 2}%"></div>
+        </div>
+        <div class="flex justify-between text-[11px] font-mono font-bold text-[var(--text-muted)]">
+          <span>{xp} XP</span>
+          <span>{streakCount}d Streak 🔥</span>
+        </div>
       </div>
-    </header>
+    </aside>
 
-    <!-- MAIN APP WORKSPACE -->
-    <main class="flex-grow p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6">
+    <!-- MAIN APP CONTAINER -->
+    <div class="flex-grow flex flex-col min-w-0 pb-20 lg:pb-0">
 
-      <!-- TAB 1: 20-DAY SCHEDULE -->
-      {#if activeTab === 'dashboard'}
-        <div class="space-y-6">
-          <!-- Day Header & Selector -->
-          <div class="app-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">Day {currentDay}</span>
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">{currentDayData.phase}</span>
-              </div>
-              <h2 class="text-2xl font-extrabold text-white mt-1">{currentDayData.dateStr}</h2>
-              <p class="text-xs text-slate-400">{currentDayData.math.topic} • {currentDayData.physics.topic} • {currentDayData.prog.topic}</p>
-            </div>
-            <select bind:value={currentDay} on:change={saveState} class="bg-slate-950 border border-slate-800 text-slate-200 text-sm font-semibold rounded-xl px-4 py-2 cursor-pointer focus:outline-none focus:border-blue-500">
-              {#each CURRICULUM_DATA as dayObj}
-                <option value={dayObj.day}>Day {dayObj.day}: {dayObj.dateStr.split(' (')[0]}</option>
-              {/each}
-            </select>
+      <!-- HEADER / TOP BAR CONTROLS (CRISP HORIZONTAL FLEXING LINE, GAP: 12PX) -->
+      <header class="p-4 sm:p-6 flex flex-wrap items-center justify-between gap-3">
+        <!-- Theme & Binaural Beat Controls -->
+        <div class="flex items-center gap-3">
+          <button on:click={toggleTheme} class="neu-btn text-xs">
+            <i class="fa-solid {theme === 'dark' ? 'fa-sun text-amber-400' : 'fa-moon text-indigo-600'} mr-2"></i>
+            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
+
+          <div class="hidden md:flex items-center gap-2 neu-panel-inset p-1.5 rounded-2xl">
+            <button on:click={() => handleToggleSoundscape('alpha')} class="px-3 py-1 rounded-xl text-[11px] font-bold transition-all {activeSoundscape === 'alpha' ? 'neu-btn text-[var(--accent-blue)]' : 'text-[var(--text-muted)]'}">🧠 10Hz Alpha</button>
+            <button on:click={() => handleToggleSoundscape('rain')} class="px-3 py-1 rounded-xl text-[11px] font-bold transition-all {activeSoundscape === 'rain' ? 'neu-btn text-cyan-500' : 'text-[var(--text-muted)]'}">🌧️ Rain</button>
+            <button on:click={() => handleToggleSoundscape('off')} class="px-3 py-1 rounded-xl text-[11px] font-bold transition-all {activeSoundscape === 'off' ? 'neu-btn text-red-500' : 'text-[var(--text-muted)]'}">🔇 Off</button>
           </div>
+        </div>
 
-          <!-- Time Block Sessions Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {#each [
-              { id: 0, title: '🧮 Mathematics Session', subject: currentDayData.math, color: 'border-l-blue-500' },
-              { id: 1, title: '⚛️ Physics Session', subject: currentDayData.physics, color: 'border-l-indigo-500' },
-              { id: 2, title: '💻 C Programming', subject: currentDayData.prog, color: 'border-l-emerald-500' },
-              { id: 3, title: '🧠 DSA Foundations', subject: currentDayData.dsa, color: 'border-l-purple-500' },
-              { id: 4, title: '🌐 Web Development', subject: currentDayData.web, color: 'border-l-amber-500' },
-              { id: 5, title: '📖 Systems Technical Reading', subject: { topic: currentDayData.reading, subtopics: ["Read chapter thoroughly", "Take notes in journal"], docsUrl: "https://csapp.cs.cmu.edu/" }, color: 'border-l-rose-500' }
-            ] as slot}
-              {@const taskKey = `day${currentDay}_slot${slot.id}`}
-              {@const isChecked = !!completedTasks[taskKey]}
-              <div class="app-card p-5 border-l-4 {slot.color} space-y-3">
-                <div class="flex items-start justify-between gap-3">
-                  <div>
-                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{slot.title}</span>
-                    <h4 class="text-sm font-bold text-white {isChecked ? 'line-through opacity-50' : ''}">{slot.subject.topic}</h4>
-                    <ul class="text-xs text-slate-400 list-disc list-inside mt-1 space-y-0.5">
+        <!-- Right Action Buttons (gap: 12px) -->
+        <div class="flex items-center gap-3">
+          <button on:click={() => showMusicModal = true} class="neu-btn text-xs text-emerald-500">
+            <i class="fa-brands fa-spotify mr-1.5"></i> <span class="hidden sm:inline">Spotify Player</span>
+          </button>
+
+          <button on:click={() => showP2PModal = true} class="neu-btn text-xs text-cyan-500">
+            <i class="fa-bluetooth mr-1.5"></i> <span class="hidden sm:inline">P2P Sync</span>
+          </button>
+
+          <button on:click={() => showImportModal = true} class="neu-btn text-xs text-[var(--accent-blue)]">
+            <i class="fa-solid fa-upload mr-1.5"></i> <span class="hidden sm:inline">Load JSON</span>
+          </button>
+
+          <button on:click={exportJSON} class="neu-btn text-xs text-amber-500">
+            <i class="fa-solid fa-download mr-1.5"></i> <span class="hidden sm:inline">Save JSON</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- MAIN APP WORKSPACE -->
+      <main class="flex-grow p-4 sm:p-6 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- TAB 1: 20-DAY SCHEDULE -->
+        {#if activeTab === 'dashboard'}
+          <div class="space-y-6">
+            <!-- Day Selector & Header Card -->
+            <div class="neu-card flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="px-3 py-1 rounded-full text-xs font-extrabold neu-panel-inset text-[var(--accent-blue)]">Day {currentDay}</span>
+                  <span class="px-3 py-1 rounded-full text-xs font-extrabold neu-panel-inset text-purple-500">{currentDayData.phase}</span>
+                </div>
+                <h2 class="text-2xl font-black mt-2 tracking-tight text-[var(--text-main)]">{currentDayData.dateStr}</h2>
+                <p class="text-xs font-semibold text-[var(--text-muted)] mt-1">{currentDayData.math.topic} • {currentDayData.physics.topic}</p>
+              </div>
+
+              <!-- Standardized 44px Height Dropdown Field -->
+              <select bind:value={currentDay} on:change={saveState} class="neu-field text-xs font-extrabold cursor-pointer">
+                {#each CURRICULUM_DATA as dayObj}
+                  <option value={dayObj.day}>Day {dayObj.day}: {dayObj.dateStr.split(' (')[0]}</option>
+                {/each}
+              </select>
+            </div>
+
+            <!-- Time Block Sessions Grid (border-radius: 20px, padding: 24px) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {#each [
+                { id: 0, title: '🧮 Mathematics Session', subject: currentDayData.math },
+                { id: 1, title: '⚛️ Physics Session', subject: currentDayData.physics },
+                { id: 2, title: '💻 C Programming', subject: currentDayData.prog },
+                { id: 3, title: '🧠 DSA Foundations', subject: currentDayData.dsa },
+                { id: 4, title: '🌐 Web Development', subject: currentDayData.web },
+                { id: 5, title: '📖 Technical Systems Reading', subject: { topic: currentDayData.reading, subtopics: ["Read assigned chapter", "Take journal notes"] } }
+              ] as slot}
+                {@const taskKey = `day${currentDay}_slot${slot.id}`}
+                {@const isChecked = !!completedTasks[taskKey]}
+                <div class="neu-card flex flex-col justify-between space-y-4">
+                  <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">{slot.title}</span>
+                      <button on:click={() => toggleTask(taskKey)} class="neu-btn w-10 h-10 p-0 rounded-full flex items-center justify-center {isChecked ? 'active text-emerald-500' : 'text-[var(--text-muted)]'}">
+                        <i class="fa-solid {isChecked ? 'fa-circle-check text-xl text-emerald-500' : 'fa-circle-check text-base opacity-40'}"></i>
+                      </button>
+                    </div>
+                    <h4 class="text-base font-bold text-[var(--text-main)] {isChecked ? 'line-through opacity-50' : ''}">{slot.subject.topic}</h4>
+                    <ul class="text-xs font-medium text-[var(--text-muted)] list-disc list-inside space-y-1">
                       {#each slot.subject.subtopics as st}
                         <li>{st}</li>
                       {/each}
                     </ul>
                   </div>
-                  <button on:click={() => toggleTask(taskKey)} class="p-3 rounded-xl border transition-all active-press {isChecked ? 'bg-emerald-600 text-white border-emerald-500 shadow-md' : 'bg-slate-950 text-slate-400 border-slate-800 hover:border-blue-500'}">
-                    <i class="fa-solid {isChecked ? 'fa-check-double text-base' : 'fa-check text-sm'}"></i>
-                  </button>
-                </div>
 
-                <!-- Video Lessons & Study Materials Drawer -->
-                {#if slot.subject.videos && slot.subject.videos.length > 0}
-                  <div class="pt-2.5 border-t border-slate-800/80 space-y-1.5">
-                    <span class="text-[10px] font-bold text-slate-400 uppercase flex items-center gap-1"><i class="fa-brands fa-youtube text-red-500"></i> Video Lessons & Resources:</span>
-                    <div class="flex flex-wrap gap-1.5">
-                      {#each slot.subject.videos as vid}
-                        <button on:click={() => openVideo(vid.title, vid.embedId)} class="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-[11px] text-slate-300 flex items-center gap-1.5 active-press">
-                          <i class="fa-solid fa-circle-play text-red-400 text-xs"></i> {vid.title}
-                        </button>
-                      {/each}
+                  <!-- Video Lessons (Clean Typographic Links) -->
+                  {#if slot.subject.videos && slot.subject.videos.length > 0}
+                    <div class="pt-3 border-t border-slate-700/10 space-y-2">
+                      <span class="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-wider block"><i class="fa-brands fa-youtube text-red-500 mr-1"></i> Recommended Lessons:</span>
+                      <div class="flex flex-col gap-1.5">
+                        {#each slot.subject.videos as vid}
+                          <a href="#video" on:click|preventDefault={() => openVideo(vid.title, vid.embedId)} class="lesson-link">
+                            <i class="fa-solid fa-play-circle text-red-500 text-xs"></i> {vid.title}
+                          </a>
+                        {/each}
+                      </div>
                     </div>
-                  </div>
-                {/if}
-              </div>
-            {/each}
+                  {/if}
+                </div>
+              {/each}
+            </div>
           </div>
-        </div>
 
-      <!-- TAB 2: C PLAYGROUND & STACK RAM INSPECTOR -->
-      {:else if activeTab === 'snippets'}
-        <div class="space-y-6">
-          <div class="app-card p-6 space-y-4">
-            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 class="text-base font-bold text-white">{currentSnippet.title}</h3>
-              <button on:click={handleRunCCode} class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white shadow-lg active-press">
-                <i class="fa-solid fa-play mr-1.5"></i> Run C Code
+        <!-- TAB 2: C PLAYGROUND & STACK RAM INSPECTOR -->
+        {:else if activeTab === 'snippets'}
+          <div class="space-y-6">
+            <div class="neu-card space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-base font-extrabold text-[var(--text-main)]">{currentSnippet.title}</h3>
+                <button on:click={handleRunCCode} class="neu-btn text-xs text-emerald-500 font-extrabold">
+                  <i class="fa-solid fa-play mr-1.5"></i> Run C Code (Client-Side WASM)
+                </button>
+              </div>
+              <!-- Code Area Inset Carved -->
+              <textarea id="c-app-editor" rows="12" class="w-full neu-field h-auto p-4 font-mono text-xs text-emerald-500 focus:outline-none">{currentSnippet.code}</textarea>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="neu-card">
+                <h4 class="text-xs font-black text-[var(--text-muted)] uppercase tracking-wider mb-2">Terminal Output (stdout)</h4>
+                <pre><code id="c-app-output" class="text-xs font-mono text-emerald-500">$ ready.</code></pre>
+              </div>
+              <div class="neu-card">
+                <h4 class="text-xs font-black text-[var(--text-muted)] uppercase tracking-wider mb-2">Stack Variable RAM Inspector</h4>
+                <div id="c-app-table"></div>
+              </div>
+            </div>
+          </div>
+
+        <!-- TAB 3: ANKI SM-2 FLASHCARDS -->
+        {:else if activeTab === 'flashcards'}
+          <div class="max-w-xl mx-auto space-y-6">
+            <div class="perspective-1000 w-full min-h-[260px] cursor-pointer" on:click={flipCard}>
+              <div class="relative w-full h-full transform-style-3d transition-transform duration-500 neu-card flex flex-col justify-between text-center">
+                <span class="text-xs font-black text-purple-500 uppercase tracking-widest">{currentCard.category}</span>
+                <h3 class="text-xl font-bold text-[var(--text-main)] my-6">{isFlashcardFlipped ? currentCard.answer : currentCard.question}</h3>
+                <span class="text-[11px] font-mono text-[var(--text-muted)]">{isFlashcardFlipped ? currentCard.exp : 'Click to flip card 🔄'}</span>
+              </div>
+            </div>
+            <div class="grid grid-cols-4 gap-3">
+              <button on:click={() => rateFlashcard(1)} class="neu-btn text-xs text-red-500">Again (1d)</button>
+              <button on:click={() => rateFlashcard(2)} class="neu-btn text-xs text-amber-500">Hard (2d)</button>
+              <button on:click={() => rateFlashcard(3)} class="neu-btn text-xs text-[var(--accent-blue)]">Good (4d)</button>
+              <button on:click={() => rateFlashcard(4)} class="neu-btn text-xs text-emerald-500">Easy (7d)</button>
+            </div>
+          </div>
+
+        <!-- TAB 4: GAMIFICATION & BADGES -->
+        {:else if activeTab === 'gamification'}
+          <div class="space-y-6 max-w-4xl mx-auto">
+            <div class="neu-card flex items-center justify-between gap-4">
+              <div>
+                <span class="text-xs font-black text-amber-500 uppercase tracking-widest">Level Progress</span>
+                <h2 class="text-2xl font-black mt-1 text-[var(--text-main)]">{levelInfo.title}</h2>
+                <p class="text-xs text-[var(--text-muted)]">Earn XP by completing time blocks, running C code, and passing quizzes.</p>
+              </div>
+              <div class="neu-panel-inset p-4 rounded-3xl text-center font-mono">
+                <span class="text-2xl font-extrabold text-amber-500">{xp}</span>
+                <span class="block text-[10px] text-[var(--text-muted)] uppercase font-bold">Total XP</span>
+              </div>
+            </div>
+
+            <!-- Unlockable Badges Suite -->
+            <div class="neu-card space-y-4">
+              <h3 class="text-sm font-black text-[var(--text-muted)] uppercase tracking-wider">Achievement Badges</h3>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                {#each ACHIEVEMENTS as badge}
+                  {@const isUnlocked = xp >= badge.xpRequired}
+                  <div class="neu-card p-4 text-center space-y-2 opacity-{isUnlocked ? '100' : '40'}">
+                    <div class="w-12 h-12 rounded-2xl neu-card mx-auto flex items-center justify-center text-2xl text-amber-500">
+                      <i class="fa-solid {badge.icon}"></i>
+                    </div>
+                    <h4 class="text-xs font-extrabold text-[var(--text-main)]">{badge.name}</h4>
+                    <p class="text-[10px] text-[var(--text-muted)]">{badge.desc}</p>
+                    <span class="text-[9px] font-mono px-2 py-0.5 rounded-full neu-panel-inset text-amber-500 block">{badge.xpRequired} XP</span>
+                  </div>
+                {/each}
+              </div>
+            </div>
+          </div>
+
+        <!-- TAB 5: GEMINI AI COACH -->
+        {:else if activeTab === 'ai-mentor'}
+          <div class="space-y-4 max-w-4xl mx-auto">
+            <div class="neu-card flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl neu-panel-inset text-purple-500 flex items-center justify-center text-lg font-extrabold">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                  <h3 class="text-base font-extrabold text-[var(--text-main)]">Context-Aware Gemini AI Coach</h3>
+                  <p class="text-xs text-[var(--text-muted)]">Context active: Day {currentDay} ({currentDayData.math.topic}), XP ({xp}).</p>
+                </div>
+              </div>
+              <button on:click={() => showAIKeyModal = true} class="neu-btn text-xs text-purple-500">
+                {geminiApiKey ? '🔑 Key Configured' : 'Set Gemini Key'}
               </button>
             </div>
-            <textarea id="c-app-editor" rows="12" class="w-full bg-[#070a12] border border-slate-800 rounded-xl p-4 font-mono text-xs text-emerald-300 focus:outline-none focus:border-emerald-500">{currentSnippet.code}</textarea>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="app-card p-4">
-              <h4 class="text-xs font-bold text-slate-400 mb-2">Terminal Output (stdout)</h4>
-              <pre><code id="c-app-output" class="text-xs font-mono text-emerald-400">$ ready.</code></pre>
+
+            <!-- Quick Action Prompt Chips -->
+            <div class="flex flex-wrap gap-2 text-xs">
+              <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)} class="neu-btn text-xs">💡 Explain Day {currentDay} Math Concept</button>
+              <button on:click={() => handleSendAiChat("Debug my C playground code and suggest memory optimization tips.")} class="neu-btn text-xs">🐞 Debug My C Playground Code</button>
+              <button on:click={() => handleSendAiChat("Evaluate my 20-day preparation progress and suggest high-yield revision topics.")} class="neu-btn text-xs">🏆 Evaluate My Study Progress</button>
             </div>
-            <div class="app-card p-4">
-              <h4 class="text-xs font-bold text-slate-400 mb-2">Stack Variable RAM Inspector</h4>
-              <div id="c-app-table"></div>
+
+            <!-- Chat Stream Box -->
+            <div class="neu-card space-y-4 max-h-[500px] overflow-y-auto font-sans">
+              {#each chatMessages as msg}
+                <div class="p-4 rounded-2xl text-xs leading-relaxed {msg.role === 'user' ? 'neu-card bg-purple-600 text-white ml-auto max-w-lg font-bold' : 'neu-panel-inset text-[var(--text-main)]'}">
+                  <strong class="block text-[10px] uppercase font-black mb-1 opacity-75">{msg.role === 'user' ? 'You' : 'Gemini AI Coach'}</strong>
+                  <div class="whitespace-pre-wrap">{msg.text}</div>
+                </div>
+              {/each}
+              {#if isAiThinking}
+                <div class="p-3 neu-panel-inset text-xs text-purple-500 font-mono animate-pulse">
+                  Gemini is thinking & analyzing context...
+                </div>
+              {/if}
+            </div>
+
+            <!-- Standardized 44px Input Field -->
+            <div class="flex gap-3">
+              <input type="text" bind:value={aiUserPrompt} on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()} placeholder="Ask anything about Calculus, Physics, C Pointers, DSA, or study strategy..." class="flex-grow neu-field text-xs">
+              <button on:click={() => handleSendAiChat()} class="neu-btn text-xs text-purple-500 flex items-center gap-2">
+                <i class="fa-solid fa-paper-plane"></i> Send
+              </button>
             </div>
           </div>
-        </div>
+        {/if}
+      </main>
+    </div>
 
-      <!-- TAB 3: ANKI SM-2 FLASHCARDS -->
-      {:else if activeTab === 'flashcards'}
-        <div class="max-w-xl mx-auto space-y-6">
-          <div class="perspective-1000 w-full min-h-[240px] cursor-pointer" on:click={flipCard}>
-            <div class="relative w-full h-full transform-style-3d transition-transform duration-500 app-card p-8 flex flex-col justify-between text-center">
-              <span class="text-xs font-bold text-purple-400 uppercase">{currentCard.category}</span>
-              <h3 class="text-lg font-bold text-white my-6">{isFlashcardFlipped ? currentCard.answer : currentCard.question}</h3>
-              <span class="text-[10px] text-slate-500">{isFlashcardFlipped ? currentCard.exp : 'Click to flip card 🔄'}</span>
-            </div>
-          </div>
-          <div class="grid grid-cols-4 gap-2">
-            <button on:click={() => rateFlashcard(1)} class="p-2.5 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs font-bold active-press">Again (1d)</button>
-            <button on:click={() => rateFlashcard(2)} class="p-2.5 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-300 text-xs font-bold active-press">Hard (2d)</button>
-            <button on:click={() => rateFlashcard(3)} class="p-2.5 rounded-xl bg-blue-950/60 border border-blue-500/40 text-blue-300 text-xs font-bold active-press">Good (4d)</button>
-            <button on:click={() => rateFlashcard(4)} class="p-2.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-bold active-press">Easy (7d)</button>
-          </div>
-        </div>
+    <!-- MOBILE BOTTOM TOUCH DOCK BAR -->
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 p-3 bg-[var(--bg-base)] flex justify-around text-[11px] font-bold z-50 border-t border-slate-700/10">
+      <button on:click={() => activeTab = 'dashboard'} class="neu-btn p-2 h-auto flex flex-col items-center gap-1 {activeTab === 'dashboard' ? 'active' : ''}"><i class="fa-solid fa-calendar-day text-sm"></i>Schedule</button>
+      <button on:click={() => activeTab = 'snippets'} class="neu-btn p-2 h-auto flex flex-col items-center gap-1 {activeTab === 'snippets' ? 'active' : ''}"><i class="fa-solid fa-terminal text-sm"></i>C Code</button>
+      <button on:click={() => activeTab = 'flashcards'} class="neu-btn p-2 h-auto flex flex-col items-center gap-1 {activeTab === 'flashcards' ? 'active' : ''}"><i class="fa-solid fa-layer-group text-sm"></i>Anki</button>
+      <button on:click={() => activeTab = 'gamification'} class="neu-btn p-2 h-auto flex flex-col items-center gap-1 {activeTab === 'gamification' ? 'active' : ''}"><i class="fa-solid fa-trophy text-sm"></i>Stats</button>
+      <button on:click={() => activeTab = 'ai-mentor'} class="neu-btn p-2 h-auto flex flex-col items-center gap-1 {activeTab === 'ai-mentor' ? 'active' : ''}"><i class="fa-solid fa-robot text-sm"></i>AI Coach</button>
+    </nav>
 
-      <!-- TAB 4: GEMINI AI COACH -->
-      {:else if activeTab === 'ai-mentor'}
-        <div class="space-y-4 max-w-4xl mx-auto">
-          <div class="app-card p-5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center text-lg font-bold">
-                <i class="fa-solid fa-robot"></i>
-              </div>
-              <div>
-                <h3 class="text-base font-bold text-white">Context-Aware Gemini AI Coach</h3>
-                <p class="text-xs text-slate-400">Context active: Day {currentDay} ({currentDayData.math.topic}), XP ({xp}).</p>
-              </div>
-            </div>
-            <button on:click={() => showAIKeyModal = true} class="px-3.5 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold active-press">
-              {geminiApiKey ? '🔑 Key Configured' : 'Set Gemini Key'}
-            </button>
+    <!-- SPOTIFY EMBEDDED PLAYER MODAL -->
+    {#if showMusicModal}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
+        <div class="neu-card max-w-lg w-full space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-extrabold text-emerald-500 flex items-center gap-2"><i class="fa-brands fa-spotify"></i> Spotify Focus Player</h3>
+            <button on:click={() => showMusicModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
           </div>
 
-          <div class="flex flex-wrap gap-2 text-xs">
-            <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)} class="px-3 py-1.5 rounded-xl bg-[#090e1a] hover:bg-purple-950/60 border border-slate-800 text-slate-300 active-press">💡 Explain Day {currentDay} Math Concept</button>
-            <button on:click={() => handleSendAiChat("Debug my C playground code and suggest memory optimization tips.")} class="px-3 py-1.5 rounded-xl bg-[#090e1a] hover:bg-purple-950/60 border border-slate-800 text-slate-300 active-press">🐞 Debug My C Playground Code</button>
-            <button on:click={() => handleSendAiChat("Evaluate my 20-day preparation progress and suggest high-yield revision topics.")} class="px-3 py-1.5 rounded-xl bg-[#090e1a] hover:bg-purple-950/60 border border-slate-800 text-slate-300 active-press">🏆 Evaluate My Study Progress</button>
+          <!-- Preset Playlists -->
+          <div class="flex gap-2 text-xs">
+            <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX8Uebhn2wVvT')} class="neu-btn text-xs text-emerald-500">🎧 Lofi Beats</button>
+            <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="neu-btn text-xs text-emerald-500">🎹 Deep Focus</button>
+            <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="neu-btn text-xs text-emerald-500">🎻 Classical</button>
           </div>
 
-          <div class="app-card p-5 space-y-4 max-h-[500px] overflow-y-auto font-sans">
-            {#each chatMessages as msg}
-              <div class="p-3.5 rounded-2xl text-xs leading-relaxed {msg.role === 'user' ? 'bg-purple-600 text-white ml-auto max-w-lg shadow-md' : 'bg-[#070a12] border border-slate-800 text-slate-200'}">
-                <strong class="block text-[10px] uppercase font-bold mb-1 opacity-75">{msg.role === 'user' ? 'You' : 'Gemini AI Coach'}</strong>
-                <div class="whitespace-pre-wrap">{msg.text}</div>
-              </div>
-            {/each}
-            {#if isAiThinking}
-              <div class="p-3 rounded-2xl bg-[#070a12] border border-slate-800 text-xs text-purple-400 font-mono animate-pulse">
-                Gemini is thinking & analyzing context...
-              </div>
-            {/if}
-          </div>
-
+          <!-- Custom Playlist URL Input -->
           <div class="flex gap-2">
-            <input type="text" bind:value={aiUserPrompt} on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()} placeholder="Ask anything about Calculus, Physics, C Pointers, DSA, or study strategy..." class="flex-grow bg-[#090e1a] border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-purple-500">
-            <button on:click={() => handleSendAiChat()} class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-lg shadow-purple-600/30 active-press">
-              <i class="fa-solid fa-paper-plane"></i> Send
-            </button>
+            <input type="text" bind:value={customSpotifyUrl} placeholder="Paste public Spotify Playlist URL..." class="flex-grow neu-field text-xs">
+            <button on:click={parseAndSetCustomSpotify} class="neu-btn text-xs text-emerald-500">Load</button>
+          </div>
+
+          <!-- Embedded Spotify Player Iframe -->
+          <div class="rounded-2xl overflow-hidden neu-panel-inset p-1">
+            <iframe title="Spotify Player" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{spotifyPlaylistId}?utm_source=generator&theme=0" width="100%" height="240" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
-      {/if}
-    </main>
+      </div>
+    {/if}
+
+    <!-- P2P BLUETOOTH SYNC MODAL -->
+    {#if showP2PModal}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
+        <div class="neu-card max-w-md w-full space-y-4 text-center">
+          <div class="flex items-center justify-between border-b border-slate-700/10 pb-3">
+            <h3 class="text-base font-extrabold text-cyan-500"><i class="fa-bluetooth text-cyan-500 mr-2"></i>P2P Bluetooth Sync</h3>
+            <button on:click={() => showP2PModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <p class="text-xs font-semibold text-[var(--text-muted)]">Pair phone and laptop offline over Web Bluetooth or QR code.</p>
+          <div class="p-4 neu-panel-inset font-mono text-2xl font-extrabold text-amber-500 tracking-widest">
+            {Math.floor(100000 + Math.random() * 900000)}
+          </div>
+          <button on:click={() => showP2PModal = false} class="w-full neu-btn text-xs text-cyan-500 font-extrabold">Close Sync</button>
+        </div>
+      </div>
+    {/if}
+
+    <!-- MASTER JSON IMPORT MODAL -->
+    {#if showImportModal}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
+        <div class="neu-card max-w-md w-full space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-700/10 pb-3">
+            <h3 class="text-base font-extrabold text-[var(--accent-blue)]"><i class="fa-solid fa-upload text-[var(--accent-blue)] mr-2"></i>Load Master State JSON</h3>
+            <button on:click={() => showImportModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <input type="file" accept=".json" on:change={handleFileSelect} class="w-full text-xs text-[var(--text-muted)] file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-[var(--accent-blue)] file:text-white file:font-bold cursor-pointer">
+          <div class="grid grid-cols-2 gap-2 text-xs font-bold text-[var(--text-muted)]">
+            <label class="flex items-center gap-1.5"><input type="radio" bind:group={importStrategy} value="overwrite"> Overwrite</label>
+            <label class="flex items-center gap-1.5"><input type="radio" bind:group={importStrategy} value="merge"> Merge</label>
+          </div>
+          <button on:click={executeImport} disabled={!pendingImportData} class="w-full neu-btn text-xs text-[var(--accent-blue)] font-extrabold disabled:opacity-50">Load Master Backup Now</button>
+        </div>
+      </div>
+    {/if}
+
+    <!-- GEMINI API KEY MODAL -->
+    {#if showAIKeyModal}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
+        <div class="neu-card max-w-lg w-full space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-700/10 pb-3">
+            <h3 class="text-base font-extrabold text-purple-500"><i class="fa-solid fa-key text-purple-500 mr-2"></i>Set Gemini API Key (BYOK)</h3>
+            <button on:click={() => showAIKeyModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="neu-panel-inset p-4 text-xs text-purple-500 space-y-2">
+            <strong class="block font-bold">How to get your free Gemini API key:</strong>
+            <ol class="list-decimal list-inside space-y-1 text-[11px]">
+              <li>Go to <a href="https://aistudio.google.com/" target="_blank" class="underline font-bold">Google AI Studio (aistudio.google.com)</a></li>
+              <li>Sign in with your Google Account & click <strong>Get API key</strong></li>
+              <li>Create a key & paste it into the box below</li>
+            </ol>
+          </div>
+          <div>
+            <label class="text-xs font-bold block mb-1">Your Gemini API Key:</label>
+            <input type="password" bind:value={geminiApiKey} placeholder="AIzaSy..." class="w-full neu-field text-xs font-mono text-purple-500">
+          </div>
+          <div class="flex justify-end gap-2 pt-2">
+            <button on:click={() => showAIKeyModal = false} class="neu-btn text-xs text-[var(--text-muted)]">Cancel</button>
+            <button on:click={saveGeminiKey} class="neu-btn text-xs text-purple-500 font-extrabold">Save Key Now</button>
+          </div>
+        </div>
+      </div>
+    {/if}
+
+    <!-- VIDEO PLAYER MODAL -->
+    {#if showVideoModal}
+      <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
+        <div class="neu-card max-w-3xl w-full space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-extrabold truncate text-[var(--text-main)]"><i class="fa-brands fa-youtube text-red-500 mr-2"></i>{activeVideoTitle}</h3>
+            <button on:click={() => showVideoModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <div class="relative aspect-video w-full rounded-2xl overflow-hidden neu-panel-inset p-1">
+            <iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/{activeVideoEmbedId}?autoplay=1" title="YouTube Video Player" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    {/if}
+
   </div>
-
-  <!-- MOBILE BOTTOM TOUCH DOCK BAR -->
-  <nav class="lg:hidden fixed bottom-0 left-0 right-0 border-t border-slate-800 bg-[#090e1a]/95 backdrop-blur-md px-2 py-2.5 flex justify-around text-[11px] font-semibold text-slate-400 z-50">
-    <button on:click={() => activeTab = 'dashboard'} class="flex flex-col items-center gap-1 active-press {activeTab === 'dashboard' ? 'text-blue-400 font-bold' : ''}"><i class="fa-solid fa-calendar-day text-sm"></i>Schedule</button>
-    <button on:click={() => activeTab = 'snippets'} class="flex flex-col items-center gap-1 active-press {activeTab === 'snippets' ? 'text-blue-400 font-bold' : ''}"><i class="fa-solid fa-terminal text-sm"></i>C Code</button>
-    <button on:click={() => activeTab = 'flashcards'} class="flex flex-col items-center gap-1 active-press {activeTab === 'flashcards' ? 'text-blue-400 font-bold' : ''}"><i class="fa-solid fa-layer-group text-sm"></i>Anki</button>
-    <button on:click={() => activeTab = 'ai-mentor'} class="flex flex-col items-center gap-1 active-press {activeTab === 'ai-mentor' ? 'text-purple-400 font-bold' : ''}"><i class="fa-solid fa-robot text-sm"></i>AI Coach</button>
-  </nav>
-
-  <!-- P2P BLUETOOTH SYNC MODAL -->
-  {#if showP2PModal}
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
-      <div class="app-card p-6 max-w-md w-full space-y-4 text-center border-cyan-500/40">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 class="text-base font-bold text-white"><i class="fa-bluetooth text-cyan-400 mr-2"></i>P2P Bluetooth Sync</h3>
-          <button on:click={() => showP2PModal = false} class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <p class="text-xs text-slate-300">Pair phone and laptop offline over Web Bluetooth or QR code.</p>
-        <div class="p-4 bg-[#070a12] rounded-xl border border-slate-800 font-mono text-xl font-extrabold text-amber-400 tracking-widest">
-          {Math.floor(100000 + Math.random() * 900000)}
-        </div>
-        <button on:click={() => showP2PModal = false} class="w-full py-2.5 rounded-xl bg-cyan-600 text-white font-bold text-xs active-press">Close Sync</button>
-      </div>
-    </div>
-  {/if}
-
-  <!-- JSON IMPORT MODAL -->
-  {#if showImportModal}
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
-      <div class="app-card p-6 max-w-md w-full space-y-4 border-emerald-500/40">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 class="text-base font-bold text-white"><i class="fa-solid fa-upload text-emerald-400 mr-2"></i>Load Progress JSON</h3>
-          <button on:click={() => showImportModal = false} class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <input type="file" accept=".json" on:change={handleFileSelect} class="w-full text-xs text-slate-300 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:bg-emerald-600 file:text-white file:font-bold cursor-pointer">
-        <div class="grid grid-cols-2 gap-2 text-xs text-slate-300">
-          <label class="flex items-center gap-1.5"><input type="radio" bind:group={importStrategy} value="overwrite"> Overwrite</label>
-          <label class="flex items-center gap-1.5"><input type="radio" bind:group={importStrategy} value="merge"> Merge</label>
-        </div>
-        <button on:click={executeImport} disabled={!pendingImportData} class="w-full py-2.5 rounded-xl bg-emerald-600 text-white font-bold text-xs disabled:opacity-50 active-press">Load Backup Now</button>
-      </div>
-    </div>
-  {/if}
-
-  <!-- GEMINI API KEY MODAL -->
-  {#if showAIKeyModal}
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
-      <div class="app-card p-6 max-w-lg w-full space-y-4 border-purple-500/40">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
-          <h3 class="text-base font-bold text-white"><i class="fa-solid fa-key text-purple-400 mr-2"></i>Set Gemini API Key (BYOK)</h3>
-          <button on:click={() => showAIKeyModal = false} class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-
-        <div class="p-3 bg-purple-950/40 border border-purple-500/30 rounded-xl text-xs text-purple-200 space-y-2">
-          <strong class="block font-bold">How to get your free Gemini API key:</strong>
-          <ol class="list-decimal list-inside space-y-1 text-[11px] text-purple-300">
-            <li>Go to <a href="https://aistudio.google.com/" target="_blank" class="underline font-bold text-white">Google AI Studio (aistudio.google.com)</a></li>
-            <li>Sign in with your Google Account & click <strong>Get API key</strong></li>
-            <li>Create a key & paste it into the box below</li>
-          </ol>
-        </div>
-
-        <div>
-          <label class="text-xs font-bold text-slate-300 block mb-1">Your Gemini API Key:</label>
-          <input type="password" bind:value={geminiApiKey} placeholder="AIzaSy..." class="w-full bg-[#070a12] border border-slate-800 rounded-xl p-3 text-xs font-mono text-purple-300 focus:outline-none">
-        </div>
-
-        <div class="flex justify-end gap-2 pt-2">
-          <button on:click={() => showAIKeyModal = false} class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold">Cancel</button>
-          <button on:click={saveGeminiKey} class="px-5 py-2 rounded-xl bg-purple-600 text-white text-xs font-bold shadow-lg shadow-purple-600/30 active-press">Save Key Now</button>
-        </div>
-      </div>
-    </div>
-  {/if}
-
-  <!-- VIDEO PLAYER MODAL -->
-  {#if showVideoModal}
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4">
-      <div class="app-card p-5 max-w-3xl w-full space-y-4">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-          <h3 class="text-sm font-bold text-white truncate"><i class="fa-brands fa-youtube text-red-500 mr-2"></i>{activeVideoTitle}</h3>
-          <button on:click={() => showVideoModal = false} class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="relative aspect-video w-full rounded-2xl overflow-hidden bg-[#070a12] border border-slate-800">
-          <iframe class="w-full h-full" src="https://www.youtube.com/embed/{activeVideoEmbedId}?autoplay=1" title="YouTube Video Player" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-  {/if}
-
 </div>
