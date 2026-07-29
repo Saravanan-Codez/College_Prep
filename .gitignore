@@ -1,0 +1,26 @@
+# Node / Bun dependencies
+node_modules/
+bun.lockb
+package-lock.json
+~/
+
+# Build outputs
+dist/
+build/
+.svelte-kit/
+
+# Tauri Rust build outputs
+src-tauri/target/
+src-tauri/gen/
+src-tauri/Cargo.lock
+
+# Environment & local secrets
+.env
+.env.local
+*.log
+
+# IDE & OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp

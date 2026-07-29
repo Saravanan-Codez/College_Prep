@@ -1,0 +1,11 @@
+# Bun Configuration File
+[install]
+# Cache directory
+cache = "~/.bun/install/cache"
+
+# Save exact version numbers in package.json
+exact = false
+
+[run]
+# Enable Bun's ultra-fast transpiler
+bun = true

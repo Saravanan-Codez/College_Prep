@@ -1,0 +1,21 @@
+{
+  "name": "CS College Prep 20-Day Mastery OS",
+  "short_name": "CS Prep OS",
+  "description": "Cross-platform offline-first 20-day preparation OS for Computer Science & Engineering students.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080c14",
+  "theme_color": "#080c14",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/2991/2991148.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
