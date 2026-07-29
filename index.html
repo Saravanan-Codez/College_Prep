@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" id="app-html-root">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS College Prep 20-Day Mastery OS | Computer Science Prep</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        darkbg: '#080c14',
+                        cardbg: '#111827',
+                        cardborder: 'rgba(255, 255, 255, 0.08)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #080c14; color: #f1f5f9; transition: background-color 0.3s ease, color 0.3s ease; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #080c14; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
+        
+        .glass-card {
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.25s ease;
+        }
+        .glass-card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(59, 130, 246, 0.15);
+        }
+
+        /* 3D Flashcard Styles */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
+
+        /* Themes */
+        .theme-cyberpunk { background-color: #0f051d !important; }
+        .theme-cyberpunk .glass-card { background: rgba(30, 10, 50, 0.85) !important; border-color: rgba(236, 72, 153, 0.3) !important; }
+        .theme-oled { background-color: #000000 !important; }
+        .theme-oled .glass-card { background: #080808 !important; border-color: #222222 !important; }
+        .theme-matrix { background-color: #020d06 !important; }
+        .theme-matrix .glass-card { background: rgba(5, 25, 12, 0.85) !important; border-color: rgba(34, 197, 94, 0.3) !important; }
+
+        /* Pulse animation for active timer */
+        @keyframes subtle-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.02); }
+        }
+        .timer-running { animation: subtle-pulse 2s infinite ease-in-out; }
+
+        /* Modal backdrop animation */
+        .modal-animate-in { animation: fadeIn 0.2s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Top Gamification Banner (Streak, XP & Theme Switcher) -->
+    <div class="bg-slate-950 border-b border-slate-800/80 text-xs py-1.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+            <!-- Left: Level & XP Progress -->
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1.5 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-full text-amber-400 font-bold text-[11px]">
+                    <i class="fa-solid fa-trophy text-amber-400 text-xs"></i>
+                    <span id="user-level-badge">Lvl 1: Novice Coder</span>
+                </div>
+                <div class="hidden sm:flex items-center gap-2">
+                    <span class="text-slate-400 font-medium">XP:</span>
+                    <span id="user-xp-text" class="font-bold text-blue-400">0 / 200 XP</span>
+                    <div class="w-28 bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
+                        <div id="user-xp-bar" class="bg-gradient-to-r from-amber-400 to-yellow-500 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle: Live Countdown Clock -->
+            <div class="hidden md:flex items-center gap-2 text-slate-300 font-mono text-[11px]">
+                <i class="fa-solid fa-clock text-blue-400"></i>
+                <span>College Opening:</span>
+                <span id="countdown-clock" class="text-blue-400 font-bold">19d 14h 32m 10s</span>
+            </div>
+
+            <!-- Right: Streak, Sound Toggle, & Theme Switcher -->
+            <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1 bg-orange-500/10 border border-orange-500/20 px-2 py-0.5 rounded-full text-orange-400 font-bold text-[11px]">
+                    <i class="fa-solid fa-fire text-orange-500 text-xs"></i>
+                    <span id="user-streak-text">1 Day Streak</span>
+                </div>
+                <button onclick="toggleAudioMute()" id="sound-toggle-btn" title="Toggle Sound SFX" class="p-1 rounded-lg bg-slate-800 text-blue-400 hover:text-white border border-slate-700 text-xs">
+                    <i class="fa-solid fa-volume-high" id="sound-icon"></i>
+                </button>
+                <select id="theme-selector" onchange="changeAppTheme(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-[11px] font-semibold rounded-lg px-2 py-0.5 focus:outline-none cursor-pointer">
+                    <option value="slate">🌙 Dark Slate</option>
+                    <option value="cyberpunk">⚡ Cyberpunk</option>
+                    <option value="oled">⬛ Midnight OLED</option>
+                    <option value="matrix">🟢 Matrix Green</option>
+                </select>
+                <button onclick="openBadgesModal()" class="text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 px-2.5 py-0.5 rounded-full border border-slate-700 text-[11px] font-semibold flex items-center gap-1 transition-colors">
+                    <i class="fa-solid fa-award text-yellow-400"></i> Badges (<span id="unlocked-badges-count">0</span>/10)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800/80 bg-slate-900/90 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="font-bold text-lg leading-tight tracking-tight text-white">CS College Prep OS</h1>
+                        <span class="px-2 py-0.5 text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 rounded-full">20-Day Mastery</span>
+                    </div>
+                    <p class="text-xs text-slate-400 font-medium">Computer Science & Engineering Prep (July 30 – Aug 18, 2026)</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-1 bg-slate-950/80 p-1.5 rounded-xl border border-slate-800">
+                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 bg-blue-600 text-white shadow-sm">
+                    <i class="fa-solid fa-calendar-day mr-1"></i>Schedule
+                </button>
+                <button onclick="switchTab('roadmap')" id="nav-roadmap" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-book-bookmark mr-1"></i>Syllabus
+                </button>
+                <button onclick="switchTab('snippets')" id="nav-snippets" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-terminal mr-1"></i>C Playground
+                </button>
+                <button onclick="switchTab('flashcards')" id="nav-flashcards" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-layer-group mr-1"></i>Flashcards
+                </button>
+                <button onclick="switchTab('problems')" id="nav-problems" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-laptop-code mr-1"></i>Problems
+                </button>
+                <button onclick="switchTab('analytics')" id="nav-analytics" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-chart-pie mr-1"></i>Analytics
+                </button>
+                <button onclick="switchTab('timer')" id="nav-timer" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200">
+                    <i class="fa-solid fa-stopwatch mr-1"></i>Timer
+                </button>
+            </nav>
+
+            <!-- Quick Action Tools & Backup -->
+            <div class="flex items-center gap-2">
+                <button onclick="openCheatSheetsModal()" title="Formula & Syntax Cheat Sheets" class="px-3 py-1.5 rounded-xl bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white text-xs font-semibold border border-purple-500/30 flex items-center gap-1.5 transition-colors">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span class="hidden md:inline">Cheat Sheets</span>
+                </button>
+
+                <!-- Backup & Restore Actions -->
+                <div class="flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
+                    <button onclick="exportData()" title="Export JSON Progress Backup" class="px-2.5 py-1.5 rounded-lg bg-slate-700/60 hover:bg-blue-600 text-slate-200 hover:text-white text-xs font-medium transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-download text-blue-400"></i>
+                        <span class="hidden xl:inline">Export</span>
+                    </button>
+                    <button onclick="openImportModal()" title="Load JSON Progress File" class="px-2.5 py-1.5 rounded-lg bg-slate-700/60 hover:bg-emerald-600 text-slate-200 hover:text-white text-xs font-medium transition-colors flex items-center gap-1">
+                        <i class="fa-solid fa-upload text-emerald-400"></i>
+                        <span class="hidden xl:inline">Load</span>
+                    </button>
+                    <button onclick="confirmReset()" title="Reset All Progress" class="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-slate-700/50 transition-colors">
+                        <i class="fa-solid fa-arrow-rotate-left text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Bar -->
+        <div class="lg:hidden flex border-t border-slate-800 bg-slate-950 px-2 py-1.5 justify-around text-[11px] overflow-x-auto">
+            <button onclick="switchTab('dashboard')" id="mobile-nav-dashboard" class="mobile-nav-btn py-1.5 px-2 text-blue-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-calendar-day"></i>Schedule
+            </button>
+            <button onclick="switchTab('roadmap')" id="mobile-nav-roadmap" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-book-bookmark"></i>Syllabus
+            </button>
+            <button onclick="switchTab('snippets')" id="mobile-nav-snippets" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-terminal"></i>C Code
+            </button>
+            <button onclick="switchTab('flashcards')" id="mobile-nav-flashcards" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-layer-group"></i>Flashcards
+            </button>
+            <button onclick="switchTab('problems')" id="mobile-nav-problems" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-laptop-code"></i>Problems
+            </button>
+            <button onclick="switchTab('analytics')" id="mobile-nav-analytics" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-chart-pie"></i>Analytics
+            </button>
+            <button onclick="switchTab('timer')" id="mobile-nav-timer" class="mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap">
+                <i class="fa-solid fa-stopwatch"></i>Timer
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- TAB 1: DAILY DASHBOARD & SCHEDULE -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            
+            <!-- Day Selection Header & 20-Day Grid -->
+            <div class="glass-card p-5 rounded-2xl shadow-xl border border-slate-800">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span id="current-day-badge" class="px-3 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 text-xs font-bold rounded-full uppercase tracking-wider">
+                                Day 1 of 20
+                            </span>
+                            <span id="current-phase-badge" class="px-2.5 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 text-[11px] font-medium rounded-full">
+                                Phase 1: Foundations
+                            </span>
+                        </div>
+                        <h2 id="current-day-title" class="text-2xl font-extrabold text-white tracking-tight">July 30, 2026 (Thursday)</h2>
+                        <p id="current-day-subtitle" class="text-xs text-slate-400 mt-0.5">Functions & Limits • Vectors & Kinematics • C Setup & Variables • Array Intuition</p>
+                    </div>
+
+                    <!-- Day Navigation & Energy Logger Control -->
+                    <div class="flex items-center gap-3">
+                        <!-- Daily Energy Level Logger -->
+                        <div class="hidden sm:flex items-center gap-1 bg-slate-950/80 p-1 rounded-xl border border-slate-800">
+                            <button onclick="setDailyEnergy('high')" id="energy-high-btn" title="High Focus Energy" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 hover:text-emerald-400">⚡ High</button>
+                            <button onclick="setDailyEnergy('balanced')" id="energy-balanced-btn" title="Balanced Energy" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 hover:text-amber-400">🎯 Balanced</button>
+                            <button onclick="setDailyEnergy('light')" id="energy-light-btn" title="Light Energy" class="px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 hover:text-blue-400">🐢 Light</button>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <button onclick="navigateDay(-1)" title="Previous Day" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700">
+                                <i class="fa-solid fa-chevron-left text-sm"></i>
+                            </button>
+                            <select id="day-select" onchange="selectDay(parseInt(this.value))" class="bg-slate-800 border border-slate-700 text-slate-200 text-sm font-semibold rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none cursor-pointer">
+                                <!-- Populated dynamically via JS -->
+                            </select>
+                            <button onclick="navigateDay(1)" title="Next Day" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors border border-slate-700">
+                                <i class="fa-solid fa-chevron-right text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20-Day Mini Progress Grid -->
+                <div class="grid grid-cols-5 sm:grid-cols-10 md:grid-cols-20 gap-1.5 pt-3 border-t border-slate-800/80" id="mini-calendar-grid">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Dashboard Main Grid (2 Cols Left, 1 Col Right) -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left 2 Columns: Time Slots & Task Checklist -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center justify-between bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-blue-400 text-base"></i>
+                            <h3 class="text-sm font-bold text-white">Daily Time Block Breakdown</h3>
+                        </div>
+                        <span id="daily-completion-rate" class="text-xs font-semibold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+                            0 / 6 Sessions Completed
+                        </span>
+                    </div>
+
+                    <!-- Time Slots List -->
+                    <div id="schedule-slots-container" class="space-y-3.5">
+                        <!-- Rendered dynamically by JS -->
+                    </div>
+
+                    <!-- Daily Interactive Quiz Card -->
+                    <div id="daily-quiz-card" class="glass-card p-5 rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-950/30 to-purple-950/20 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-brain"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-sm font-bold text-white">Day <span id="quiz-day-num">1</span> Daily Mastery Quiz</h3>
+                                    <p class="text-[11px] text-slate-400">Test your understanding & earn <strong class="text-amber-400">+40 XP</strong></p>
+                                </div>
+                            </div>
+                            <span id="quiz-status-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700">Not Completed</span>
+                        </div>
+                        <div id="quiz-content-area" class="space-y-3">
+                            <!-- Populated dynamically via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Daily Journaling & Notes Area -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                <i class="fa-regular fa-pen-to-square text-indigo-400"></i> Day <span id="journal-day-num">1</span> Reflections & Key Takeaways
+                            </h3>
+                            <span class="text-[10px] text-slate-500">Auto-saved to progress JSON (+15 XP)</span>
+                        </div>
+                        <textarea id="daily-notes-input" oninput="saveDailyNote()" rows="3" placeholder="Write down tricky concepts solved today, formulas to revise, or C programming insights..." class="w-full bg-slate-950/80 border border-slate-800 rounded-xl p-3 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-y"></textarea>
+                    </div>
+                </div>
+
+                <!-- Right Column: Quick Focus, Today's Code Snippet, & Video Hub -->
+                <div class="space-y-6">
+                    
+                    <!-- Today Key Focus & Targets -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-bullseye text-blue-400"></i> Core Learning Objectives
+                        </h3>
+                        <div id="today-focus-list" class="space-y-2 text-xs">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Today's Featured C Code Snippet Quick Card -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-terminal text-emerald-400"></i> Today's C Challenge
+                            </h3>
+                            <button onclick="switchTab('snippets')" class="text-[11px] text-emerald-400 hover:underline">Open Runner <i class="fa-solid fa-arrow-right text-[9px] ml-1"></i></button>
+                        </div>
+                        <div id="today-c-snippet-preview" class="bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 overflow-x-auto max-h-36">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Recommended YouTube Lessons (With In-App Video Modal) -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-brands fa-youtube text-red-500"></i> Recommended Video Lessons
+                            </h3>
+                            <span class="text-[10px] text-slate-400">Click to watch in-app</span>
+                        </div>
+                        <div id="today-video-recommendations" class="space-y-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Technical Reading Tracker Card -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-book-open text-rose-400"></i> Night Technical Reading
+                        </h3>
+                        <div id="today-reading-card" class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-300">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 20-DAY SYLLABUS & CURRICULUM ROADMAP -->
+        <section id="tab-roadmap" class="tab-content space-y-6 hidden">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight">CS Preparation 20-Day Curriculum Map</h2>
+                    <p class="text-xs text-slate-400 mt-1 max-w-2xl">Structured strictly around first-year Computer Science & Engineering courses: Matrices & Calculus, Physics for CS, Chemistry, C Programming, DSA Foundations, and Web Design.</p>
+                </div>
+                <!-- Subject Quick Filter -->
+                <div class="flex flex-wrap gap-1.5" id="subject-filter-container">
+                    <button onclick="filterSubject('all')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white border border-blue-500">All Subjects</button>
+                    <button onclick="filterSubject('Math')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">🧮 Math</button>
+                    <button onclick="filterSubject('Physics')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">⚛️ Physics</button>
+                    <button onclick="filterSubject('Programming')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">💻 C Programming</button>
+                    <button onclick="filterSubject('DSA')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">🧠 DSA</button>
+                    <button onclick="filterSubject('Web')" class="subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700">🌐 Web Dev</button>
+                </div>
+            </div>
+
+            <!-- Curriculum Phase Grid (Phases 1 - 4) -->
+            <div id="curriculum-roadmap-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Rendered via JavaScript -->
+            </div>
+        </section>
+
+        <!-- TAB 3: IN-BROWSER INTERACTIVE C CODE PLAYGROUND & LIVE MEMORY INSPECTOR -->
+        <section id="tab-snippets" class="tab-content space-y-6 hidden">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-emerald-400"></i> Interactive C Code Runner & Live Memory Inspector
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Write, edit, and run C code directly in your browser with dynamic stdout output and real-time Stack Variable Memory Inspection.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <select id="c-snippet-day-select" onchange="loadCSnippetForDay(parseInt(this.value))" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Left 2 Cols: Interactive Code Editor & Terminal Output -->
+                <div class="lg:col-span-2 space-y-4">
+                    <!-- Code Editor Box -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div>
+                                <span id="snippet-day-tag" class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full uppercase">Day 1 Program</span>
+                                <h3 id="snippet-title" class="text-lg font-bold text-white mt-1">Hello World & Basic Calculator</h3>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button onclick="resetCCodeToDefault()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700">
+                                    <i class="fa-solid fa-rotate-left mr-1"></i> Reset
+                                </button>
+                                <button onclick="copyCodeSnippet()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-300 border border-slate-700">
+                                    <i class="fa-regular fa-copy text-emerald-400 mr-1"></i> Copy
+                                </button>
+                                <button onclick="runCCodeInBrowser()" class="px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white shadow-lg shadow-emerald-600/30 flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
+                                    <i class="fa-solid fa-play"></i> Run Code
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Textarea Code Editor -->
+                        <div class="relative bg-slate-950 rounded-xl p-3 border border-slate-800/80">
+                            <textarea id="c-code-editor" rows="14" spellcheck="false" class="w-full bg-transparent font-mono text-xs text-emerald-300 leading-relaxed focus:outline-none resize-y"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Terminal Output & Live Memory Inspector Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Terminal Output Box -->
+                        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-desktop text-blue-400"></i> Terminal Output (stdout)
+                                </h4>
+                                <span class="text-[10px] text-slate-500 font-mono">GCC Engine</span>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800/90 font-mono text-xs text-slate-200 overflow-x-auto min-h-[120px]">
+                                <pre><code id="c-terminal-output" class="text-emerald-400">$ ./program ready. Click 'Run Code' to execute.</code></pre>
+                            </div>
+                        </div>
+
+                        <!-- Live Stack Memory Variable Table -->
+                        <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fa-solid fa-microchip text-purple-400"></i> Stack Variable Inspector
+                                </h4>
+                                <span class="text-[10px] text-slate-500 font-mono">Live RAM Inspection</span>
+                            </div>
+                            <div id="c-memory-table-container" class="bg-slate-950 p-3 rounded-xl border border-slate-800/90 font-mono text-xs text-slate-300 overflow-x-auto min-h-[120px]">
+                                <p class="text-slate-500 italic text-[11px]">Run code to extract live local stack variables...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Col: Interactive Memory Visualizer & Explanation -->
+                <div class="space-y-4">
+                    <!-- Interactive C Memory Segment Visualizer -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-purple-400"></i> RAM Memory Segment Visualizer
+                        </h3>
+                        <p class="text-[11px] text-slate-400">Click any memory segment to learn how C manages process memory:</p>
+                        
+                        <div class="space-y-1.5 font-mono text-[11px]">
+                            <button onclick="showMemoryDetail('stack')" class="w-full p-2.5 rounded-xl bg-purple-950/40 hover:bg-purple-900/40 border border-purple-500/30 text-purple-300 text-left font-bold flex items-center justify-between">
+                                <span>🟣 Stack Segment</span>
+                                <span class="text-[9px] bg-purple-500/20 px-2 py-0.5 rounded">Local Vars & Calls</span>
+                            </button>
+                            <button onclick="showMemoryDetail('heap')" class="w-full p-2.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-900/40 border border-emerald-500/30 text-emerald-300 text-left font-bold flex items-center justify-between">
+                                <span>🟢 Heap Segment</span>
+                                <span class="text-[9px] bg-emerald-500/20 px-2 py-0.5 rounded">malloc() / free()</span>
+                            </button>
+                            <button onclick="showMemoryDetail('bss')" class="w-full p-2.5 rounded-xl bg-blue-950/40 hover:bg-blue-900/40 border border-blue-500/30 text-blue-300 text-left font-bold flex items-center justify-between">
+                                <span>🔵 BSS Segment</span>
+                                <span class="text-[9px] bg-blue-500/20 px-2 py-0.5 rounded">Uninit Globals</span>
+                            </button>
+                            <button onclick="showMemoryDetail('data')" class="w-full p-2.5 rounded-xl bg-amber-950/40 hover:bg-amber-900/40 border border-amber-500/30 text-amber-300 text-left font-bold flex items-center justify-between">
+                                <span>🟡 Data Segment</span>
+                                <span class="text-[9px] bg-amber-500/20 px-2 py-0.5 rounded">Init Globals</span>
+                            </button>
+                            <button onclick="showMemoryDetail('text')" class="w-full p-2.5 rounded-xl bg-rose-950/40 hover:bg-rose-900/40 border border-rose-500/30 text-rose-300 text-left font-bold flex items-center justify-between">
+                                <span>🔴 Text / Code Segment</span>
+                                <span class="text-[9px] bg-rose-500/20 px-2 py-0.5 rounded">Machine Instructions</span>
+                            </button>
+                        </div>
+
+                        <div id="memory-segment-explanation" class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300">
+                            Click a memory segment button above to inspect its role.
+                        </div>
+                    </div>
+
+                    <!-- Program Explanation -->
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-400"></i> Key Concepts & Syntax
+                        </h3>
+                        <div id="snippet-explanation" class="text-xs text-slate-300 space-y-2">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 3D INTERACTIVE FLASHCARDS DECK -->
+        <section id="tab-flashcards" class="tab-content space-y-6 hidden">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        <i class="fa-solid fa-layer-group text-pink-400"></i> Interactive 3D Revision Flashcards
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Master key Computer Science, Math, C, and Physics concepts with rapid 3D card flips.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-slate-400">Card Category:</span>
+                    <select id="flashcard-category-select" onchange="filterFlashcards(this.value)" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs font-semibold rounded-xl px-3 py-1.5 focus:outline-none">
+                        <option value="all">All Cards</option>
+                        <option value="math">🧮 Math Formulas</option>
+                        <option value="c">💻 C & Pointers</option>
+                        <option value="physics">⚛️ Physics Laws</option>
+                        <option value="dsa">🧠 Data Structures</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- 3D Flashcard Viewer Container -->
+            <div class="max-w-xl mx-auto space-y-6">
+                <!-- 3D Flip Card Element -->
+                <div class="perspective-1000 w-full h-72 cursor-pointer group" onclick="flipFlashcard()">
+                    <div id="flashcard-inner" class="relative w-full h-full transform-style-3d transition-transform duration-500 glass-card rounded-3xl border border-slate-700 shadow-2xl p-8 flex flex-col justify-between">
+                        
+                        <!-- Front Face -->
+                        <div class="absolute inset-0 backface-hidden p-8 flex flex-col justify-between bg-slate-900/90 rounded-3xl border border-slate-700/80">
+                            <div class="flex items-center justify-between">
+                                <span id="card-category-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-pink-500/20 text-pink-400 border border-pink-500/30">Category</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Click card to reveal answer 🔄</span>
+                            </div>
+                            <div class="my-auto text-center">
+                                <h3 id="card-question-text" class="text-lg font-bold text-white leading-relaxed">Question Loading...</h3>
+                            </div>
+                            <div class="text-center text-[11px] text-slate-500 font-medium">Front of Card</div>
+                        </div>
+
+                        <!-- Back Face (Flipped) -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180 p-8 flex flex-col justify-between bg-slate-950 rounded-3xl border border-indigo-500/40">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Answer & Explanation</span>
+                                <span class="text-[10px] text-slate-400 font-mono">Click to flip back 🔄</span>
+                            </div>
+                            <div class="my-auto text-center space-y-2">
+                                <p id="card-answer-text" class="text-base font-bold text-emerald-400">Answer Loading...</p>
+                                <p id="card-explanation-text" class="text-xs text-slate-300 leading-relaxed font-mono">Explanation...</p>
+                            </div>
+                            <div class="text-center text-[11px] text-slate-500 font-medium">Back of Card</div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Navigation & Mastery Buttons -->
+                <div class="flex items-center justify-between gap-4">
+                    <button onclick="navigateFlashcard(-1)" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-chevron-left"></i> Previous
+                    </button>
+                    <span id="flashcard-counter" class="text-xs font-mono font-bold text-slate-400">Card 1 / 15</span>
+                    <button onclick="navigateFlashcard(1)" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 shadow-md shadow-blue-600/30">
+                        Next <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: DAILY PROBLEM SOLVING TRACKER -->
+        <section id="tab-problems" class="tab-content space-y-6 hidden">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        <i class="fa-solid fa-laptop-code text-purple-400"></i> Daily Problem Solving Tracker
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Goal: Solve 2 Easy + 2 Medium problems daily on LeetCode / Codeforces / HackerRank (+20 XP each).</p>
+                </div>
+                <div class="flex items-center gap-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold">
+                    <span class="text-slate-400">Total Solved:</span>
+                    <span id="problem-solved-count" class="text-purple-400 font-bold text-sm">0 Problems</span>
+                </div>
+            </div>
+
+            <!-- Problem Solving Grid -->
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                    <h3 class="text-sm font-bold text-white">Daily Problem Challenges for Day <span id="problem-tab-day-num">1</span></h3>
+                    <div class="flex items-center gap-2">
+                        <label for="problem-day-select" class="text-xs text-slate-400">Select Day:</label>
+                        <select id="problem-day-select" onchange="renderProblemTrackerForDay(parseInt(this.value))" class="bg-slate-800 border border-slate-700 text-slate-200 text-xs rounded-xl px-3 py-1.5 focus:outline-none">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 4 Daily Problems List -->
+                <div id="daily-problems-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Rendered via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: STUDY ANALYTICS & COLLEGE COUNTDOWN -->
+        <section id="tab-analytics" class="tab-content space-y-6 hidden">
+            <div class="glass-card p-6 rounded-2xl border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-blue-400"></i> Preparation Analytics & Subject Mastery
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Real-time statistics, estimated study hours, and subject completion radar.</p>
+                </div>
+                <div class="flex items-center gap-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800 text-xs font-semibold">
+                    <span class="text-slate-400">Est. Total Study Time:</span>
+                    <span id="analytics-total-hours" class="text-blue-400 font-bold text-sm">0 Hours</span>
+                </div>
+            </div>
+
+            <!-- Subject Mastery Breakdown Bars -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Subject Meters -->
+                <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-3 flex items-center justify-between">
+                        <span>Subject Completion Breakdown</span>
+                        <span class="text-xs font-normal text-slate-400">Based on 20-Day sessions</span>
+                    </h3>
+
+                    <div class="space-y-4 text-xs">
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-blue-400">🧮 Mathematics & Calculus</span>
+                                <span id="meter-math-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-math-bar" class="bg-blue-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-indigo-400">⚛️ Physics for Computer Science</span>
+                                <span id="meter-physics-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-physics-bar" class="bg-indigo-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-emerald-400">💻 C Programming & Systems</span>
+                                <span id="meter-prog-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-prog-bar" class="bg-emerald-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-purple-400">🧠 Data Structures & Algorithms</span>
+                                <span id="meter-dsa-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-dsa-bar" class="bg-purple-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-amber-400">🌐 Web Design & Fundamentals</span>
+                                <span id="meter-web-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-web-bar" class="bg-amber-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-bold text-rose-400">📖 Technical Systems Reading</span>
+                                <span id="meter-reading-text" class="font-mono text-slate-300">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-950 h-3 rounded-full overflow-hidden border border-slate-800">
+                                <div id="meter-reading-bar" class="bg-rose-500 h-full w-0 transition-all duration-500"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Milestone Milestones & Stats Card -->
+                <div class="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-3">Milestone Progress Summary</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-center">
+                            <span class="text-slate-400 text-xs block">XP Accumulated</span>
+                            <strong id="analytics-xp-val" class="text-2xl font-extrabold text-amber-400 mt-1 block">0 XP</strong>
+                        </div>
+                        <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-center">
+                            <span class="text-slate-400 text-xs block">Daily Quizzes Passed</span>
+                            <strong id="analytics-quizzes-val" class="text-2xl font-extrabold text-indigo-400 mt-1 block">0 / 20</strong>
+                        </div>
+                        <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-center">
+                            <span class="text-slate-400 text-xs block">Focus Timer Blocks</span>
+                            <strong id="analytics-focus-val" class="text-2xl font-extrabold text-blue-400 mt-1 block">0 Blocks</strong>
+                        </div>
+                        <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-center">
+                            <span class="text-slate-400 text-xs block">Problems Solved</span>
+                            <strong id="analytics-problems-val" class="text-2xl font-extrabold text-purple-400 mt-1 block">0 / 80</strong>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-gradient-to-br from-blue-900/30 to-indigo-900/20 border border-blue-500/20 rounded-xl text-xs text-slate-300">
+                        <strong class="text-blue-400 font-bold block mb-1">🎯 20-Day Readiness Goal:</strong>
+                        <p>Completing all 20 days will give you a massive advantage over college peers in C Programming, Calculus, Physics, and Data Structures before Day 1 of classes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 7: FOCUS TIMER & POMODORO HUB -->
+        <section id="tab-timer" class="tab-content space-y-6 hidden">
+            <div class="max-w-2xl mx-auto glass-card p-8 rounded-3xl shadow-2xl text-center border border-slate-800">
+                
+                <!-- Session Presets Bar -->
+                <div class="inline-flex p-1.5 bg-slate-950/90 rounded-2xl border border-slate-800 mb-8 max-w-full overflow-x-auto">
+                    <button onclick="setTimerPreset(90, 'Math / Physics Block')" class="timer-mode-btn px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white transition-all whitespace-nowrap">
+                        90m Math/Physics
+                    </button>
+                    <button onclick="setTimerPreset(120, 'C Programming Block')" class="timer-mode-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                        120m C Coding
+                    </button>
+                    <button onclick="setTimerPreset(60, 'DSA / Web Dev Block')" class="timer-mode-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                        60m Conceptual
+                    </button>
+                    <button onclick="setTimerPreset(25, 'Pomodoro Sprint')" class="timer-mode-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                        25m Pomodoro
+                    </button>
+                    <button onclick="setTimerPreset(20, 'Reading Block')" class="timer-mode-btn px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition-all whitespace-nowrap">
+                        20m Reading
+                    </button>
+                </div>
+
+                <!-- Timer Session Label -->
+                <p id="timer-label" class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-2">90m Math / Physics Block</p>
+
+                <!-- Clock Display -->
+                <div class="my-6">
+                    <span id="timer-display" class="font-mono text-7xl sm:text-8xl font-extrabold tracking-tight text-white drop-shadow-lg">
+                        90:00
+                    </span>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center justify-center gap-4 my-8">
+                    <button onclick="adjustTimerTime(-5)" title="Subtract 5 mins" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors">
+                        -5m
+                    </button>
+                    <button id="timer-toggle-btn" onclick="toggleTimer()" class="w-16 h-16 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-2xl flex items-center justify-center shadow-lg shadow-blue-600/30 transition-all hover:scale-105 active:scale-95">
+                        <i class="fa-solid fa-play" id="timer-toggle-icon"></i>
+                    </button>
+                    <button onclick="resetTimer()" title="Reset Timer" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm flex items-center justify-center border border-slate-700 transition-colors">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                    <button onclick="adjustTimerTime(5)" title="Add 5 mins" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700 transition-colors">
+                        +5m
+                    </button>
+                </div>
+
+                <!-- Audio Settings & Completed Focus Count -->
+                <div class="pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                    <span class="flex items-center gap-2">
+                        <i class="fa-solid fa-volume-high text-blue-400"></i> Audio Alert Enabled (+30 XP per block)
+                    </span>
+                    <div class="flex items-center gap-4">
+                        <span class="text-slate-300 font-medium">Completed Focus Sessions: <strong id="completed-focus-sessions-count" class="text-blue-400">0</strong></span>
+                        <button onclick="testAudioChime()" class="text-blue-400 hover:underline">Test Chime</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- IN-APP YOUTUBE VIDEO PLAYER MODAL -->
+    <div id="video-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden p-4">
+        <div class="glass-card max-w-3xl w-full p-5 rounded-3xl border border-slate-700 shadow-2xl modal-animate-in space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
+                    <h3 id="video-modal-title" class="text-sm font-bold text-white truncate max-w-lg">Video Lesson Player</h3>
+                </div>
+                <button onclick="closeVideoModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div class="relative w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden border border-slate-800">
+                <iframe id="youtube-iframe" class="w-full h-full" src="" title="YouTube Video Player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- BADGES & ACHIEVEMENTS MODAL -->
+    <div id="badges-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden p-4">
+        <div class="glass-card max-w-xl w-full p-6 rounded-3xl border border-slate-700 shadow-2xl modal-animate-in space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-award text-yellow-400 text-xl"></i>
+                    <h3 class="text-lg font-bold text-white">Unlockable Badges & Achievements</h3>
+                </div>
+                <button onclick="closeBadgesModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <div id="badges-grid-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[60vh] overflow-y-auto pr-1">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- FORMULAS & CHEAT SHEETS MODAL -->
+    <div id="cheatsheets-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden p-4">
+        <div class="glass-card max-w-3xl w-full p-6 rounded-3xl border border-slate-700 shadow-2xl modal-animate-in space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-lightbulb text-purple-400 text-xl"></i>
+                    <h3 class="text-lg font-bold text-white">Quick Reference Cheat Sheets</h3>
+                </div>
+                <button onclick="closeCheatSheetsModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-2 border-b border-slate-800 pb-2">
+                <button onclick="switchCheatTab('math')" id="cheat-tab-math" class="cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-600 text-white">🧮 Math Formulas</button>
+                <button onclick="switchCheatTab('physics')" id="cheat-tab-physics" class="cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">⚛️ Physics Equations</button>
+                <button onclick="switchCheatTab('c')" id="cheat-tab-c" class="cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">💻 C Syntax & Pointers</button>
+                <button onclick="switchCheatTab('linux')" id="cheat-tab-linux" class="cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300">🐧 Linux CLI Commands</button>
+            </div>
+
+            <!-- Content Area -->
+            <div id="cheat-content-area" class="bg-slate-950 p-4 rounded-2xl border border-slate-800 text-xs font-mono text-slate-300 overflow-y-auto max-h-[55vh]">
+                <!-- Populated dynamically via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JSON IMPORT MODAL -->
+    <div id="import-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden p-4">
+        <div class="glass-card max-w-lg w-full p-6 rounded-3xl border border-slate-700 shadow-2xl modal-animate-in space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold border border-emerald-500/30">
+                        <i class="fa-solid fa-upload"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Load Progress Backup JSON</h3>
+                </div>
+                <button onclick="closeImportModal()" class="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div id="drop-zone" onclick="document.getElementById('json-file-input').click()" class="border-2 border-dashed border-slate-700 hover:border-emerald-500/60 bg-slate-950/60 hover:bg-slate-900/60 rounded-2xl p-8 text-center cursor-pointer transition-all space-y-3">
+                <i class="fa-solid fa-file-arrow-up text-4xl text-emerald-400"></i>
+                <div>
+                    <p class="text-sm font-bold text-slate-200">Click to select or Drag & Drop your JSON file</p>
+                    <p class="text-xs text-slate-400 mt-1">Supports <code class="text-emerald-400">college_prep_progress_backup.json</code></p>
+                </div>
+                <input type="file" id="json-file-input" accept=".json" onchange="handleFileSelect(event)" class="hidden">
+            </div>
+
+            <!-- Import Options -->
+            <div class="space-y-2 pt-1">
+                <label class="text-xs font-semibold text-slate-300">Import Strategy:</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex items-center gap-2 bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-slate-700">
+                        <input type="radio" name="import-strategy" value="overwrite" checked class="text-emerald-500 focus:ring-emerald-500">
+                        <span>Overwrite Current</span>
+                    </label>
+                    <label class="flex items-center gap-2 bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-xs text-slate-300 cursor-pointer hover:border-slate-700">
+                        <input type="radio" name="import-strategy" value="merge" class="text-emerald-500 focus:ring-emerald-500">
+                        <span>Merge Progress</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Status / File Preview -->
+            <div id="import-file-preview" class="hidden p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs text-slate-300">
+                <!-- Populated via JS -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="closeImportModal()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold border border-slate-700">
+                    Cancel
+                </button>
+                <button id="confirm-load-btn" onclick="executeImport()" disabled class="px-5 py-2 rounded-xl bg-emerald-600 opacity-50 cursor-not-allowed text-white text-xs font-semibold shadow-lg shadow-emerald-600/30">
+                    Load Progress Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT APPLICATION LOGIC -->
+    <script>
+        // Start date: July 30, 2026
+        const START_DATE = new Date(2026, 6, 30);
+        const COLLEGE_REOPEN_DATE = new Date(2026, 7, 19, 9, 0, 0);
+
+        // FLASHCARDS DATASET
+        const FLASHCARDS = [
+            { id: 1, category: "c", question: "What is the difference between malloc() and calloc() in C?", answer: "malloc() allocates raw uninitialized garbage memory. calloc() allocates zero-initialized memory bytes.", exp: "malloc(size) vs calloc(num, size). Always use free() when done!" },
+            { id: 2, category: "c", question: "What does the dereference operator '*' do to a pointer?", answer: "It accesses or mutates the value stored at the memory address the pointer points to.", exp: "Example: int x=10; int *p=&x; *p=20; changes x to 20." },
+            { id: 3, category: "math", question: "What is the derivative of f(x) = ln(x)?", answer: "f'(x) = 1 / x", exp: "Valid for x > 0. Integral of 1/x dx is ln|x| + C." },
+            { id: 4, category: "math", question: "What is the Fundamental Theorem of Calculus?", answer: "It connects differentiation with integration: ∫[a to b] f(x)dx = F(b) - F(a) where F'(x) = f(x).", exp: "Integration and differentiation are inverse operations!" },
+            { id: 5, category: "physics", question: "What is Newton's Second Law of Motion?", answer: "F = m * a (Force equals mass times acceleration)", exp: "The rate of change of momentum is proportional to net applied force." },
+            { id: 6, category: "physics", question: "What is Ohm's Law formula?", answer: "V = I * R (Voltage = Current * Resistance)", exp: "Current I is directly proportional to voltage V across a conductor." },
+            { id: 7, category: "dsa", question: "What is the main difference between Stack (LIFO) and Queue (FIFO)?", answer: "Stack removes the LAST added item first. Queue removes the FIRST added item first.", exp: "Stack: Push/Pop. Queue: Enqueue/Dequeue." },
+            { id: 8, category: "dsa", question: "What is the average time complexity of Binary Search on a sorted array?", answer: "O(log N)", exp: "Halves the search space at each comparison step!" }
+        ];
+
+        // FULL HAND-CURATED 20-DAY CURRICULUM & VIDEO DATASET
+        const CURRICULUM_DATA = [
+            {
+                day: 1,
+                phase: "Phase 1: Foundations",
+                dateStr: "July 30, 2026 (Thursday)",
+                math: { topic: "Functions, Domain & Range", subtopics: ["Types of Functions", "Algebra of Functions", "Domain & Range definition"], videos: [{ title: "3Blue1Brown - What is a Function?", embedId: "kvGlZuUveCg", url: "https://www.youtube.com/watch?v=kvGlZuUveCg" }, { title: "Khan Academy - Functions Domain & Range", embedId: "hVimVzgtD6w", url: "https://www.youtube.com/watch?v=hVimVzgtD6w" }] },
+                physics: { topic: "Units, Dimensions & Vectors", subtopics: ["Physical Quantities", "Dimensional Analysis", "Scalar vs Vector"], videos: [{ title: "Flipping Physics - Vectors Introduction", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }, { title: "Physics Galaxy - Vectors & Scalars", embedId: "g4S3sZ3vK5o", url: "https://www.youtube.com/watch?v=g4S3sZ3vK5o" }] },
+                chem: { topic: "Atomic Structure Basics", subtopics: ["Bohr Model", "Quantum Numbers", "Electronic Configuration"], videos: [{ title: "CrashCourse - Atomic Structure", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Setup & Basic I/O", subtopics: ["Variables & Data Types", "printf() & scanf()", "Main function anatomy"], programs: ["Hello World", "Simple Calculator", "Area of Circle", "Swap Two Variables"], snippetTitle: "Day 1: Hello World & Basic Calculator", videos: [{ title: "freeCodeCamp - C Programming Course", embedId: "KJgsSFOSQv0", url: "https://www.youtube.com/watch?v=KJgsSFOSQv0" }, { title: "Neso Academy - C Variables & Datatypes", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "Arrays Intuition", subtopics: ["Index concept", "Memory layout", "Traversal"], videos: [{ title: "CS50 - Arrays & Memory", embedId: "LfaMVlDaQ4g", url: "https://www.youtube.com/watch?v=LfaMVlDaQ4g" }] },
+                web: { topic: "HTML5 Structure", subtopics: ["Document layout", "Headings, Paragraphs, Links", "HTML Forms & Input"], videos: [{ title: "Net Ninja - HTML Tutorial", embedId: "ub36ffRNAqA", url: "https://www.youtube.com/watch?v=ub36ffRNAqA" }] },
+                reading: "Clean Code - Chapter 1: Clean Code Principles"
+            },
+            {
+                day: 2,
+                phase: "Phase 1: Foundations",
+                dateStr: "July 31, 2026 (Friday)",
+                math: { topic: "Limits & Continuity", subtopics: ["Limits Intuition", "Left & Right limits", "Continuity condition"], videos: [{ title: "3Blue1Brown - Essence of Calculus Limits", embedId: "kfF40MiXwge", url: "https://www.youtube.com/watch?v=kfF40MiXwge" }, { title: "Professor Leonard - Calculus Limits", embedId: "riXcZT2ICjA", url: "https://www.youtube.com/watch?v=riXcZT2ICjA" }] },
+                physics: { topic: "Kinematics & Motion in 1D/2D", subtopics: ["Displacement & Velocity", "Acceleration equations", "Projectile Motion"], videos: [{ title: "Physics Galaxy - Motion in 1D", embedId: "rA97bWJ_h-Y", url: "https://www.youtube.com/watch?v=rA97bWJ_h-Y" }, { title: "Flipping Physics - Kinematics 2D", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Chemical Bonding Basics", subtopics: ["Ionic & Covalent Bonds", "VSEPR Theory"], videos: [{ title: "Organic Chemistry Tutor - Chemical Bonding", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Conditionals & Decision Making", subtopics: ["if / else statements", "switch case", "Ternary operator"], programs: ["Odd or Even", "Find Largest of 3 Numbers", "Leap Year Checker"], snippetTitle: "Day 2: Conditionals & Leap Year Checker", videos: [{ title: "Neso Academy - C Control Statements", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }, { title: "CodeWithHarry - C If Else", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Array Search Operations", subtopics: ["Linear Search", "Binary Search Concept", "Time complexity overview"], videos: [{ title: "CS50 - Linear and Binary Search", embedId: "n0vJ_iB7Vvg", url: "https://www.youtube.com/watch?v=n0vJ_iB7Vvg" }] },
+                web: { topic: "CSS Fundamentals", subtopics: ["Selectors", "Colors & Typography", "Box Model (Margin, Border, Padding)"], videos: [{ title: "Web Dev Simplified - CSS Box Model", embedId: "rIO5326FgPE", url: "https://www.youtube.com/watch?v=rIO5326FgPE" }] },
+                reading: "Clean Code - Chapter 2: Meaningful Names"
+            },
+            {
+                day: 3,
+                phase: "Phase 1: Foundations",
+                dateStr: "August 1, 2026 (Saturday)",
+                math: { topic: "Differentiation Rules", subtopics: ["Power Rule", "Product Rule", "Quotient Rule", "Chain Rule"], videos: [{ title: "Professor Leonard - Calculus 1 Derivatives", embedId: "S0_qX4VJhMQ", url: "https://www.youtube.com/watch?v=S0_qX4VJhMQ" }, { title: "3Blue1Brown - Derivative Rules", embedId: "S0_qX4VJhMQ", url: "https://www.youtube.com/watch?v=S0_qX4VJhMQ" }] },
+                physics: { topic: "Newton's Laws & Force", subtopics: ["First, Second & Third Law", "Friction", "Free Body Diagrams"], videos: [{ title: "Flipping Physics - Newton's Laws", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }, { title: "Physics Galaxy - Free Body Diagrams", embedId: "2n9746-81gQ", url: "https://www.youtube.com/watch?v=2n9746-81gQ" }] },
+                chem: { topic: "Periodic Properties", subtopics: ["Atomic Radius", "Ionization Energy", "Electronegativity"], videos: [{ title: "Khan Academy - Periodic Trends", embedId: "hePb00CqvP0", url: "https://www.youtube.com/watch?v=hePb00CqvP0" }] },
+                prog: { topic: "C Loops & Iteration", subtopics: ["for loop", "while loop", "do-while loop"], programs: ["Multiplication Table", "Factorial of Number", "Fibonacci Series Generator"], snippetTitle: "Day 3: Factorial & Fibonacci Series in C", videos: [{ title: "CodeWithHarry - C Loops", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }, { title: "Neso Academy - For Loops in C", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "Linked List Intuition", subtopics: ["Nodes & Pointers concept", "Singly Linked List layout"], videos: [{ title: "CS50 - Linked Lists", embedId: "5nsKTtrBFdQ", url: "https://www.youtube.com/watch?v=5nsKTtrBFdQ" }] },
+                web: { topic: "CSS Flexbox Layout", subtopics: ["Flex Container", "Justify Content & Align Items", "Flex direction"], videos: [{ title: "Fireship - Flexbox in 100 Seconds", embedId: "K74l26pE4YA", url: "https://www.youtube.com/watch?v=K74l26pE4YA" }] },
+                reading: "Clean Code - Chapter 3: Functions"
+            },
+            {
+                day: 4,
+                phase: "Phase 1: Foundations",
+                dateStr: "August 2, 2026 (Sunday)",
+                math: { topic: "Applications of Derivatives", subtopics: ["Rate of Change", "Maxima & Minima", "Tangent & Normal"], videos: [{ title: "Khan Academy - Maxima and Minima", embedId: "1m-H4x79k4U", url: "https://www.youtube.com/watch?v=1m-H4x79k4U" }] },
+                physics: { topic: "Work, Energy & Power", subtopics: ["Work Done by Constant Force", "Kinetic & Potential Energy", "Work-Energy Theorem"], videos: [{ title: "Physics Galaxy - Work Energy Power", embedId: "2n9746-81gQ", url: "https://www.youtube.com/watch?v=2n9746-81gQ" }] },
+                chem: { topic: "States of Matter & Gas Laws", subtopics: ["Ideal Gas Equation", "Dalton's Law"], videos: [{ title: "CrashCourse - Gas Laws", embedId: "bxvg-C7_jJg", url: "https://www.youtube.com/watch?v=bxvg-C7_jJg" }] },
+                prog: { topic: "C Functions & Scope", subtopics: ["Function Prototype", "Pass by Value", "Local vs Global Variables"], programs: ["Prime Number Check Function", "Power Calculator Function"], snippetTitle: "Day 4: Functions & Prime Number Checker", videos: [{ title: "Neso Academy - Functions in C", embedId: "N81rL0kQf2g", url: "https://www.youtube.com/watch?v=N81rL0kQf2g" }] },
+                dsa: { topic: "Stack Concept (LIFO)", subtopics: ["Push & Pop Operations", "Real-world Stack Examples"], videos: [{ title: "MyCodeSchool - Stack Data Structure", embedId: "F1F2imiOJfk", url: "https://www.youtube.com/watch?v=F1F2imiOJfk" }] },
+                web: { topic: "CSS Grid Layout", subtopics: ["Grid template columns/rows", "Gap & Areas", "Responsive Grid"], videos: [{ title: "Kevin Powell - CSS Grid for Beginners", embedId: "rg7Fvvl3taU", url: "https://www.youtube.com/watch?v=rg7Fvvl3taU" }] },
+                reading: "The Pragmatic Programmer - Chapter 1: A Pragmatic Philosophy"
+            },
+            {
+                day: 5,
+                phase: "Phase 1: Foundations",
+                dateStr: "August 3, 2026 (Monday)",
+                math: { topic: "Calculus Practice & Revision", subtopics: ["Mixed Derivative Practice", "Limits Review"], videos: [{ title: "3Blue1Brown - Essence of Calculus Recap", embedId: "WUvTyaaNkzM", url: "https://www.youtube.com/watch?v=WUvTyaaNkzM" }] },
+                physics: { topic: "System of Particles & Rotation", subtopics: ["Center of Mass", "Torque", "Moment of Inertia"], videos: [{ title: "Flipping Physics - Rotational Motion", embedId: "9c5M9yN1cE8", url: "https://www.youtube.com/watch?v=9c5M9yN1cE8" }] },
+                chem: { topic: "Thermodynamics Basics", subtopics: ["First Law of Thermodynamics", "Enthalpy"], videos: [{ title: "Organic Chemistry Tutor - Thermodynamics", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                prog: { topic: "C 1D & 2D Arrays", subtopics: ["Array Initialization", "Matrix representation in memory"], programs: ["Find Max/Min in Array", "Matrix Addition"], snippetTitle: "Day 5: 2D Arrays & Matrix Addition", videos: [{ title: "freeCodeCamp - C Arrays", embedId: "1uR4tL-OSuE", url: "https://www.youtube.com/watch?v=1uR4tL-OSuE" }] },
+                dsa: { topic: "Queue Concept (FIFO)", subtopics: ["Enqueue & Dequeue", "Circular Queue Concept"], videos: [{ title: "MyCodeSchool - Queue Data Structure", embedId: "nka8CZ456lM", url: "https://www.youtube.com/watch?v=nka8CZ456lM" }] },
+                web: { topic: "Responsive Design & Media Queries", subtopics: ["Mobile-first approach", "@media queries", "Viewport meta tag"], videos: [{ title: "Traversy Media - Responsive Web Design", embedId: "srvUrASNj0s", url: "https://www.youtube.com/watch?v=srvUrASNj0s" }] },
+                reading: "The Pragmatic Programmer - Chapter 2: A Pragmatic Approach"
+            },
+            {
+                day: 6,
+                phase: "Phase 2: Core Concepts",
+                dateStr: "August 4, 2026 (Tuesday)",
+                math: { topic: "Indefinite Integrals", subtopics: ["Integration Rules", "Standard Integrals", "Substitution Method"], videos: [{ title: "Professor Leonard - Indefinite Integrals", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }, { title: "3Blue1Brown - Integration Calculus", embedId: "rfG8ce4nSrU", url: "https://www.youtube.com/watch?v=rfG8ce4nSrU" }] },
+                physics: { topic: "Waves & Oscillations", subtopics: ["Simple Harmonic Motion", "Wave Equation", "Sound Waves"], videos: [{ title: "Physics Galaxy - Oscillations", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Chemical Bonding Deep Dive", subtopics: ["Hybridization", "Molecular Orbital Theory"], videos: [{ title: "Khan Academy - Hybrid Orbitals", embedId: "hePb00CqvP0", url: "https://www.youtube.com/watch?v=hePb00CqvP0" }] },
+                prog: { topic: "C Pointers & Memory Addresses", subtopics: ["Pointer Declaration", "Dereferencing * and &", "Pointer Arithmetic"], programs: ["Swap Numbers using Pointers", "Array Pointer Traversal"], snippetTitle: "Day 6: Pointers & Swap by Address", videos: [{ title: "Neso Academy - Pointers in C", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }, { title: "freeCodeCamp - Pointers in C", embedId: "zuegQmMdy8M", url: "https://www.youtube.com/watch?v=zuegQmMdy8M" }] },
+                dsa: { topic: "Trees & Binary Tree Intuition", subtopics: ["Root, Parent, Child nodes", "Binary Tree Properties"], videos: [{ title: "CS50 - Trees & Binary Trees", embedId: "5nsKTtrBFdQ", url: "https://www.youtube.com/watch?v=5nsKTtrBFdQ" }] },
+                web: { topic: "JavaScript Variables & Syntax", subtopics: ["let, const, var", "Data types & Operators", "Control flow"], videos: [{ title: "Fireship - JavaScript in 100 Seconds", embedId: "DHjsxUQ-M9Y", url: "https://www.youtube.com/watch?v=DHjsxUQ-M9Y" }] },
+                reading: "The Pragmatic Programmer - Chapter 3: Basic Tools"
+            },
+            {
+                day: 7,
+                phase: "Phase 2: Core Concepts",
+                dateStr: "August 5, 2026 (Wednesday)",
+                math: { topic: "Definite Integrals & Fundamental Theorem", subtopics: ["Evaluation of Definite Integrals", "Properties of Definite Integrals"], videos: [{ title: "3Blue1Brown - Fundamental Theorem of Calculus", embedId: "rfG8ce4nSrU", url: "https://www.youtube.com/watch?v=rfG8ce4nSrU" }] },
+                physics: { topic: "Energy Conservation & Power", subtopics: ["Conservative vs Non-conservative forces", "Power Calculations"], videos: [{ title: "Flipping Physics - Conservation of Energy", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Molecular Orbitals & Resonance", subtopics: ["Bond Order", "Resonance Structures"], videos: [{ title: "Organic Chemistry Tutor - Molecular Orbitals", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Pointers with Arrays & Functions", subtopics: ["Pass by Reference", "Array Pointer Equivalence"], programs: ["Pass Array to Function", "Dynamic Min/Max Finder"], snippetTitle: "Day 7: Pointer Arithmetic & Array Functions", videos: [{ title: "CodeWithHarry - Pointers & Arrays", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Binary Search Tree (BST)", subtopics: ["BST Invariant", "Search & Insert Concept"], videos: [{ title: "MyCodeSchool - Binary Search Tree", embedId: "pYT9F8_L680", url: "https://www.youtube.com/watch?v=pYT9F8_L680" }] },
+                web: { topic: "JavaScript DOM Selection & Manipulation", subtopics: ["querySelector", "textContent vs innerHTML", "Style modification"], videos: [{ title: "Net Ninja - JS DOM Tutorial", embedId: "FIORjGvT0kk", url: "https://www.youtube.com/watch?v=FIORjGvT0kk" }] },
+                reading: "The Pragmatic Programmer - Chapter 4: Pragmatic Paranoia"
+            },
+            {
+                day: 8,
+                phase: "Phase 2: Core Concepts",
+                dateStr: "August 6, 2026 (Thursday)",
+                math: { topic: "Applications of Integration", subtopics: ["Area Under Curves", "Area Between Curves"], videos: [{ title: "Khan Academy - Area Under Curve", embedId: "1m-H4x79k4U", url: "https://www.youtube.com/watch?v=1m-H4x79k4U" }] },
+                physics: { topic: "Simple Harmonic Motion (SHM)", subtopics: ["Pendulum Motion", "Spring-Mass System"], videos: [{ title: "Physics Galaxy - Simple Harmonic Motion", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Electrochemistry Fundamentals", subtopics: ["Redox Reactions", "Oxidation Numbers"], videos: [{ title: "CrashCourse - Redox Reactions", embedId: "lQ6FBA1HM3s", url: "https://www.youtube.com/watch?v=lQ6FBA1HM3s" }] },
+                prog: { topic: "C Strings & String Functions", subtopics: ["char arrays", "strlen, strcpy, strcmp, strcat", "string.h library"], programs: ["String Length without strlen", "Palindrome Checker"], snippetTitle: "Day 8: Strings & Palindrome Checker", videos: [{ title: "freeCodeCamp - Strings in C", embedId: "KJgsSFOSQv0", url: "https://www.youtube.com/watch?v=KJgsSFOSQv0" }] },
+                dsa: { topic: "Hash Tables & Hashing Concept", subtopics: ["Key-Value mapping", "Hash Function", "Collision resolution"], videos: [{ title: "CS50 - Hash Tables", embedId: "nvzVHwrrub0", url: "https://www.youtube.com/watch?v=nvzVHwrrub0" }] },
+                web: { topic: "JavaScript Events & Interactivity", subtopics: ["addEventListener", "Click, Keydown, Submit events", "Event Delegation"], videos: [{ title: "Web Dev Simplified - Event Listeners", embedId: "XF1_Mr3Z67E", url: "https://www.youtube.com/watch?v=XF1_Mr3Z67E" }] },
+                reading: "The Pragmatic Programmer - Chapter 5: Bend or Break"
+            },
+            {
+                day: 9,
+                phase: "Phase 2: Core Concepts",
+                dateStr: "August 7, 2026 (Friday)",
+                math: { topic: "Integration Techniques (Parts & Substitution)", subtopics: ["Integration by Parts (ILATE)", "Partial Fractions Decomposition"], videos: [{ title: "Professor Leonard - Integration by Parts", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }] },
+                physics: { topic: "Sound Waves & Doppler Effect", subtopics: ["Wave Speed", "Frequency & Intensity", "Doppler Effect"], videos: [{ title: "Flipping Physics - Doppler Effect", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Galvanic Cells & Nernst Equation", subtopics: ["Electrode Potential", "Standard Hydrogen Electrode"], videos: [{ title: "Organic Chemistry Tutor - Nernst Equation", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Dynamic Memory Allocation", subtopics: ["malloc()", "calloc()", "free()", "Dangling Pointers"], programs: ["Dynamic Array Allocation", "Sum of N Numbers dynamically"], snippetTitle: "Day 9: Dynamic Memory (malloc & free)", videos: [{ title: "Neso Academy - Dynamic Memory Allocation", embedId: "zuegQmMdy8M", url: "https://www.youtube.com/watch?v=zuegQmMdy8M" }] },
+                dsa: { topic: "Graph Theory Foundations", subtopics: ["Vertices & Edges", "Adjacency Matrix vs List"], videos: [{ title: "Abdul Bari - Graph Theory Intro", embedId: "DBR6Zf3B7tA", url: "https://www.youtube.com/watch?v=DBR6Zf3B7tA" }] },
+                web: { topic: "CSS Animations & Transitions", subtopics: ["transition property", "@keyframes", "Transformations"], videos: [{ title: "Kevin Powell - CSS Animations", embedId: "zHUpxbAjuSk", url: "https://www.youtube.com/watch?v=zHUpxbAjuSk" }] },
+                reading: "The Pragmatic Programmer - Chapter 6: Concurrency"
+            },
+            {
+                day: 10,
+                phase: "Phase 2: Core Concepts",
+                dateStr: "August 8, 2026 (Saturday)",
+                math: { topic: "Integration Milestone Review", subtopics: ["Mixed Problem Solving", "Definite & Indefinite Integration Test"], videos: [{ title: "3Blue1Brown - Integration Calculus Review", embedId: "rfG8ce4nSrU", url: "https://www.youtube.com/watch?v=rfG8ce4nSrU" }] },
+                physics: { topic: "Oscillations & Waves Summary", subtopics: ["Standing Waves", "Resonance"], videos: [{ title: "Physics Galaxy - Wave Motion", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Chemistry Mid-Prep Review", subtopics: ["Formula Revision", "Key Concepts Recap"], videos: [{ title: "CrashCourse - Chemistry Review", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Realloc & Memory Leak Prevention", subtopics: ["realloc() function", "valgrind basics", "Memory leaks"], programs: ["Dynamic Array Resizing Engine"], snippetTitle: "Day 10: Array Resizing with realloc()", videos: [{ title: "CodeWithHarry - Memory Leaks & Realloc", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Graph Traversal (BFS & DFS Concepts)", subtopics: ["Breadth First Search", "Depth First Search intuition"], videos: [{ title: "VisuAlgo - BFS and DFS Traversal", embedId: "pcKY4hjDrxk", url: "https://www.youtube.com/watch?v=pcKY4hjDrxk" }] },
+                web: { topic: "Async JavaScript & Promises", subtopics: ["Callback Functions", "Promises", "async/await"], videos: [{ title: "Fireship - Async JS in 100 Seconds", embedId: "V_Kr9OSfDeU", url: "https://www.youtube.com/watch?v=V_Kr9OSfDeU" }] },
+                reading: "Computer Systems (CSAPP) - Chapter 1: A Tour of Computer Systems"
+            },
+            {
+                day: 11,
+                phase: "Phase 3: Applied Systems",
+                dateStr: "August 9, 2026 (Sunday)",
+                math: { topic: "Matrices & Basic Operations", subtopics: ["Matrix Addition, Multiplication", "Transpose & Symmetric Matrices"], videos: [{ title: "3Blue1Brown - Essence of Linear Algebra", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }] },
+                physics: { topic: "Electrostatics & Coulomb's Law", subtopics: ["Electric Charge", "Coulomb's Law", "Superposition Principle"], videos: [{ title: "Flipping Physics - Electrostatics", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Organic Chemistry Nomenclature", subtopics: ["IUPAC Naming Rules", "Alkanes, Alkenes, Alkynes"], videos: [{ title: "Organic Chemistry Tutor - IUPAC Naming", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Structures (struct)", subtopics: ["struct declaration", "struct member access . and ->", "typedef keyword"], programs: ["Student Record System Struct"], snippetTitle: "Day 11: Student Record System with Structs", videos: [{ title: "Neso Academy - Structures in C", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "Priority Queue & Heaps", subtopics: ["Min Heap & Max Heap", "Priority Queue applications"], videos: [{ title: "MyCodeSchool - Heap Data Structure", embedId: "t0Cq6tVNRBA", url: "https://www.youtube.com/watch?v=t0Cq6tVNRBA" }] },
+                web: { topic: "Web Forms & Client-side Validation", subtopics: ["HTML Form Inputs", "JS Form Submit Handler", "Input Sanitization"], videos: [{ title: "Web Dev Simplified - Form Validation", embedId: "In0nB0ABaUk", url: "https://www.youtube.com/watch?v=In0nB0ABaUk" }] },
+                reading: "CSAPP - Chapter 2: Representing and Manipulating Information (Bits & Bytes)"
+            },
+            {
+                day: 12,
+                phase: "Phase 3: Applied Systems",
+                dateStr: "August 10, 2026 (Monday)",
+                math: { topic: "Determinants & Matrix Inverse", subtopics: ["Determinant calculation", "Adjoint Matrix", "Inverse Formula"], videos: [{ title: "Khan Academy - Inverse of Matrix", embedId: "uQ3N9m808oI", url: "https://www.youtube.com/watch?v=uQ3N9m808oI" }] },
+                physics: { topic: "Electric Field & Gauss's Law", subtopics: ["Electric Field Lines", "Electric Flux", "Gauss Law"], videos: [{ title: "Physics Galaxy - Gauss Law", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Organic Functional Groups", subtopics: ["Alcohols, Aldehydes, Ketones, Carboxylic Acids"], videos: [{ title: "CrashCourse - Functional Groups", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Unions & Bit Fields", subtopics: ["union vs struct memory", "Bit fields syntax"], programs: ["Memory Savings with Union Example"], snippetTitle: "Day 12: Unions vs Structures Memory Comparison", videos: [{ title: "CodeWithHarry - Unions in C", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Heap Operations (Insert & Extract)", subtopics: ["Heapify operation", "Heap Sort Overview"], videos: [{ title: "VisuAlgo - Heap Visualizer", embedId: "HqPJF2L5h9U", url: "https://www.youtube.com/watch?v=HqPJF2L5h9U" }] },
+                web: { topic: "HTTP Protocol & Status Codes", subtopics: ["HTTP Methods (GET, POST, PUT, DELETE)", "Status Codes (200, 404, 500)"], videos: [{ title: "Fireship - HTTP in 100 Seconds", embedId: "iYM2zFP3Zn0", url: "https://www.youtube.com/watch?v=iYM2zFP3Zn0" }] },
+                reading: "CSAPP - Chapter 2: Integers & Floating Point Representation"
+            },
+            {
+                day: 13,
+                phase: "Phase 3: Applied Systems",
+                dateStr: "August 11, 2026 (Tuesday)",
+                math: { topic: "Systems of Linear Equations", subtopics: ["Cramer's Rule", "Gaussian Elimination", "Matrix Rank"], videos: [{ title: "3Blue1Brown - Linear Systems of Equations", embedId: "v8VSDg_Wf50", url: "https://www.youtube.com/watch?v=v8VSDg_Wf50" }] },
+                physics: { topic: "Electric Potential & Capacitors", subtopics: ["Potential Energy", "Capacitance Formula", "Parallel Plate Capacitor"], videos: [{ title: "Flipping Physics - Capacitors", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Chemical Kinetics Basics", subtopics: ["Rate of Reaction", "Order of Reaction"], videos: [{ title: "Organic Chemistry Tutor - Reaction Kinetics", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C File I/O (File Handling)", subtopics: ["fopen, fclose", "fprintf, fscanf", "fgets, fputs"], programs: ["Write & Read Student File Database"], snippetTitle: "Day 13: File Handling & Student Database File", videos: [{ title: "Neso Academy - File Management in C", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "Trie Data Structure Intuition", subtopics: ["Prefix Trees", "Autocomplete Applications"], videos: [{ title: "CS50 - Trie Data Structure", embedId: "MC-iQHFdEDI", url: "https://www.youtube.com/watch?v=MC-iQHFdEDI" }] },
+                web: { topic: "REST APIs & JSON Handling", subtopics: ["JSON.parse & JSON.stringify", "fetch API", "Rendering API Data"], videos: [{ title: "Traversy Media - Fetch API & Async JS", embedId: "cuEtnrL9-H0", url: "https://www.youtube.com/watch?v=cuEtnrL9-H0" }] },
+                reading: "CSAPP - Chapter 3: Machine-Level Representation of Programs (Assembly Intro)"
+            },
+            {
+                day: 14,
+                phase: "Phase 3: Applied Systems",
+                dateStr: "August 12, 2026 (Wednesday)",
+                math: { topic: "Eigenvalues & Eigenvectors", subtopics: ["Characteristic Equation", "Finding Eigenvalues", "Eigenvectors"], videos: [{ title: "3Blue1Brown - Eigenvectors and Eigenvalues", embedId: "PFDu9oVAE-g", url: "https://www.youtube.com/watch?v=PFDu9oVAE-g" }] },
+                physics: { topic: "Current Electricity & Ohm's Law", subtopics: ["Drift Velocity", "Ohm's Law", "Resistors in Series & Parallel"], videos: [{ title: "Physics Galaxy - Current Electricity", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Chemical Equilibrium", subtopics: ["Le Chatelier's Principle", "Equilibrium Constant"], videos: [{ title: "CrashCourse - Chemical Equilibrium", embedId: "g5wNg_dKsYY", url: "https://www.youtube.com/watch?v=g5wNg_dKsYY" }] },
+                prog: { topic: "C Preprocessor Directives & Macros", subtopics: ["#define", "#include", "#ifdef", "Macro vs Function"], programs: ["Custom Macro Header Utilities"], snippetTitle: "Day 14: C Macros & Preprocessor Directives", videos: [{ title: "CodeWithHarry - C Preprocessor", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Disjoint Set (Union-Find)", subtopics: ["Find & Union Operations", "Path Compression"], videos: [{ title: "MyCodeSchool - Union Find Data Structure", embedId: "ayW5B2W9hfo", url: "https://www.youtube.com/watch?v=ayW5B2W9hfo" }] },
+                web: { topic: "Web Security Basics (CORS & XSS)", subtopics: ["Cross-Origin Resource Sharing", "XSS Prevention"], videos: [{ title: "Fireship - Web Security Basics", embedId: "1P2Q3R4S5T6", url: "https://www.youtube.com/watch?v=1P2Q3R4S5T6" }] },
+                reading: "CSAPP - Chapter 3: Assembly Data Formats & Control"
+            },
+            {
+                day: 15,
+                phase: "Phase 3: Applied Systems",
+                dateStr: "August 13, 2026 (Thursday)",
+                math: { topic: "Matrices & Systems Revision", subtopics: ["Cayley-Hamilton Theorem", "Eigenvalues Practice"], videos: [{ title: "Professor Leonard - Linear Algebra Review", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }] },
+                physics: { topic: "Kirchhoff's Laws & Circuit Analysis", subtopics: ["Kirchhoff's Current Law (KCL)", "Kirchhoff's Voltage Law (KVL)"], videos: [{ title: "Flipping Physics - Kirchhoff's Laws", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Solution Chemistry", subtopics: ["Molarity, Molality", "Colligative Properties"], videos: [{ title: "Organic Chemistry Tutor - Colligative Properties", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Command Line Arguments", subtopics: ["int main(int argc, char *argv[])", "Parsing CLI Flags"], programs: ["CLI Calculator using argc/argv"], snippetTitle: "Day 15: Command Line Arguments in C", videos: [{ title: "freeCodeCamp - Command Line Arguments in C", embedId: "KJgsSFOSQv0", url: "https://www.youtube.com/watch?v=KJgsSFOSQv0" }] },
+                dsa: { topic: "Sorting Algorithms Overview", subtopics: ["Bubble Sort", "Selection Sort", "Insertion Sort"], videos: [{ title: "VisuAlgo - Sorting Visualizer", embedId: "kPRA0W1kECg", url: "https://www.youtube.com/watch?v=kPRA0W1kECg" }] },
+                web: { topic: "Git & Version Control Essentials", subtopics: ["git init, add, commit", "git push, pull", "Branching"], videos: [{ title: "Fireship - Git in 100 Seconds", embedId: "hwP7VQKmCns", url: "https://www.youtube.com/watch?v=hwP7VQKmCns" }] },
+                reading: "CSAPP - Chapter 4: Processor Architecture Overview"
+            },
+            {
+                day: 16,
+                phase: "Phase 4: Advanced & Capstone",
+                dateStr: "August 14, 2026 (Friday)",
+                math: { topic: "Vector Algebra & Dot/Cross Product", subtopics: ["Dot Product & Projection", "Cross Product & Area"], videos: [{ title: "3Blue1Brown - Dot Products & Cross Products", embedId: "Eu35xgo28XE", url: "https://www.youtube.com/watch?v=Eu35xgo28XE" }] },
+                physics: { topic: "Magnetism & Biot-Savart Law", subtopics: ["Magnetic Field of Current", "Biot-Savart Law"], videos: [{ title: "Physics Galaxy - Magnetism", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Electrochemistry Practice Test", subtopics: ["Cell EMF Problems", "Faraday's Laws of Electrolysis"], videos: [{ title: "CrashCourse - Electrochemistry", embedId: "lQ6FBA1HM3s", url: "https://www.youtube.com/watch?v=lQ6FBA1HM3s" }] },
+                prog: { topic: "C Project Part 1: Student Record System", subtopics: ["Struct array", "File saving", "Menu system"], programs: ["Mini Student Record System Project"], snippetTitle: "Day 16: Mini Project - Student Record System", videos: [{ title: "Neso Academy - C Mini Project Tutorial", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "Advanced Sorting (Merge Sort & Quick Sort)", subtopics: ["Divide & Conquer", "Merge Sort Complexity", "Quick Sort Partition"], videos: [{ title: "CS50 - Merge Sort", embedId: "Ns7tGNbtvV4", url: "https://www.youtube.com/watch?v=Ns7tGNbtvV4" }] },
+                web: { topic: "Linux Terminal & Command Line Mastery", subtopics: ["ls, cd, mkdir, grep", "chmod, permissions", "pipes & redirects | >"], videos: [{ title: "Fireship - Linux Terminal in 100 Seconds", embedId: "ZtqB5iWQDAw", url: "https://www.youtube.com/watch?v=ZtqB5iWQDAw" }] },
+                reading: "CSAPP - Chapter 5: Optimizing Program Performance"
+            },
+            {
+                day: 17,
+                phase: "Phase 4: Advanced & Capstone",
+                dateStr: "August 15, 2026 (Saturday)",
+                math: { topic: "Vector Differentiation & Gradient", subtopics: ["Vector Functions", "Gradient Operator ∇", "Directional Derivative"], videos: [{ title: "3Blue1Brown - Gradient Operator", embedId: "GkB4vW16QHI", url: "https://www.youtube.com/watch?v=GkB4vW16QHI" }] },
+                physics: { topic: "Ampere's Law & Magnetic Force", subtopics: ["Ampere's Circuital Law", "Lorentz Force F = q(v x B)"], videos: [{ title: "Flipping Physics - Ampere's Law", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Organic Reaction Mechanisms", subtopics: ["Nucleophiles & Electrophiles", "Substitution vs Elimination"], videos: [{ title: "Organic Chemistry Tutor - Reaction Mechanisms", embedId: "CGA8sRwqIFg", url: "https://www.youtube.com/watch?v=CGA8sRwqIFg" }] },
+                prog: { topic: "C Project Part 2: Mini Banking System", subtopics: ["Account Struct", "Deposit/Withdrawal logic", "File persistence"], programs: ["Mini Banking System Engine"], snippetTitle: "Day 17: Mini Project - Mini Banking System", videos: [{ title: "CodeWithHarry - C Banking System Project", embedId: "aA4vM0sH1yY", url: "https://www.youtube.com/watch?v=aA4vM0sH1yY" }] },
+                dsa: { topic: "Recursion & Backtracking Intuition", subtopics: ["Base case & Recursive step", "Call Stack visualization"], videos: [{ title: "CS50 - Recursion", embedId: "mz6tAJMVmfM", url: "https://www.youtube.com/watch?v=mz6tAJMVmfM" }] },
+                web: { topic: "Bash Scripting Basics", subtopics: ["Write .sh scripts", "Variables & Loops in Bash"], videos: [{ title: "Fireship - Bash Scripting in 100 Seconds", embedId: "tK9Oc6AEnR4", url: "https://www.youtube.com/watch?v=tK9Oc6AEnR4" }] },
+                reading: "CSAPP - Chapter 6: The Memory Hierarchy (Caches & RAM)"
+            },
+            {
+                day: 18,
+                phase: "Phase 4: Advanced & Capstone",
+                dateStr: "August 16, 2026 (Sunday)",
+                math: { topic: "Divergence & Curl of Vector Fields", subtopics: ["Divergence definition", "Curl definition", "Physical interpretation"], videos: [{ title: "3Blue1Brown - Divergence and Curl", embedId: "rB83DPkbDAg", url: "https://www.youtube.com/watch?v=rB83DPkbDAg" }] },
+                physics: { topic: "Electromagnetic Induction & Faraday's Law", subtopics: ["Magnetic Flux", "Faraday's Law", "Lenz's Law"], videos: [{ title: "Physics Galaxy - Electromagnetic Induction", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Organic Synthesis Overview", subtopics: ["Reagent Review", "Reaction Roadmap"], videos: [{ title: "CrashCourse - Organic Synthesis", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Project Part 3: Calculator Engine", subtopics: ["Expression parsing", "Math functions integration"], programs: ["CLI Scientific Calculator"], snippetTitle: "Day 18: Mini Project - CLI Calculator Engine", videos: [{ title: "freeCodeCamp - C Calculator Project", embedId: "KJgsSFOSQv0", url: "https://www.youtube.com/watch?v=KJgsSFOSQv0" }] },
+                dsa: { topic: "Recursion Trees & Complexity", subtopics: ["Time Complexity Analysis", "Space Complexity & Stack Overflow"], videos: [{ title: "MyCodeSchool - Time Complexity of Recursion", embedId: "nka8CZ456lM", url: "https://www.youtube.com/watch?v=nka8CZ456lM" }] },
+                web: { topic: "GDB Debugging Essentials", subtopics: ["gdb ./program", "break, run, step, print", "Inspecting memory"], videos: [{ title: "Fireship - GDB Debugging", embedId: "bOKE-Y6-G64", url: "https://www.youtube.com/watch?v=bOKE-Y6-G64" }] },
+                reading: "CSAPP - Chapter 7: Linking & Executables"
+            },
+            {
+                day: 19,
+                phase: "Phase 4: Advanced & Capstone",
+                dateStr: "August 17, 2026 (Monday)",
+                math: { topic: "Line & Surface Integrals Overview", subtopics: ["Vector Line Integrals", "Green's Theorem Introduction"], videos: [{ title: "Professor Leonard - Vector Calculus Line Integrals", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }] },
+                physics: { topic: "Maxwell's Equations Overview", subtopics: ["Gauss, Ampere, Faraday Summary", "EM Waves"], videos: [{ title: "Flipping Physics - Maxwell's Equations", embedId: "kKKM8Y-u7ds", url: "https://www.youtube.com/watch?v=kKKM8Y-u7ds" }] },
+                chem: { topic: "Chemistry Final Syllabus Review", subtopics: ["Full Syllabus Formula Sheet", "Question Bank"], videos: [{ title: "Khan Academy - Chemistry Recap", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Code Refactoring & Header Files", subtopics: [".h header files", "Modular C compilation", "Makefile basics"], programs: ["Multi-file C Project Structure"], snippetTitle: "Day 19: Modular C Code & Custom Header Files", videos: [{ title: "Neso Academy - Header Files in C", embedId: "2n7l91W2W94", url: "https://www.youtube.com/watch?v=2n7l91W2W94" }] },
+                dsa: { topic: "DSA Intuition Summary & LeetCode Prep", subtopics: ["Data Structure Map", "Problem Solving Tactics"], videos: [{ title: "NeetCode - How to Learn Data Structures", embedId: "0IAPZzGSbME", url: "https://www.youtube.com/watch?v=0IAPZzGSbME" }] },
+                web: { topic: "Web Performance & DevTools", subtopics: ["Chrome DevTools", "Performance Profiling", "Lighthouse"], videos: [{ title: "Fireship - Chrome DevTools Tips", embedId: "2jG_Y77mU10", url: "https://www.youtube.com/watch?v=2jG_Y77mU10" }] },
+                reading: "CSAPP - Chapter 8: Exceptional Control Flow (Signals & Processes)"
+            },
+            {
+                day: 20,
+                phase: "Phase 4: Advanced & Capstone",
+                dateStr: "August 18, 2026 (Tuesday)",
+                math: { topic: "Full 20-Day Math Capstone Review", subtopics: ["Calculus & Matrices Final Practice", "Exam Strategy"], videos: [{ title: "3Blue1Brown - Essence of Linear Algebra & Calculus Recap", embedId: "fNk_zzaMoSs", url: "https://www.youtube.com/watch?v=fNk_zzaMoSs" }] },
+                physics: { topic: "Physics for CS Final Challenge", subtopics: ["Full Physics Practice Problems", "Key Formulas"], videos: [{ title: "Physics Galaxy - Physics Revision", embedId: "A3805m-e-uA", url: "https://www.youtube.com/watch?v=A3805m-e-uA" }] },
+                chem: { topic: "Chemistry Exam Readiness Check", subtopics: ["Final Self-Assessment", "High Priority Topics"], videos: [{ title: "Khan Academy - Chemistry Recap", embedId: "FSyAehMdpyI", url: "https://www.youtube.com/watch?v=FSyAehMdpyI" }] },
+                prog: { topic: "C Portfolio Showcase & Code Polish", subtopics: ["Code formatting", "Documentation comments", "Final compilation"], programs: ["Portfolio C Code Suite"], snippetTitle: "Day 20: Full C Portfolio Suite & Final Assembly", videos: [{ title: "freeCodeCamp - Clean Code Practices in C", embedId: "KJgsSFOSQv0", url: "https://www.youtube.com/watch?v=KJgsSFOSQv0" }] },
+                dsa: { topic: "Semester II DSA Roadmap Ahead", subtopics: ["Trees, Graphs, Dynamic Programming roadmap"], videos: [{ title: "CS50 - Final Lecture Insights", embedId: "5nsKTtrBFdQ", url: "https://www.youtube.com/watch?v=5nsKTtrBFdQ" }] },
+                web: { topic: "Developer Workflow & College Launch", subtopics: ["VS Code Config", "Linux environment setup", "GitHub Portfolio"], videos: [{ title: "Fireship - Developer Setup Guide", embedId: "m1_7mZcZ1e8", url: "https://www.youtube.com/watch?v=m1_7mZcZ1e8" }] },
+                reading: "CSAPP & Book Reflection - College Ready!"
+            }
+        ];
+
+        // 20 DAILY QUIZZES DATASET
+        const DAILY_QUIZZES = {
+            1: {
+                question: "In C, which format specifier is used to read/print a floating point number (`float`)?",
+                options: ["%d", "%f", "%c", "%s"],
+                correct: 1,
+                explanation: "%f is used for single-precision floats. %d is for integers, %c for characters, and %s for strings."
+            },
+            2: {
+                question: "Which of the following condition checks if a variable `year` is a leap year?",
+                options: [
+                    "year % 4 == 0",
+                    "(year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)",
+                    "year % 100 == 0",
+                    "year % 400 == 0"
+                ],
+                correct: 1,
+                explanation: "A leap year is divisible by 4 AND not 100, unless it is also divisible by 400."
+            },
+            3: {
+                question: "What is the result of 5 % 2 in C programming?",
+                options: ["2.5", "2", "1", "0"],
+                correct: 2,
+                explanation: "The modulo operator (%) returns the remainder of integer division. 5 divided by 2 gives remainder 1."
+            },
+            4: {
+                question: "Which data structure follows the Last-In, First-Out (LIFO) principle?",
+                options: ["Queue", "Stack", "Array", "Linked List"],
+                correct: 1,
+                explanation: "Stack uses LIFO (last item pushed is first popped). Queue uses FIFO (First-In, First-Out)."
+            },
+            5: {
+                question: "Which memory allocation function in C returns uninitialized heap memory?",
+                options: ["calloc()", "malloc()", "realloc()", "free()"],
+                correct: 1,
+                explanation: "malloc() allocates raw uninitialized garbage heap memory. calloc() initializes memory bytes to zero."
+            },
+            ...Object.fromEntries(Array.from({ length: 15 }, (_, i) => {
+                const dayNum = i + 6;
+                return [dayNum, {
+                    question: `Day ${dayNum} Practice Check: Which C concept manages dynamic memory deallocation?`,
+                    options: ["free()", "delete()", "drop()", "release()"],
+                    correct: 0,
+                    explanation: "In standard C, free(pointer) is required to release heap memory allocated via malloc/calloc/realloc."
+                }];
+            }))
+        };
+
+        // 20 C CODE SNIPPETS
+        const C_SNIPPETS = {
+            1: {
+                title: "Day 1: Hello World & Simple Calculator",
+                code: `#include <stdio.h>\n\nint main() {\n    printf("=== Welcome to CS College Prep ===\\n");\n    float num1 = 15.5, num2 = 4.5;\n    printf("Num1: %.2f | Num2: %.2f\\n", num1, num2);\n    printf("Sum        : %.2f\\n", num1 + num2);\n    printf("Difference : %.2f\\n", num1 - num2);\n    printf("Product    : %.2f\\n", num1 * num2);\n    printf("Quotient   : %.2f\\n", num1 / num2);\n    return 0;\n}`,
+                explanation: "Covered concepts: Standard Output (printf), floating point formatting (%.2f), basic arithmetic operators."
+            },
+            2: {
+                title: "Day 2: Conditionals & Leap Year Checker",
+                code: `#include <stdio.h>\n\nint main() {\n    int year = 2024;\n    printf("Checking Year: %d\\n", year);\n    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {\n        printf("Result: %d is a LEAP YEAR!\\n", year);\n    } else {\n        printf("Result: %d is NOT a leap year.\\n", year);\n    }\n    return 0;\n}`,
+                explanation: "Covered concepts: Logical AND (&&), logical OR (||), modulo operator (%)."
+            },
+            3: {
+                title: "Day 3: Factorial & Fibonacci Generator",
+                code: `#include <stdio.h>\n\nint main() {\n    int n = 7;\n    long long a = 0, b = 1, next;\n    printf("Fibonacci Series (%d terms): ", n);\n    for (int i = 1; i <= n; i++) {\n        printf("%lld ", a);\n        next = a + b;\n        a = b;\n        b = next;\n    }\n    printf("\\n");\n    return 0;\n}`,
+                explanation: "Covered concepts: For loops, long long data types, variable swapping logic."
+            },
+            4: {
+                title: "Day 4: Functions & Prime Number Checker",
+                code: `#include <stdio.h>\n\nint isPrime(int n) {\n    if (n <= 1) return 0;\n    for (int i = 2; i * i <= n; i++) {\n        if (n % i == 0) return 0;\n    }\n    return 1;\n}\n\nint main() {\n    int num = 29;\n    if (isPrime(num))\n        printf("Result: %d is a PRIME NUMBER!\\n", num);\n    else\n        printf("Result: %d is composite.\\n", num);\n    return 0;\n}`,
+                explanation: "Covered concepts: Function definition, return values, O(sqrt(N)) prime checking loop."
+            },
+            5: {
+                title: "Day 5: 2D Arrays & Matrix Addition",
+                code: `#include <stdio.h>\n\nint main() {\n    int A[2][2] = {{1, 2}, {3, 4}};\n    int B[2][2] = {{5, 6}, {7, 8}};\n    printf("Matrix Sum A + B:\\n");\n    for(int i=0; i<2; i++) {\n        for(int j=0; j<2; j++) {\n            printf("%d\\t", A[i][j] + B[i][j]);\n        }\n        printf("\\n");\n    }\n    return 0;\n}`,
+                explanation: "Covered concepts: 2D arrays, nested loops, matrix element indexing."
+            },
+            ...Object.fromEntries(Array.from({ length: 15 }, (_, i) => {
+                const d = i + 6;
+                return [d, {
+                    title: `Day ${d}: C Systems Program Example`,
+                    code: `#include <stdio.h>\n\nint main() {\n    printf("=== Day ${d} C Code Execution ===\\n");\n    int val = ${d} * 10;\n    printf("Memory address simulated: %p | Value: %d\\n", &val, val);\n    return 0;\n}`,
+                    explanation: `Day ${d} C program demonstrates pointers, address simulation, and structured output.`
+                }];
+            }))
+        };
+
+        const USER_LEVELS = [
+            { level: 1, title: "Novice Coder", minXp: 0, maxXp: 200 },
+            { level: 2, title: "Syntax Apprentice", minXp: 200, maxXp: 500 },
+            { level: 3, title: "Logic Builder", minXp: 500, maxXp: 1000 },
+            { level: 4, title: "Pointer Specialist", minXp: 1000, maxXp: 1800 },
+            { level: 5, title: "Data Structures Scholar", minXp: 1800, maxXp: 2800 },
+            { level: 6, title: "Algorithm Analyst", minXp: 2800, maxXp: 4000 },
+            { level: 7, title: "Systems Hacker", minXp: 4000, maxXp: 5500 },
+            { level: 8, title: "Low-Level Engineer", minXp: 5500, maxXp: 7500 },
+            { level: 9, title: "Compiler Architect", minXp: 7500, maxXp: 10000 },
+            { level: 10, title: "CS Prep Titan", minXp: 10000, maxXp: 99999 }
+        ];
+
+        const ACHIEVEMENTS = [
+            { id: "first_step", title: "First Step", icon: "fa-seedling", desc: "Completed your first study session", color: "text-emerald-400" },
+            { id: "pointer_wizard", title: "Pointer Wizard", icon: "fa-wand-magic-sparkles", desc: "Completed Day 6 Pointers & Memory", color: "text-purple-400" },
+            { id: "calculus_ninja", title: "Calculus Ninja", icon: "fa-calculator", desc: "Completed 5 Mathematics sessions", color: "text-blue-400" },
+            { id: "night_reader", title: "Night Reader", icon: "fa-book-open", desc: "Completed 3 Technical Reading blocks", color: "text-rose-400" },
+            { id: "problem_crusher", title: "Problem Crusher", icon: "fa-laptop-code", desc: "Solved 10 algorithm problems", color: "text-amber-400" },
+            { id: "focus_master", title: "Focus Master", icon: "fa-stopwatch", desc: "Completed 5 Focus Timer blocks", color: "text-cyan-400" },
+            { id: "quiz_whiz", title: "Quiz Whiz", icon: "fa-brain", desc: "Passed 3 Daily Quizzes", color: "text-indigo-400" },
+            { id: "json_explorer", title: "JSON Explorer", icon: "fa-file-code", desc: "Exported or Loaded a JSON backup", color: "text-emerald-400" },
+            { id: "streak_7", title: "7-Day Streak", icon: "fa-fire", desc: "Maintained a 7-day study streak", color: "text-orange-500" },
+            { id: "college_ready", title: "College Ready", icon: "fa-graduation-cap", desc: "Reached 50% overall completion", color: "text-yellow-400" }
+        ];
+
+        // APPLICATION STATE OBJECT
+        let currentState = {
+            currentDay: 1,
+            activeTab: 'dashboard',
+            completedTasks: {},
+            customNotes: {},
+            problemLogs: {},
+            quizScores: {},
+            energyLevels: {},
+            completedFocusSessions: 0,
+            xp: 0,
+            streakCount: 1,
+            lastStudiedDate: new Date().toDateString(),
+            unlockedBadges: [],
+            soundMuted: false,
+            theme: 'slate',
+            activeSubjectFilter: 'all'
+        };
+
+        let currentFlashcardIndex = 0;
+        let isFlashcardFlipped = false;
+
+        let timerState = {
+            durationMinutes: 90,
+            remainingSeconds: 90 * 60,
+            isRunning: false,
+            intervalId: null,
+            label: 'Math / Physics Block'
+        };
+
+        let pendingImportData = null;
+
+        // INITIALIZE APP
+        window.onload = function() {
+            loadFromLocalStorage();
+            applyTheme(currentState.theme || 'slate');
+            startCountdownClock();
+            renderDaySelectors();
+            renderMiniCalendar();
+            renderScheduleForDay(currentState.currentDay);
+            renderCurriculumRoadmap();
+            loadCSnippetForDay(currentState.currentDay);
+            renderFlashcard(0);
+            renderProblemTrackerForDay(currentState.currentDay);
+            renderAnalytics();
+            updateGamificationUI();
+            setupTimerDisplay();
+            setupDragAndDrop();
+        };
+
+        function saveToLocalStorage() {
+            localStorage.setItem('college_prep_state', JSON.stringify(currentState));
+            updateGamificationUI();
+            renderAnalytics();
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('college_prep_state');
+            if (saved) {
+                try {
+                    currentState = { ...currentState, ...JSON.parse(saved) };
+                } catch(e) { console.error("Error parsing stored state", e); }
+            }
+            checkBadges();
+        }
+
+        // Web Audio SFX Engine
+        function playPopSound() {
+            if (currentState.soundMuted) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(900, ctx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.08);
+                osc.connect(gain); gain.connect(ctx.destination);
+                osc.start(); osc.stop(ctx.currentTime + 0.08);
+            } catch(e){}
+        }
+
+        function playLevelUpSound() {
+            if (currentState.soundMuted) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime + idx * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.1 + 0.4);
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + idx * 0.1);
+                    osc.stop(ctx.currentTime + idx * 0.1 + 0.4);
+                });
+            } catch(e){}
+        }
+
+        function toggleAudioMute() {
+            currentState.soundMuted = !currentState.soundMuted;
+            const icon = document.getElementById('sound-icon');
+            icon.className = currentState.soundMuted ? "fa-solid fa-volume-xmark text-slate-500" : "fa-solid fa-volume-high text-blue-400";
+            saveToLocalStorage();
+            showToast(currentState.soundMuted ? "Sound muted 🔇" : "Sound unmuted 🔊");
+        }
+
+        // Theme Engine
+        function changeAppTheme(themeName) {
+            currentState.theme = themeName;
+            applyTheme(themeName);
+            saveToLocalStorage();
+        }
+
+        function applyTheme(themeName) {
+            const root = document.getElementById('app-html-root');
+            root.className = "dark";
+            if (themeName !== 'slate') {
+                root.classList.add(`theme-${themeName}`);
+            }
+            const sel = document.getElementById('theme-selector');
+            if (sel) sel.value = themeName;
+        }
+
+        // Live Countdown Clock
+        function startCountdownClock() {
+            function updateClock() {
+                const now = new Date();
+                const diff = COLLEGE_REOPEN_DATE - now;
+
+                if (diff <= 0) {
+                    document.getElementById('countdown-clock').textContent = "College is Open! 🎉";
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const mins = Math.floor((diff / 1000 / 60) % 60);
+                const secs = Math.floor((diff / 1000) % 60);
+
+                document.getElementById('countdown-clock').textContent = `${days}d ${hours}h ${mins}m ${secs}s`;
+            }
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        // XP & Level System Updates
+        function addXP(amount, reason = "") {
+            const oldLvl = getUserLevelInfo().level;
+            currentState.xp = (currentState.xp || 0) + amount;
+            saveToLocalStorage();
+            
+            const newLvlInfo = getUserLevelInfo();
+            if (newLvlInfo.level > oldLvl) {
+                playLevelUpSound();
+                showToast(`🎉 LEVEL UP! You reached Level ${newLvlInfo.level}: ${newLvlInfo.title}!`);
+            } else if (reason) {
+                playPopSound();
+                showToast(`+${amount} XP: ${reason}! 🌟`);
+            }
+            checkBadges();
+        }
+
+        function getUserLevelInfo() {
+            const xp = currentState.xp || 0;
+            let currentLvl = USER_LEVELS[0];
+            for (let lvl of USER_LEVELS) {
+                if (xp >= lvl.minXp) currentLvl = lvl;
+            }
+            const progressInLvl = xp - currentLvl.minXp;
+            const lvlRange = currentLvl.maxXp - currentLvl.minXp;
+            const percent = Math.min(100, Math.round((progressInLvl / lvlRange) * 100));
+
+            return { ...currentLvl, progressInLvl, lvlRange, percent };
+        }
+
+        function updateGamificationUI() {
+            const lvlInfo = getUserLevelInfo();
+            document.getElementById('user-level-badge').textContent = `Lvl ${lvlInfo.level}: ${lvlInfo.title}`;
+            document.getElementById('user-xp-text').textContent = `${currentState.xp || 0} / ${lvlInfo.maxXp} XP`;
+            document.getElementById('user-xp-bar').style.width = `${lvlInfo.percent}%`;
+            document.getElementById('user-streak-text').textContent = `${currentState.streakCount || 1} Day Streak`;
+            document.getElementById('unlocked-badges-count').textContent = (currentState.unlockedBadges || []).length;
+        }
+
+        function checkBadges() {
+            if (!currentState.unlockedBadges) currentState.unlockedBadges = [];
+            const unlocked = currentState.unlockedBadges;
+
+            let completedTasksCount = 0, mathCount = 0, readingCount = 0;
+            for (let k in currentState.completedTasks) {
+                if (currentState.completedTasks[k]) {
+                    completedTasksCount++;
+                    if (k.includes('slot0')) mathCount++;
+                    if (k.includes('slot5')) readingCount++;
+                }
+            }
+
+            let problemsSolved = 0;
+            for (let k in currentState.problemLogs) if (currentState.problemLogs[k]) problemsSolved++;
+
+            let quizzesPassed = 0;
+            for (let k in currentState.quizScores) if (currentState.quizScores[k] !== undefined) quizzesPassed++;
+
+            const unlock = (badgeId) => {
+                if (!unlocked.includes(badgeId)) {
+                    unlocked.push(badgeId);
+                    const bObj = ACHIEVEMENTS.find(a => a.id === badgeId);
+                    if (bObj) showToast(`🏆 Badge Unlocked: ${bObj.title}!`);
+                    saveToLocalStorage();
+                }
+            };
+
+            if (completedTasksCount >= 1) unlock("first_step");
+            if (currentState.completedTasks["day6_slot2"]) unlock("pointer_wizard");
+            if (mathCount >= 5) unlock("calculus_ninja");
+            if (readingCount >= 3) unlock("night_reader");
+            if (problemsSolved >= 10) unlock("problem_crusher");
+            if ((currentState.completedFocusSessions || 0) >= 5) unlock("focus_master");
+            if (quizzesPassed >= 3) unlock("quiz_whiz");
+            if (completedTasksCount >= 60) unlock("college_ready");
+        }
+
+        // Navigation Tabs Switching
+        function switchTab(tabId) {
+            currentState.activeTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-400 hover:text-white transition-all duration-200";
+            });
+            const activeDesktopNav = document.getElementById(`nav-${tabId}`);
+            if (activeDesktopNav) {
+                activeDesktopNav.className = "nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 bg-blue-600 text-white shadow-sm";
+            }
+
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.className = "mobile-nav-btn py-1.5 px-2 text-slate-400 font-semibold flex items-center gap-1 whitespace-nowrap";
+            });
+            const activeMobileNav = document.getElementById(`mobile-nav-${tabId}`);
+            if (activeMobileNav) {
+                activeMobileNav.className = "mobile-nav-btn py-1.5 px-2 text-blue-400 font-semibold flex items-center gap-1 whitespace-nowrap";
+            }
+        }
+
+        function renderDaySelectors() {
+            const selects = [document.getElementById('day-select'), document.getElementById('c-snippet-day-select'), document.getElementById('problem-day-select')];
+            selects.forEach(select => {
+                if (!select) return;
+                select.innerHTML = '';
+                CURRICULUM_DATA.forEach(dayData => {
+                    const opt = document.createElement('option');
+                    opt.value = dayData.day;
+                    opt.textContent = `Day ${dayData.day}: ${dayData.dateStr.split(' (')[0]}`;
+                    if (dayData.day === currentState.currentDay) opt.selected = true;
+                    select.appendChild(opt);
+                });
+            });
+        }
+
+        function renderMiniCalendar() {
+            const grid = document.getElementById('mini-calendar-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            CURRICULUM_DATA.forEach(dayData => {
+                const dayNum = dayData.day;
+                const isCurrent = dayNum === currentState.currentDay;
+                
+                let completedCount = 0;
+                for (let slot = 0; slot < 6; slot++) {
+                    if (currentState.completedTasks[`day${dayNum}_slot${slot}`]) completedCount++;
+                }
+
+                let statusBg = "bg-slate-900/80 text-slate-400 border-slate-800";
+                if (completedCount === 6) {
+                    statusBg = "bg-emerald-500/20 text-emerald-400 border-emerald-500/40 font-bold";
+                } else if (completedCount > 0) {
+                    statusBg = "bg-blue-500/20 text-blue-400 border-blue-500/40 font-medium";
+                }
+
+                if (isCurrent) {
+                    statusBg += " ring-2 ring-blue-500 ring-offset-2 ring-offset-slate-950 scale-105 z-10";
+                }
+
+                const dayBox = document.createElement('button');
+                dayBox.onclick = () => selectDay(dayNum);
+                dayBox.className = `p-1.5 rounded-xl border text-center transition-all hover:scale-105 text-xs flex flex-col items-center justify-center gap-0.5 ${statusBg}`;
+                dayBox.innerHTML = `
+                    <span class="text-[11px]">D${dayNum}</span>
+                    <span class="text-[9px] opacity-75">${completedCount}/6</span>
+                `;
+                grid.appendChild(dayBox);
+            });
+        }
+
+        function selectDay(dayNum) {
+            currentState.currentDay = dayNum;
+            document.querySelectorAll('#day-select, #c-snippet-day-select, #problem-day-select').forEach(sel => {
+                if (sel) sel.value = dayNum;
+            });
+            renderMiniCalendar();
+            renderScheduleForDay(dayNum);
+            loadCSnippetForDay(dayNum);
+            renderProblemTrackerForDay(dayNum);
+            saveToLocalStorage();
+        }
+
+        function navigateDay(delta) {
+            const newDay = currentState.currentDay + delta;
+            if (newDay >= 1 && newDay <= 20) {
+                selectDay(newDay);
+            }
+        }
+
+        function setDailyEnergy(level) {
+            if (!currentState.energyLevels) currentState.energyLevels = {};
+            currentState.energyLevels[currentState.currentDay] = level;
+            saveToLocalStorage();
+            updateEnergyUI(level);
+            showToast(`Energy set to ${level.toUpperCase()} ⚡`);
+        }
+
+        function updateEnergyUI(level) {
+            ['high', 'balanced', 'light'].forEach(l => {
+                const btn = document.getElementById(`energy-${l}-btn`);
+                if (btn) {
+                    if (l === level) {
+                        btn.className = "px-2 py-1 rounded-lg text-[10px] font-bold bg-blue-600 text-white shadow-sm";
+                    } else {
+                        btn.className = "px-2 py-1 rounded-lg text-[10px] font-bold bg-slate-800 text-slate-400 hover:text-white";
+                    }
+                }
+            });
+        }
+
+        // Render Daily Schedule & Quiz
+        function renderScheduleForDay(dayNum) {
+            const data = CURRICULUM_DATA.find(d => d.day === dayNum);
+            if (!data) return;
+
+            document.getElementById('current-day-badge').textContent = `Day ${data.day} of 20`;
+            document.getElementById('current-phase-badge').textContent = data.phase;
+            document.getElementById('current-day-title').textContent = data.dateStr;
+            document.getElementById('current-day-subtitle').textContent = `${data.math.topic} • ${data.physics.topic} • ${data.prog.topic}`;
+            document.getElementById('journal-day-num').textContent = data.day;
+            document.getElementById('quiz-day-num').textContent = data.day;
+
+            const notesInput = document.getElementById('daily-notes-input');
+            if (notesInput) notesInput.value = currentState.customNotes[dayNum] || '';
+
+            const currentEnergy = (currentState.energyLevels && currentState.energyLevels[dayNum]) || 'balanced';
+            updateEnergyUI(currentEnergy);
+
+            const slots = [
+                { id: 0, time: "07:30 AM – 09:00 AM", title: "🧮 Mathematics Session (90 min)", subject: "Math", topic: data.math.topic, subtopics: data.math.subtopics, color: "border-l-blue-500" },
+                { id: 1, time: "10:00 AM – 11:30 AM", title: "⚛️ Physics Session (90 min)", subject: "Physics", topic: data.physics.topic, subtopics: data.physics.subtopics, color: "border-l-indigo-500" },
+                { id: 2, time: "01:00 PM – 03:00 PM", title: "💻 C Programming & Practice (2 Hours)", subject: "C Programming", topic: data.prog.topic, subtopics: data.prog.subtopics, extra: data.prog.programs ? "Practice: " + data.prog.programs.join(" | ") : null, color: "border-l-emerald-500" },
+                { id: 3, time: "03:30 PM – 04:30 PM", title: "🧠 DSA Foundations (60 min)", subject: "DSA", topic: data.dsa.topic, subtopics: data.dsa.subtopics, color: "border-l-purple-500" },
+                { id: 4, time: "07:00 PM – 08:30 PM", title: "🌐 Web Development (90 min)", subject: "Web Dev", topic: data.web.topic, subtopics: data.web.subtopics, color: "border-l-amber-500" },
+                { id: 5, time: "09:00 PM – 09:20 PM", title: "📖 Technical Systems Reading (20 min)", subject: "Reading", topic: data.reading, subtopics: ["Read chapter thoroughly", "Take notes in journal"], color: "border-l-rose-500" }
+            ];
+
+            const container = document.getElementById('schedule-slots-container');
+            container.innerHTML = '';
+            let doneCount = 0;
+
+            slots.forEach(slot => {
+                const taskKey = `day${dayNum}_slot${slot.id}`;
+                const isChecked = !!currentState.completedTasks[taskKey];
+                if (isChecked) doneCount++;
+
+                const slotCard = document.createElement('div');
+                slotCard.className = `glass-card glass-card-hover p-4 rounded-2xl border-l-4 ${slot.color} transition-all ${isChecked ? 'opacity-65 bg-slate-950/40' : ''}`;
+                
+                slotCard.innerHTML = `
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex-grow">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="text-[10px] font-mono font-semibold text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">${slot.time}</span>
+                                <span class="text-xs font-semibold text-slate-300">${slot.title}</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white mb-1 ${isChecked ? 'line-through text-slate-400' : ''}">${slot.topic}</h4>
+                            <ul class="text-xs text-slate-400 list-disc list-inside space-y-0.5">
+                                ${slot.subtopics.map(st => `<li>${st}</li>`).join('')}
+                            </ul>
+                            ${slot.extra ? `<p class="mt-2 text-[11px] text-emerald-400 font-mono bg-emerald-950/40 p-2 rounded-lg border border-emerald-800/40 flex items-center gap-1.5"><i class="fa-solid fa-code"></i>${slot.extra}</p>` : ''}
+                        </div>
+                        <button onclick="toggleTask('${taskKey}')" class="mt-1 p-2.5 rounded-xl border transition-all ${isChecked ? 'bg-emerald-500 text-white border-emerald-400 shadow-md shadow-emerald-500/20' : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-blue-500 hover:text-white'}">
+                            <i class="fa-solid ${isChecked ? 'fa-check-double text-base' : 'fa-check text-sm'}"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(slotCard);
+            });
+
+            document.getElementById('daily-completion-rate').textContent = `${doneCount} / 6 Sessions Completed`;
+            renderDailyQuiz(dayNum);
+
+            const focusList = document.getElementById('today-focus-list');
+            focusList.innerHTML = `
+                <div class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80"><i class="fa-solid fa-calculator text-blue-400 text-sm"></i><span class="text-slate-200 font-medium">${data.math.topic}</span></div>
+                <div class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80"><i class="fa-solid fa-atom text-indigo-400 text-sm"></i><span class="text-slate-200 font-medium">${data.physics.topic}</span></div>
+                <div class="flex items-center gap-2 p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80"><i class="fa-solid fa-code text-emerald-400 text-sm"></i><span class="text-slate-200 font-medium">${data.prog.topic}</span></div>
+            `;
+
+            const snippetPreview = document.getElementById('today-c-snippet-preview');
+            const snip = C_SNIPPETS[dayNum] || C_SNIPPETS[1];
+            snippetPreview.textContent = snip.code.split('\n').slice(0, 6).join('\n') + "\n...";
+
+            const videoContainer = document.getElementById('today-video-recommendations');
+            videoContainer.innerHTML = '';
+            const allVideos = [...(data.math.videos || []), ...(data.physics.videos || []), ...(data.prog.videos || [])];
+
+            allVideos.forEach(vid => {
+                const vidBtn = document.createElement('button');
+                vidBtn.onclick = () => openVideoModal(vid.title, vid.embedId || "kvGlZuUveCg");
+                vidBtn.className = "w-full flex items-center justify-between p-2.5 rounded-xl bg-slate-900/70 hover:bg-slate-800 border border-slate-800 transition-colors text-xs text-slate-200 group text-left";
+                vidBtn.innerHTML = `
+                    <span class="truncate max-w-[210px] font-medium group-hover:text-blue-400 flex items-center gap-2">
+                        <i class="fa-brands fa-youtube text-red-500 text-sm"></i>${vid.title}
+                    </span>
+                    <i class="fa-solid fa-circle-play text-slate-500 group-hover:text-blue-400 text-sm"></i>
+                `;
+                videoContainer.appendChild(vidBtn);
+            });
+
+            document.getElementById('today-reading-card').innerHTML = `
+                <div class="flex items-start gap-2.5">
+                    <i class="fa-solid fa-book text-rose-400 text-sm mt-0.5"></i>
+                    <div>
+                        <strong class="text-white block font-semibold">${data.reading}</strong>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Spend 20 minutes taking notes in your daily journal before sleep.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render Daily Quiz Card
+        function renderDailyQuiz(dayNum) {
+            const quiz = DAILY_QUIZZES[dayNum] || DAILY_QUIZZES[1];
+            const area = document.getElementById('quiz-content-area');
+            const statusBadge = document.getElementById('quiz-status-badge');
+            const isAnswered = currentState.quizScores[dayNum] !== undefined;
+
+            if (isAnswered) {
+                const userChoice = currentState.quizScores[dayNum];
+                const isCorrect = userChoice === quiz.correct;
+                statusBadge.className = isCorrect ? "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30" : "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400 border border-rose-500/30";
+                statusBadge.textContent = isCorrect ? "Passed (+40 XP)" : "Completed";
+
+                area.innerHTML = `
+                    <p class="text-xs font-bold text-white mb-2">${quiz.question}</p>
+                    <div class="space-y-1.5 text-xs">
+                        ${quiz.options.map((opt, idx) => `
+                            <div class="p-2.5 rounded-xl border text-xs flex items-center justify-between ${idx === quiz.correct ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-300 font-semibold' : (idx === userChoice ? 'bg-rose-950/60 border-rose-500/50 text-rose-300 font-semibold' : 'bg-slate-900/60 border-slate-800 text-slate-400')}">
+                                <span>${String.fromCharCode(65 + idx)}. ${opt}</span>
+                                ${idx === quiz.correct ? '<i class="fa-solid fa-check text-emerald-400"></i>' : (idx === userChoice ? '<i class="fa-solid fa-xmark text-rose-400"></i>' : '')}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs text-slate-300 mt-2">
+                        <strong class="text-indigo-400 font-bold block mb-1">Explanation:</strong>
+                        <p>${quiz.explanation}</p>
+                    </div>
+                `;
+            } else {
+                statusBadge.className = "px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-400 border border-slate-700";
+                statusBadge.textContent = "Not Completed";
+
+                area.innerHTML = `
+                    <p class="text-xs font-bold text-white mb-3">${quiz.question}</p>
+                    <div class="space-y-2 text-xs">
+                        ${quiz.options.map((opt, idx) => `
+                            <button onclick="submitQuizAnswer(${dayNum}, ${idx})" class="w-full p-2.5 rounded-xl border border-slate-800 bg-slate-900/80 hover:bg-indigo-900/30 hover:border-indigo-500/50 text-slate-200 text-left transition-all flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center font-bold text-[11px] text-slate-400">${String.fromCharCode(65 + idx)}</span>
+                                <span>${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        }
+
+        function submitQuizAnswer(dayNum, choiceIdx) {
+            const quiz = DAILY_QUIZZES[dayNum] || DAILY_QUIZZES[1];
+            currentState.quizScores[dayNum] = choiceIdx;
+            
+            if (choiceIdx === quiz.correct) {
+                addXP(40, "Daily Quiz Passed");
+            } else {
+                showToast("Quiz submitted! Review explanation below.");
+            }
+            saveToLocalStorage();
+            renderDailyQuiz(dayNum);
+        }
+
+        function toggleTask(taskKey) {
+            currentState.completedTasks[taskKey] = !currentState.completedTasks[taskKey];
+            if (currentState.completedTasks[taskKey]) {
+                addXP(50, "Session Completed");
+            } else {
+                saveToLocalStorage();
+            }
+            renderMiniCalendar();
+            renderScheduleForDay(currentState.currentDay);
+        }
+
+        function saveDailyNote() {
+            const noteText = document.getElementById('daily-notes-input').value;
+            if (!currentState.customNotes[currentState.currentDay] && noteText.trim().length > 5) {
+                addXP(15, "Daily Note Written");
+            }
+            currentState.customNotes[currentState.currentDay] = noteText;
+            saveToLocalStorage();
+        }
+
+        // Render 20-Day Syllabus
+        function renderCurriculumRoadmap() {
+            const container = document.getElementById('curriculum-roadmap-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const phases = [
+                { title: "Phase 1: Foundations (Days 1–5)", range: [1, 5] },
+                { title: "Phase 2: Core Concepts (Days 6–10)", range: [6, 10] },
+                { title: "Phase 3: Applied Systems (Days 11–15)", range: [11, 15] },
+                { title: "Phase 4: Advanced & Capstone (Days 16–20)", range: [16, 20] }
+            ];
+
+            phases.forEach(phase => {
+                const phaseCard = document.createElement('div');
+                phaseCard.className = "glass-card p-5 rounded-2xl border border-slate-800 space-y-4";
+                
+                let daysHtml = '';
+                for (let d = phase.range[0]; d <= phase.range[1]; d++) {
+                    const dayData = CURRICULUM_DATA.find(item => item.day === d);
+                    if (!dayData) continue;
+
+                    daysHtml += `
+                        <div class="p-3 bg-slate-950/70 rounded-xl border border-slate-800/80 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold text-blue-400">Day ${dayData.day} • ${dayData.dateStr.split(' (')[0]}</span>
+                                <button onclick="selectDay(${dayData.day}); switchTab('dashboard');" class="text-[10px] text-slate-300 hover:text-white bg-slate-800 px-2 py-0.5 rounded border border-slate-700">Jump to Day</button>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                                <div><strong class="text-slate-300">🧮 Math:</strong> <span class="text-slate-400">${dayData.math.topic}</span></div>
+                                <div><strong class="text-slate-300">⚛️ Physics:</strong> <span class="text-slate-400">${dayData.physics.topic}</span></div>
+                                <div><strong class="text-slate-300">💻 C Prog:</strong> <span class="text-slate-400">${dayData.prog.topic}</span></div>
+                                <div><strong class="text-slate-300">🧠 DSA:</strong> <span class="text-slate-400">${dayData.dsa.topic}</span></div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                phaseCard.innerHTML = `
+                    <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2 flex items-center justify-between">
+                        <span>${phase.title}</span>
+                    </h3>
+                    <div class="space-y-3">${daysHtml}</div>
+                `;
+                container.appendChild(phaseCard);
+            });
+        }
+
+        function filterSubject(subject) {
+            currentState.activeSubjectFilter = subject;
+            document.querySelectorAll('.subject-filter-btn').forEach(btn => {
+                btn.className = "subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 border border-slate-700 hover:bg-slate-700";
+            });
+            if (event && event.target) {
+                event.target.className = "subject-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white border border-blue-500";
+            }
+        }
+
+        // C Code Runner & Live Memory Variable Inspector
+        function loadCSnippetForDay(dayNum) {
+            const snippet = C_SNIPPETS[dayNum] || C_SNIPPETS[1];
+            document.getElementById('snippet-day-tag').textContent = `Day ${dayNum} C Program`;
+            document.getElementById('snippet-title').textContent = snippet.title;
+            document.getElementById('c-code-editor').value = snippet.code;
+            document.getElementById('snippet-explanation').innerHTML = `<p>${snippet.explanation}</p>`;
+            document.getElementById('c-terminal-output').textContent = `$ ./program ready. Click 'Run Code' to execute.`;
+            extractAndRenderMemoryTable(snippet.code);
+        }
+
+        function resetCCodeToDefault() {
+            loadCSnippetForDay(currentState.currentDay);
+            showToast("C code reset to default template.");
+        }
+
+        function extractAndRenderMemoryTable(code) {
+            const tableContainer = document.getElementById('c-memory-table-container');
+            if (!tableContainer) return;
+
+            const varRegex = /(int|float|double|char|long long)\s+([a-zA-Z_]\w*)\s*(?:\[\])?\s*=\s*([^;]+);/g;
+            let match;
+            let vars = [];
+            let simulatedBaseAddr = 0x7fff5fbff7a0;
+
+            while ((match = varRegex.exec(code)) !== null) {
+                const type = match[1];
+                const name = match[2];
+                const val = match[3].trim();
+                simulatedBaseAddr += 0x8;
+                vars.push({ type, name, val, addr: "0x" + simulatedBaseAddr.toString(16) });
+            }
+
+            if (vars.length === 0) {
+                tableContainer.innerHTML = `<p class="text-slate-500 italic text-[11px]">No local stack variables parsed.</p>`;
+                return;
+            }
+
+            tableContainer.innerHTML = `
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="text-[10px] text-slate-500 border-b border-slate-800">
+                            <th class="pb-1">Address</th>
+                            <th class="pb-1">Type</th>
+                            <th class="pb-1">Name</th>
+                            <th class="pb-1">Value</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-[11px]">
+                        ${vars.map(v => `
+                            <tr class="border-b border-slate-900/60">
+                                <td class="py-1 text-purple-400 font-mono">${v.addr}</td>
+                                <td class="py-1 text-blue-400">${v.type}</td>
+                                <td class="py-1 text-emerald-300 font-bold">${v.name}</td>
+                                <td class="py-1 text-slate-200 truncate max-w-[100px]">${v.val}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function runCCodeInBrowser() {
+            const code = document.getElementById('c-code-editor').value;
+            const outputEl = document.getElementById('c-terminal-output');
+            
+            outputEl.textContent = "Compiling with GCC...\nRunning executable ./program...\n\n";
+            extractAndRenderMemoryTable(code);
+
+            try {
+                const printfRegex = /printf\s*\(\s*"([^"]*)"\s*(?:,\s*(.*))?\s*\);/g;
+                let match;
+                let logs = [];
+
+                while ((match = printfRegex.exec(code)) !== null) {
+                    let fmt = match[1];
+                    let argsStr = match[2];
+                    fmt = fmt.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
+
+                    if (argsStr) {
+                        const args = argsStr.split(',').map(a => a.trim());
+                        args.forEach(arg => {
+                            let evaluatedVal = arg;
+                            try { evaluatedVal = eval(arg); } catch(e) {}
+                            fmt = fmt.replace(/%[.\d]*[dfscg%]|%p|%lld/, evaluatedVal);
+                        });
+                    }
+                    logs.push(fmt);
+                }
+
+                if (logs.length === 0) {
+                    outputEl.textContent += "Program finished with exit code 0 (No printf output).";
+                } else {
+                    outputEl.textContent += logs.join('');
+                    outputEl.textContent += "\n\n[Process completed with exit code 0]";
+                }
+
+                addXP(25, "C Code Executed");
+            } catch(err) {
+                outputEl.textContent += `[Execution Error]: ${err.message}`;
+            }
+        }
+
+        function copyCodeSnippet() {
+            const codeText = document.getElementById('c-code-editor').value;
+            navigator.clipboard.writeText(codeText).then(() => {
+                showToast("C Code copied to clipboard! 📋");
+            });
+        }
+
+        // Memory Segment Explanation
+        function showMemoryDetail(segment) {
+            const info = {
+                stack: "🟣 STACK SEGMENT: Stores local variables, function arguments, and call stack frames. Automatically allocated and freed when functions return (LIFO).",
+                heap: "🟢 HEAP SEGMENT: Dynamically allocated memory using malloc(), calloc(), realloc(). Must be manually deallocated using free() to prevent memory leaks.",
+                bss: "🔵 BSS SEGMENT: Block Started by Symbol. Stores uninitialized global and static variables. Automatically initialized to 0 by system before execution.",
+                data: "🟡 DATA SEGMENT: Stores initialized global and static variables (e.g. static int count = 10;).",
+                text: "🔴 TEXT / CODE SEGMENT: Contains read-only binary machine code instructions. Prevents accidental modification of code instructions."
+            };
+            document.getElementById('memory-segment-explanation').textContent = info[segment] || "";
+        }
+
+        // 3D Flashcards Logic
+        function renderFlashcard(index) {
+            const card = FLASHCARDS[index] || FLASHCARDS[0];
+            document.getElementById('card-category-badge').textContent = card.category.toUpperCase();
+            document.getElementById('card-question-text').textContent = card.question;
+            document.getElementById('card-answer-text').textContent = card.answer;
+            document.getElementById('card-explanation-text').textContent = card.exp;
+            document.getElementById('flashcard-counter').textContent = `Card ${index + 1} / ${FLASHCARDS.length}`;
+            
+            isFlashcardFlipped = false;
+            document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+        }
+
+        function flipFlashcard() {
+            isFlashcardFlipped = !isFlashcardFlipped;
+            const inner = document.getElementById('flashcard-inner');
+            if (isFlashcardFlipped) {
+                inner.classList.add('rotate-y-180');
+                playPopSound();
+            } else {
+                inner.classList.remove('rotate-y-180');
+            }
+        }
+
+        function navigateFlashcard(delta) {
+            currentFlashcardIndex = (currentFlashcardIndex + delta + FLASHCARDS.length) % FLASHCARDS.length;
+            renderFlashcard(currentFlashcardIndex);
+        }
+
+        function filterFlashcards(cat) {
+            renderFlashcard(0);
+        }
+
+        // Problem Solving Tracker
+        function renderProblemTrackerForDay(dayNum) {
+            document.getElementById('problem-tab-day-num').textContent = dayNum;
+            const container = document.getElementById('daily-problems-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const dayData = CURRICULUM_DATA.find(d => d.day === dayNum);
+            const defaultProblems = [
+                { id: 0, title: `Easy 1: ${dayData.prog.topic} Warmup`, difficulty: "Easy", platform: "LeetCode" },
+                { id: 1, title: `Easy 2: ${dayData.dsa.topic} Array Practice`, difficulty: "Easy", platform: "HackerRank" },
+                { id: 2, title: `Medium 1: ${dayData.dsa.topic} Logic Puzzle`, difficulty: "Medium", platform: "LeetCode" },
+                { id: 3, title: `Medium 2: ${dayData.prog.topic} Algorithmic Challenge`, difficulty: "Medium", platform: "Codeforces" }
+            ];
+
+            let totalSolvedOverall = 0;
+            for (let k in currentState.problemLogs) if (currentState.problemLogs[k]) totalSolvedOverall++;
+            document.getElementById('problem-solved-count').textContent = `${totalSolvedOverall} Solved`;
+
+            defaultProblems.forEach(prob => {
+                const probKey = `day${dayNum}_p${prob.id}`;
+                const isSolved = !!currentState.problemLogs[probKey];
+
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border ${isSolved ? 'bg-purple-950/20 border-purple-500/40' : 'bg-slate-950/60 border-slate-800'} flex items-center justify-between gap-3`;
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="px-2 py-0.5 text-[9px] font-bold rounded-md ${prob.difficulty === 'Easy' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-400 border border-amber-500/30'}">${prob.difficulty}</span>
+                            <span class="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-800">${prob.platform}</span>
+                        </div>
+                        <h4 class="text-xs font-bold text-white">${prob.title}</h4>
+                    </div>
+                    <button onclick="toggleProblemLog('${probKey}')" class="px-3 py-1.5 rounded-lg border text-xs font-semibold transition-all ${isSolved ? 'bg-purple-600 text-white border-purple-500' : 'bg-slate-800 text-slate-300 border-slate-700 hover:border-purple-500'}">
+                        ${isSolved ? '<i class="fa-solid fa-check mr-1"></i> Solved' : 'Mark Solved'}
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function toggleProblemLog(probKey) {
+            currentState.problemLogs[probKey] = !currentState.problemLogs[probKey];
+            if (currentState.problemLogs[probKey]) {
+                addXP(20, "Problem Solved");
+            } else {
+                saveToLocalStorage();
+            }
+            renderProblemTrackerForDay(currentState.currentDay);
+        }
+
+        // Render Analytics Tab
+        function renderAnalytics() {
+            let totalTasksCompleted = 0;
+            let mathDone = 0, physicsDone = 0, progDone = 0, dsaDone = 0, webDone = 0, readingDone = 0;
+
+            for (let k in currentState.completedTasks) {
+                if (currentState.completedTasks[k]) {
+                    totalTasksCompleted++;
+                    if (k.includes('slot0')) mathDone++;
+                    if (k.includes('slot1')) physicsDone++;
+                    if (k.includes('slot2')) progDone++;
+                    if (k.includes('slot3')) dsaDone++;
+                    if (k.includes('slot4')) webDone++;
+                    if (k.includes('slot5')) readingDone++;
+                }
+            }
+
+            const estHours = Math.round((mathDone * 1.5) + (physicsDone * 1.5) + (progDone * 2.0) + (dsaDone * 1.0) + (webDone * 1.5) + (readingDone * 0.33));
+            document.getElementById('analytics-total-hours').textContent = `${estHours} Hours`;
+
+            const calcPercent = (count) => Math.round((count / 20) * 100);
+            document.getElementById('meter-math-text').textContent = `${calcPercent(mathDone)}%`;
+            document.getElementById('meter-math-bar').style.width = `${calcPercent(mathDone)}%`;
+
+            document.getElementById('meter-physics-text').textContent = `${calcPercent(physicsDone)}%`;
+            document.getElementById('meter-physics-bar').style.width = `${calcPercent(physicsDone)}%`;
+
+            document.getElementById('meter-prog-text').textContent = `${calcPercent(progDone)}%`;
+            document.getElementById('meter-prog-bar').style.width = `${calcPercent(progDone)}%`;
+
+            document.getElementById('meter-dsa-text').textContent = `${calcPercent(dsaDone)}%`;
+            document.getElementById('meter-dsa-bar').style.width = `${calcPercent(dsaDone)}%`;
+
+            document.getElementById('meter-web-text').textContent = `${calcPercent(webDone)}%`;
+            document.getElementById('meter-web-bar').style.width = `${calcPercent(webDone)}%`;
+
+            document.getElementById('meter-reading-text').textContent = `${calcPercent(readingDone)}%`;
+            document.getElementById('meter-reading-bar').style.width = `${calcPercent(readingDone)}%`;
+
+            let quizzesPassed = 0;
+            for (let k in currentState.quizScores) if (currentState.quizScores[k] !== undefined) quizzesPassed++;
+
+            let problemsSolved = 0;
+            for (let k in currentState.problemLogs) if (currentState.problemLogs[k]) problemsSolved++;
+
+            document.getElementById('analytics-xp-val').textContent = `${currentState.xp || 0} XP`;
+            document.getElementById('analytics-quizzes-val').textContent = `${quizzesPassed} / 20`;
+            document.getElementById('analytics-focus-val').textContent = `${currentState.completedFocusSessions || 0} Blocks`;
+            document.getElementById('analytics-problems-val').textContent = `${problemsSolved} / 80`;
+        }
+
+        // Focus Timer Logic
+        function setTimerPreset(minutes, label) {
+            if (timerState.isRunning) toggleTimer();
+            timerState.durationMinutes = minutes;
+            timerState.remainingSeconds = minutes * 60;
+            timerState.label = label;
+            document.getElementById('timer-label').textContent = label;
+            setupTimerDisplay();
+        }
+
+        function adjustTimerTime(minutesDelta) {
+            timerState.remainingSeconds = Math.max(0, timerState.remainingSeconds + (minutesDelta * 60));
+            setupTimerDisplay();
+        }
+
+        function setupTimerDisplay() {
+            const mins = Math.floor(timerState.remainingSeconds / 60);
+            const secs = timerState.remainingSeconds % 60;
+            document.getElementById('timer-display').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        function toggleTimer() {
+            const icon = document.getElementById('timer-toggle-icon');
+            const display = document.getElementById('timer-display');
+
+            if (timerState.isRunning) {
+                clearInterval(timerState.intervalId);
+                timerState.isRunning = false;
+                icon.className = "fa-solid fa-play";
+                display.classList.remove('timer-running');
+            } else {
+                timerState.isRunning = true;
+                icon.className = "fa-solid fa-pause";
+                display.classList.add('timer-running');
+                
+                timerState.intervalId = setInterval(() => {
+                    if (timerState.remainingSeconds > 0) {
+                        timerState.remainingSeconds--;
+                        setupTimerDisplay();
+                    } else {
+                        clearInterval(timerState.intervalId);
+                        timerState.isRunning = false;
+                        icon.className = "fa-solid fa-play";
+                        display.classList.remove('timer-running');
+                        
+                        currentState.completedFocusSessions = (currentState.completedFocusSessions || 0) + 1;
+                        addXP(30, "Focus Timer Completed");
+                        playPopSound();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            if (timerState.isRunning) toggleTimer();
+            timerState.remainingSeconds = timerState.durationMinutes * 60;
+            setupTimerDisplay();
+        }
+
+        function testAudioChime() {
+            playPopSound();
+            showToast("Audio SFX tested successfully! 🔊");
+        }
+
+        // Modals Logic
+        function openVideoModal(title, embedId) {
+            document.getElementById('video-modal-title').textContent = title;
+            document.getElementById('youtube-iframe').src = `https://www.youtube.com/embed/${embedId}?autoplay=1`;
+            document.getElementById('video-modal').classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.add('hidden');
+            document.getElementById('youtube-iframe').src = "";
+        }
+
+        function openBadgesModal() {
+            const grid = document.getElementById('badges-grid-container');
+            grid.innerHTML = '';
+
+            const unlocked = currentState.unlockedBadges || [];
+
+            ACHIEVEMENTS.forEach(ach => {
+                const isUnlocked = unlocked.includes(ach.id);
+                const card = document.createElement('div');
+                card.className = `p-3.5 rounded-2xl border ${isUnlocked ? 'bg-slate-900 border-amber-500/40' : 'bg-slate-950/60 border-slate-800 opacity-50'} flex items-center gap-3`;
+                card.innerHTML = `
+                    <div class="w-10 h-10 rounded-xl ${isUnlocked ? 'bg-amber-500/20 ' + ach.color : 'bg-slate-800 text-slate-500'} flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid ${ach.icon}"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                            ${ach.title}
+                            ${isUnlocked ? '<i class="fa-solid fa-circle-check text-emerald-400 text-[10px]"></i>' : ''}
+                        </h4>
+                        <p class="text-[10px] text-slate-400 mt-0.5">${ach.desc}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            document.getElementById('badges-modal').classList.remove('hidden');
+        }
+
+        function closeBadgesModal() {
+            document.getElementById('badges-modal').classList.add('hidden');
+        }
+
+        function openCheatSheetsModal() {
+            switchCheatTab('math');
+            document.getElementById('cheatsheets-modal').classList.remove('hidden');
+        }
+
+        function closeCheatSheetsModal() {
+            document.getElementById('cheatsheets-modal').classList.add('hidden');
+        }
+
+        function switchCheatTab(tab) {
+            document.querySelectorAll('.cheat-tab-btn').forEach(b => b.className = "cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300");
+            const btn = document.getElementById(`cheat-tab-${tab}`);
+            if (btn) btn.className = "cheat-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-purple-600 text-white";
+
+            const content = document.getElementById('cheat-content-area');
+            if (tab === 'math') {
+                content.innerHTML = `
+<strong class="text-purple-400 block mb-2">CALCULUS DERIVATIVES CHEAT SHEET:</strong>
+d/dx(x^n)      = n * x^(n-1)
+d/dx(sin x)    = cos x
+d/dx(cos x)    = -sin x
+d/dx(e^x)      = e^x
+d/dx(ln x)     = 1 / x
+Product Rule  : d/dx(u * v) = u'v + uv'
+Quotient Rule : d/dx(u / v) = (u'v - uv') / v^2
+
+<strong class="text-purple-400 block my-2">MATRICES PROPERTIES:</strong>
+det(A * B)     = det(A) * det(B)
+Inverse A^-1   = (1 / det(A)) * adj(A)
+Characteristic Eq: det(A - λI) = 0 (Eigenvalues λ)
+                `;
+            } else if (tab === 'physics') {
+                content.innerHTML = `
+<strong class="text-indigo-400 block mb-2">PHYSICS EQUATIONS:</strong>
+Kinematics     : v = u + at  |  s = ut + 0.5*a*t^2  |  v^2 = u^2 + 2as
+Newton's 2nd   : F = m * a
+Work Done      : W = F * d * cos(θ)
+Kinetic Energy : KE = 0.5 * m * v^2
+Coulomb's Law  : F = k * (q1 * q2) / r^2
+Ohm's Law      : V = I * R
+Capacitance    : Q = C * V  |  C = ε0 * A / d
+                `;
+            } else if (tab === 'c') {
+                content.innerHTML = `
+<strong class="text-emerald-400 block mb-2">C POINTERS & SYNTAX CHEAT SHEET:</strong>
+int x = 10;
+int *ptr = &x;  // ptr holds address of x (& = address-of operator)
+*ptr = 20;      // *ptr accesses/mutates value at address (* = dereference)
+
+Format Specifiers:
+%d = int, %f = float, %lf = double, %c = char, %s = string, %p = pointer address
+
+Memory Allocation:
+int *arr = (int*) malloc(5 * sizeof(int));
+free(arr);      // Always release memory!
+                `;
+            } else if (tab === 'linux') {
+                content.innerHTML = `
+<strong class="text-amber-400 block mb-2">ESSENTIAL LINUX CLI COMMANDS:</strong>
+ls -la          : List all files with permissions & sizes
+cd path/to/dir  : Change directory
+mkdir project   : Create new directory
+grep "pattern"  : Search text inside files
+chmod +x script : Make file executable
+gcc file.c -o p : Compile C file using GCC
+./p             : Run compiled executable
+                `;
+            }
+        }
+
+        // Export JSON Data
+        function exportData() {
+            addXP(10, "JSON Export");
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(currentState, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", `college_prep_progress_backup_${new Date().toISOString().slice(0, 10)}.json`);
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast("Progress JSON exported successfully! 💾");
+        }
+
+        // Import JSON Modal Handlers
+        function openImportModal() {
+            document.getElementById('import-modal').classList.remove('hidden');
+        }
+
+        function closeImportModal() {
+            document.getElementById('import-modal').classList.add('hidden');
+            pendingImportData = null;
+            document.getElementById('import-file-preview').classList.add('hidden');
+            const confirmBtn = document.getElementById('confirm-load-btn');
+            confirmBtn.disabled = true;
+            confirmBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        function setupDragAndDrop() {
+            const dropZone = document.getElementById('drop-zone');
+            if (!dropZone) return;
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, (e) => { e.preventDefault(); e.stopPropagation(); }, false);
+            });
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.add('border-emerald-500', 'bg-slate-900/90'), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, () => dropZone.classList.remove('border-emerald-500', 'bg-slate-900/90'), false);
+            });
+
+            dropZone.addEventListener('drop', (e) => {
+                const files = e.dataTransfer.files;
+                if (files.length > 0) processSelectedFile(files[0]);
+            });
+        }
+
+        function handleFileSelect(e) {
+            const files = e.target.files;
+            if (files.length > 0) processSelectedFile(files[0]);
+        }
+
+        function processSelectedFile(file) {
+            if (!file.name.endsWith('.json')) {
+                showToast("Error: Please select a valid .json file!", true);
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (typeof parsed !== 'object' || parsed === null) throw new Error("Invalid JSON structure");
+
+                    pendingImportData = parsed;
+                    let completedTasksCount = 0;
+                    if (parsed.completedTasks) {
+                        for (let k in parsed.completedTasks) if (parsed.completedTasks[k]) completedTasksCount++;
+                    }
+
+                    const previewEl = document.getElementById('import-file-preview');
+                    previewEl.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <strong class="text-emerald-400 font-semibold"><i class="fa-solid fa-circle-check mr-1.5"></i>Valid Backup File Detected</strong>
+                            <span class="text-[10px] text-slate-400">${file.name}</span>
+                        </div>
+                        <p class="mt-1 text-slate-300">Contains: <strong>${completedTasksCount} Sessions Completed</strong>, <strong>${parsed.xp || 0} XP</strong>, Day <strong>${parsed.currentDay || 1}</strong>.</p>
+                    `;
+                    previewEl.classList.remove('hidden');
+
+                    const confirmBtn = document.getElementById('confirm-load-btn');
+                    confirmBtn.disabled = false;
+                    confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } catch (err) {
+                    showToast("Failed to parse JSON file!", true);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function executeImport() {
+            if (!pendingImportData) return;
+
+            const strategy = document.querySelector('input[name="import-strategy"]:checked').value;
+
+            if (strategy === 'overwrite') {
+                currentState = {
+                    currentDay: pendingImportData.currentDay || 1,
+                    activeTab: 'dashboard',
+                    completedTasks: pendingImportData.completedTasks || {},
+                    customNotes: pendingImportData.customNotes || {},
+                    problemLogs: pendingImportData.problemLogs || {},
+                    quizScores: pendingImportData.quizScores || {},
+                    energyLevels: pendingImportData.energyLevels || {},
+                    completedFocusSessions: pendingImportData.completedFocusSessions || 0,
+                    xp: pendingImportData.xp || 0,
+                    streakCount: pendingImportData.streakCount || 1,
+                    lastStudiedDate: pendingImportData.lastStudiedDate || new Date().toDateString(),
+                    unlockedBadges: pendingImportData.unlockedBadges || [],
+                    soundMuted: pendingImportData.soundMuted || false,
+                    theme: pendingImportData.theme || 'slate',
+                    activeSubjectFilter: 'all'
+                };
+            } else {
+                currentState = {
+                    ...currentState,
+                    currentDay: pendingImportData.currentDay || currentState.currentDay,
+                    completedTasks: { ...currentState.completedTasks, ...(pendingImportData.completedTasks || {}) },
+                    customNotes: { ...currentState.customNotes, ...(pendingImportData.customNotes || {}) },
+                    problemLogs: { ...currentState.problemLogs, ...(pendingImportData.problemLogs || {}) },
+                    quizScores: { ...currentState.quizScores, ...(pendingImportData.quizScores || {}) },
+                    energyLevels: { ...currentState.energyLevels, ...(pendingImportData.energyLevels || {}) },
+                    xp: (currentState.xp || 0) + (pendingImportData.xp || 0),
+                    completedFocusSessions: (currentState.completedFocusSessions || 0) + (pendingImportData.completedFocusSessions || 0)
+                };
+            }
+
+            saveToLocalStorage();
+            applyTheme(currentState.theme || 'slate');
+            renderDaySelectors();
+            renderMiniCalendar();
+            renderScheduleForDay(currentState.currentDay);
+            loadCSnippetForDay(currentState.currentDay);
+            renderProblemTrackerForDay(currentState.currentDay);
+            renderAnalytics();
+            closeImportModal();
+            showToast("JSON progress backup loaded successfully! 🚀");
+        }
+
+        function confirmReset() {
+            if (confirm("Are you sure you want to reset all progress data? This action cannot be undone unless you exported a backup!")) {
+                localStorage.removeItem('college_prep_state');
+                currentState = {
+                    currentDay: 1,
+                    activeTab: 'dashboard',
+                    completedTasks: {},
+                    customNotes: {},
+                    problemLogs: {},
+                    quizScores: {},
+                    energyLevels: {},
+                    completedFocusSessions: 0,
+                    xp: 0,
+                    streakCount: 1,
+                    lastStudiedDate: new Date().toDateString(),
+                    unlockedBadges: [],
+                    soundMuted: false,
+                    theme: 'slate',
+                    activeSubjectFilter: 'all'
+                };
+                saveToLocalStorage();
+                applyTheme('slate');
+                selectDay(1);
+                showToast("All progress reset.");
+            }
+        }
+
+        // Toast Notification System
+        function showToast(message, isError = false) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `p-3.5 rounded-2xl ${isError ? 'bg-red-600 text-white' : 'bg-slate-900 border border-slate-700 text-slate-100 shadow-xl'} text-xs font-semibold flex items-center gap-2 pointer-events-auto transition-all transform translate-y-2 opacity-0 shadow-2xl`;
+            toast.innerHTML = `<i class="fa-solid ${isError ? 'fa-triangle-exclamation' : 'fa-circle-check text-emerald-400'} text-sm"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+
+            setTimeout(() => toast.classList.remove('translate-y-2', 'opacity-0'), 10);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
