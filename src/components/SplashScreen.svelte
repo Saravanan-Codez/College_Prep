@@ -28,7 +28,7 @@
         [ F ]
       </div>
       <div>
-        <h1 class="text-xl font-black tracking-widest text-[var(--text-main)]">EngiPrep OS</h1>
+        <h1 class="text-xl font-black tracking-widest text-[var(--text-main)]">EngiPrep</h1>
         <p class="text-[12px] font-bold text-[var(--text-muted)] tracking-widest uppercase mt-1">BY FALKON LABS</p>
       </div>
       <!-- Sleek Inset Linear Progress Bar -->
