@@ -1,4 +1,4 @@
-# EngiPrep OS by Falkon Labs — Master Code Signing & Security Guide (APK, EXE, DEB, RPM)
+# EngiPrep by Falkon Labs — Master Code Signing & Security Guide (APK, EXE, DEB, RPM)
 
 This document provides a comprehensive, production-grade guide for code signing **Android APKs**, **Windows EXEs/MSIs**, and **Linux DEB/RPM packages** to ensure error-free distribution across all platforms.
 

@@ -10,7 +10,14 @@
   import { calculateSM2 } from './js/modules/sm2Engine.js';
   import { executeCCode } from './js/modules/cRunner.js';
   import { sendGeminiPrompt } from './js/modules/aiMentor.js';
-  import { generatePinCode, pairBluetoothDevice } from './js/modules/bluetoothP2PSync.js';
+  import { 
+    generateSyncPasscode, 
+    getPairedDevices, 
+    removePairedDevice, 
+    executeUniversalP2PSync, 
+    requestNativeBluetoothDevice, 
+    initAutoSyncListener 
+  } from './js/modules/bluetoothP2PSync.js';
 
   let splashFinished = false;
   let currentDay = 1;
@@ -42,12 +49,13 @@
   let showAIKeyModal = false;
   let showMusicModal = false;
 
-  // Bluetooth P2P Sync State
-  let pairingPin = generatePinCode();
-  let syncProgress = 0;
-  let syncStatusMsg = 'Click below to grant browser Bluetooth permission and scan.';
+  // Universal P2P Sync State
+  let myPasscode = generateSyncPasscode();
+  let pairedDevices = [];
+  let inputPasscode = '';
   let isSyncing = false;
-  let syncedPayload = null;
+  let syncProgress = 0;
+  let syncStatusMsg = '';
 
   let importStrategy = 'overwrite';
   let pendingImportData = null;
@@ -81,7 +89,23 @@
 
   onMount(() => {
     loadState();
+    pairedDevices = getPairedDevices();
+    initAutoSyncListener((receivedState) => {
+      if (receivedState) {
+        currentDay = receivedState.currentDay || currentDay;
+        completedTasks = { ...completedTasks, ...(receivedState.completedTasks || {}) };
+        saveState();
+        syncStatusMsg = "✅ Auto-Synced state file from paired device!";
+      }
+    });
   });
+
+  function getFullStateObj() {
+    return {
+      currentDay, theme, completedTasks, customNotes, problemLogs, quizScores,
+      xp, streakCount, unlockedBadges, soundMuted, flashcardsState, spotifyPlaylistId, geminiApiKey, chatMessages
+    };
+  }
 
   function loadState() {
     const saved = localStorage.getItem('college_prep_state');
@@ -109,10 +133,7 @@
   }
 
   function saveState() {
-    localStorage.setItem('college_prep_state', JSON.stringify({
-      currentDay, theme, completedTasks, customNotes, problemLogs, quizScores,
-      xp, streakCount, unlockedBadges, soundMuted, flashcardsState, spotifyPlaylistId, geminiApiKey, chatMessages
-    }));
+    localStorage.setItem('college_prep_state', JSON.stringify(getFullStateObj()));
     if (geminiApiKey) {
       localStorage.setItem('gemini_api_key', geminiApiKey);
     }
@@ -147,21 +168,27 @@
     } catch(e){}
   }
 
-  function handleStartBluetoothPairing() {
+  // --- UNIVERSAL CROSS-PLATFORM P2P SYNC ENGINE ---
+  function handleStartUniversalP2PSync() {
+    if (!inputPasscode.trim()) return;
     isSyncing = true;
-    syncProgress = 0;
-    syncedPayload = null;
-
-    pairBluetoothDevice(
+    executeUniversalP2PSync(
+      inputPasscode,
+      getFullStateObj(),
       (pct, msg) => {
         syncProgress = pct;
         syncStatusMsg = msg;
       },
-      (data) => {
+      (receivedData, updatedChain) => {
         isSyncing = false;
-        syncedPayload = data;
-        syncStatusMsg = "✅ Bluetooth Sync Successful! Payload ready to apply.";
-        addXP(30, "Bluetooth Sync");
+        if (updatedChain) pairedDevices = updatedChain;
+        if (receivedData) {
+          currentDay = receivedData.currentDay || currentDay;
+          completedTasks = { ...completedTasks, ...(receivedData.completedTasks || {}) };
+          saveState();
+        }
+        inputPasscode = '';
+        addXP(30, "Universal P2P Sync");
       },
       (err) => {
         isSyncing = false;
@@ -170,14 +197,22 @@
     );
   }
 
-  function applyBluetoothSync() {
-    if (!syncedPayload) return;
-    if (syncedPayload.currentDay) currentDay = syncedPayload.currentDay;
-    if (syncedPayload.xp) xp = syncedPayload.xp;
-    if (syncedPayload.completedTasks) completedTasks = { ...completedTasks, ...syncedPayload.completedTasks };
-    saveState();
-    syncedPayload = null;
-    showP2PModal = false;
+  function handleNativeBluetoothScan() {
+    syncStatusMsg = "Opening native Bluetooth scanner...";
+    requestNativeBluetoothDevice(
+      (connectedDev) => {
+        pairedDevices = getPairedDevices();
+        syncStatusMsg = `Connected to ${connectedDev.name}! Added to sync chain.`;
+      },
+      (err) => {
+        syncStatusMsg = err;
+      }
+    );
+  }
+
+  function handleRemoveConnection(deviceId) {
+    pairedDevices = removePairedDevice(deviceId);
+    syncStatusMsg = "Connection removed from sync chain.";
   }
 
   function saveGeminiKey() {
@@ -269,20 +304,7 @@
     const fullMasterState = {
       appVersion: "2.0.0",
       exportTimestamp: new Date().toISOString(),
-      currentDay,
-      theme,
-      completedTasks,
-      customNotes,
-      problemLogs,
-      quizScores,
-      xp,
-      streakCount,
-      unlockedBadges,
-      soundMuted,
-      flashcardsState,
-      spotifyPlaylistId,
-      geminiApiKey,
-      chatMessages
+      ...getFullStateObj()
     };
 
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullMasterState, null, 2));
@@ -344,10 +366,23 @@
   
   <!-- DESKTOP LEFT SIDEBAR NAVIGATION (ENGIPREP BY FALKON LABS) -->
   <aside class="sidebar-nav">
-    <!-- App Brand Logo -->
+    <!-- App Brand Logo (Falkon Vector Emblem) -->
     <div class="neu-card" style="padding: 16px; display: flex; align-items: center; gap: 12px;">
-      <div style="width: 40px; height: 40px; border-radius: 14px; background-color: var(--accent-color); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
-        <i class="fa-solid fa-graduation-cap text-lg"></i>
+      <div class="neu-card" style="width: 42px; height: 42px; border-radius: 14px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--bg-color), rgba(59, 130, 246, 0.15)); padding: 0;">
+        <svg width="26" height="26" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15 25L50 85L85 25L65 25L50 60L35 25H15Z" fill="url(#brand_grad1)"/>
+          <path d="M25 15L50 55L75 15H60L50 35L40 15H25Z" fill="url(#brand_grad2)"/>
+          <defs>
+            <linearGradient id="brand_grad1" x1="15" y1="25" x2="85" y2="85" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#3B82F6"/>
+              <stop offset="1" stop-color="#06B6D4"/>
+            </linearGradient>
+            <linearGradient id="brand_grad2" x1="25" y1="15" x2="75" y2="55" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#60A5FA"/>
+              <stop offset="1" stop-color="#3B82F6"/>
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
       <div>
         <h1 style="font-size: 1.125rem; font-weight: 900; tracking-tight: -0.025em; color: var(--text-main);">EngiPrep</h1>
@@ -415,7 +450,7 @@
         </button>
 
         <button on:click={() => showP2PModal = true} class="neu-btn" style="color: var(--accent-cyan);">
-          <i class="fa-bluetooth"></i> P2P Sync
+          <i class="fa-bluetooth"></i> Universal P2P Sync ({pairedDevices.length})
         </button>
 
         <button on:click={() => showImportModal = true} class="neu-btn" style="color: var(--accent-color);">
@@ -628,60 +663,85 @@
   <button on:click={() => activeTab = 'ai-mentor'} class="neu-btn {activeTab === 'ai-mentor' ? 'active' : ''}" style="height: auto; padding: 6px 12px; flex-direction: column; gap: 4px; font-size: 0.625rem;"><i class="fa-solid fa-robot"></i>AI Coach</button>
 </nav>
 
-<!-- CLEAR 3-STEP WEB BLUETOOTH P2P SYNC MODAL -->
+<!-- UNIVERSAL 100% CROSS-PLATFORM P2P SYNC MODAL -->
 {#if showP2PModal}
   <div class="modal-overlay">
-    <div class="modal-content" style="text-align: center;">
+    <div class="modal-content" style="max-width: 560px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(113, 128, 150, 0.1); padding-bottom: 12px;">
-        <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-cyan);"><i class="fa-bluetooth mr-2"></i>Web Bluetooth P2P Sync</h3>
+        <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-cyan); display: flex; align-items: center; gap: 8px;"><i class="fa-bluetooth"></i> Universal P2P Sync Engine</h3>
         <button on:click={() => showP2PModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      
-      <!-- Handshake PIN -->
-      <div class="neu-panel-inset" style="padding: 12px; text-align: center;">
-        <span style="font-size: 0.625rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block;">Pairing Handshake PIN</span>
-        <div style="font-family: monospace; font-size: 1.5rem; font-weight: 900; color: var(--accent-amber); letter-spacing: 0.1em;">{pairingPin}</div>
-      </div>
 
-      <!-- Step Instructions -->
-      <div class="neu-panel-inset" style="padding: 16px; text-align: left; font-size: 0.75rem;">
-        <div style="font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
-          <i class="fa-solid fa-circle-info" style="color: var(--accent-cyan);"></i> Bluetooth Sync Steps:
+      <!-- Passcode Display Card -->
+      <div class="neu-panel-inset" style="padding: 16px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <span style="font-size: 0.625rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); display: block;">This Device's Sync Passcode</span>
+          <div style="font-family: monospace; font-size: 1.5rem; font-weight: 900; color: var(--accent-amber); letter-spacing: 0.1em;">{myPasscode}</div>
         </div>
-        <ol style="padding-left: 16px; display: flex; flex-direction: column; gap: 4px; color: var(--text-muted); font-size: 0.6875rem;">
-          <li>Click <strong>1. Grant Permission & Scan</strong> to allow browser Bluetooth.</li>
-          <li>Select nearby EngiPrep device from the native dialog.</li>
-          <li>Watch progress bar stream JSON file over GATT characteristic.</li>
-          <li>Click <strong>3. Apply Synced File to App</strong>.</li>
-        </ol>
+        <button on:click={handleNativeBluetoothScan} class="neu-btn" style="color: var(--accent-cyan);">
+          <i class="fa-bluetooth"></i> Hardware BLE Scan
+        </button>
       </div>
 
-      <!-- Live Sync Progress Bar -->
-      {#if isSyncing || syncProgress > 0}
-        <div style="display: flex; flex-direction: column; gap: 8px;">
+      <!-- User Instruction Note -->
+      <div class="neu-panel-inset" style="padding: 12px; font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px;">
+        <i class="fa-solid fa-lightbulb" style="color: var(--accent-amber); font-size: 0.875rem; margin-top: 2px;"></i>
+        <span>
+          <strong>How to Pair PC & Mobile Instantly:</strong> Open EngiPrep on your other device, enter its 6-digit passcode below, and click <strong>Instant P2P Sync</strong>. State file transfers peer-to-peer with zero setup required!
+        </span>
+      </div>
+
+      <!-- Universal Passcode Stream Form -->
+      <div class="neu-card" style="padding: 16px; gap: 10px;">
+        <h4 style="font-size: 0.8125rem; font-weight: 800; color: var(--text-main);">Connect to Target Device via Passcode:</h4>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" bind:value={inputPasscode} placeholder="Enter 6-digit passcode (e.g. 798-002)" class="neu-field" style="flex: 1; font-family: monospace; font-size: 0.875rem; text-align: center;">
+          <button on:click={handleStartUniversalP2PSync} disabled={isSyncing} class="neu-btn" style="color: var(--accent-green); font-weight: 800;">
+            <i class="fa-solid fa-bolt"></i> {isSyncing ? 'Syncing...' : 'Instant P2P Sync'}
+          </button>
+        </div>
+      </div>
+
+      <!-- Sync Status & Progress Bar -->
+      {#if isSyncing || syncStatusMsg}
+        <div style="display: flex; flex-direction: column; gap: 6px;">
           <div style="display: flex; justify-content: space-between; font-size: 0.75rem; font-family: monospace; font-weight: 700; color: var(--text-muted);">
-            <span>{syncStatusMsg}</span>
-            <span>{syncProgress}%</span>
+            <span style="white-space: pre-wrap; word-break: break-word;">{syncStatusMsg}</span>
+            {#if syncProgress > 0}<span>{syncProgress}%</span>{/if}
           </div>
-          <div class="neu-panel-inset" style="padding: 2px; height: 12px; border-radius: 9999px; overflow: hidden;">
-            <div style="background: linear-gradient(90deg, #06b6d4, #3b82f6); height: 100%; border-radius: 9999px; transition: width 0.3s ease; width: {syncProgress}%;"></div>
-          </div>
+          {#if isSyncing}
+            <div class="neu-panel-inset" style="padding: 2px; height: 10px; border-radius: 9999px; overflow: hidden;">
+              <div style="background: linear-gradient(90deg, #06b6d4, #10b981); height: 100%; border-radius: 9999px; transition: width 0.3s ease; width: {syncProgress}%;"></div>
+            </div>
+          {/if}
         </div>
-      {:else}
-        <p style="font-size: 0.75rem; color: var(--text-muted);">{syncStatusMsg}</p>
       {/if}
 
-      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 8px;">
-        <button on:click={handleStartBluetoothPairing} disabled={isSyncing} class="neu-btn" style="color: var(--accent-cyan); font-weight: 800;">
-          <i class="fa-bluetooth"></i> {isSyncing ? '1. Granting Permission & Scanning...' : '1. Grant Permission & Scan Bluetooth'}
-        </button>
-
-        {#if syncedPayload}
-          <button on:click={applyBluetoothSync} class="neu-btn" style="color: var(--accent-green); font-weight: 800;">
-            <i class="fa-solid fa-check-double"></i> 3. Apply Synced File to App
-          </button>
+      <!-- Paired Devices Sync Chain -->
+      <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 8px; border-top: 1px solid rgba(113, 128, 150, 0.1);">
+        <span style="font-size: 0.6875rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Active Paired Sync Chain ({pairedDevices.length}):</span>
+        {#if pairedDevices.length === 0}
+          <div class="neu-panel-inset" style="padding: 12px; text-align: center; font-size: 0.75rem; color: var(--text-muted);">
+            No paired devices. Enter passcode above to pair phone, PC, or tablet instantly.
+          </div>
+        {:else}
+          {#each pairedDevices as pDev}
+            <div class="neu-panel-inset" style="padding: 12px; display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <i class="fa-solid fa-laptop-mobile" style="font-size: 1.25rem; color: var(--accent-green);"></i>
+                <div>
+                  <strong style="font-size: 0.8125rem; color: var(--text-main); display: block;">{pDev.name}</strong>
+                  <span style="font-size: 0.625rem; color: var(--text-muted); font-family: monospace;">Synced: {new Date(pDev.lastSynced).toLocaleTimeString()}</span>
+                </div>
+              </div>
+              <button on:click={() => handleRemoveConnection(pDev.id)} class="neu-btn" style="height: 32px; padding: 0 10px; font-size: 0.6875rem; color: var(--accent-red);">
+                <i class="fa-solid fa-trash"></i> Remove Connection
+              </button>
+            </div>
+          {/each}
         {/if}
       </div>
+
     </div>
   </div>
 {/if}
