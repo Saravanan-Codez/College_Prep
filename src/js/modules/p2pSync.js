@@ -1,38 +1,73 @@
-export function renderQRMode(currentState, contentContainer) {
-    const statePayload = JSON.stringify(currentState);
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(statePayload.slice(0, 300))}`;
+const SYNC_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
 
-    contentContainer.innerHTML = `
-        <div class="space-y-3">
-            <div class="p-3 bg-white inline-block rounded-2xl border border-slate-700 shadow-xl">
-                <img src="${qrUrl}" alt="Progress QR Code Payload" class="w-44 h-44 mx-auto">
-            </div>
-            <div>
-                <span class="text-xs font-bold text-cyan-400 block">Scan with Phone Camera to Sync</span>
-                <p class="text-[11px] text-slate-400 mt-0.5">Or use 6-digit Sync PIN on your second device:</p>
-            </div>
-            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800 font-mono text-xl font-extrabold text-amber-400 tracking-widest inline-block px-6">
-                ${Math.floor(100000 + Math.random() * 900000)}
-            </div>
-        </div>
-    `;
+export function createSyncPayload(snapshot, syncCode) {
+  return {
+    version: 1,
+    appVersion: '2.0.0',
+    exportedAt: new Date().toISOString(),
+    syncCode,
+    state: snapshot
+  };
 }
 
-export function renderBluetoothMode(contentContainer, onScanClick) {
-    contentContainer.innerHTML = `
-        <div class="space-y-4 py-2">
-            <div class="w-16 h-16 rounded-full bg-cyan-500/20 border border-cyan-500/40 text-cyan-400 flex items-center justify-center text-2xl mx-auto animate-pulse">
-                <i class="fa-bluetooth"></i>
-            </div>
-            <div>
-                <h4 class="text-sm font-bold text-white">Web Bluetooth Offline Discovery</h4>
-                <p class="text-xs text-slate-400 mt-1">Scan for nearby laptop or mobile device running College Prep OS.</p>
-            </div>
-            <button id="trigger-bt-scan-btn" class="px-5 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-lg shadow-cyan-600/30">
-                Scan Nearby Devices
-            </button>
-        </div>
-    `;
+export function buildSyncBundle(snapshot) {
+  const syncCode = `${Math.floor(100000 + Math.random() * 900000)}`;
+  const payload = JSON.stringify(createSyncPayload(snapshot, syncCode));
+  return { syncCode, payload };
+}
 
-    document.getElementById('trigger-bt-scan-btn').onclick = onScanClick;
+export function parseSyncPayload(rawText) {
+  if (!rawText || typeof rawText !== 'string') return null;
+
+  try {
+    const parsed = JSON.parse(rawText.trim());
+    if (parsed && parsed.state) {
+      return parsed;
+    }
+  } catch (error) {
+    return null;
+  }
+
+  return null;
+}
+
+export function describeSyncPayload(payload) {
+  const state = payload?.state || payload || {};
+  const completedCount = Object.values(state.completedTasks || {}).filter(Boolean).length;
+  const day = state.currentDay || 1;
+  const xp = state.xp || 0;
+  return `Day ${day} • ${completedCount} task(s) completed • ${xp} XP`;
+}
+
+export function isBluetoothAvailable() {
+  return typeof navigator !== 'undefined' && 'bluetooth' in navigator;
+}
+
+export async function attemptBluetoothDiscovery(onStatus) {
+  if (!isBluetoothAvailable()) {
+    onStatus?.('Web Bluetooth is not available in this browser. Use the QR or copy/share flow instead.');
+    return false;
+  }
+
+  onStatus?.('Checking Bluetooth availability...');
+
+  try {
+    const available = await navigator.bluetooth.getAvailability();
+    if (!available) {
+      onStatus?.('Bluetooth hardware is unavailable on this device. Use the QR or copy/share flow instead.');
+      return false;
+    }
+
+    onStatus?.('Requesting a nearby device...');
+    const device = await navigator.bluetooth.requestDevice({
+      filters: [{ services: [SYNC_SERVICE_UUID] }],
+      optionalServices: [SYNC_SERVICE_UUID]
+    });
+
+    onStatus?.(`Device selected: ${device.name || 'a nearby device'}. The app uses the shared payload flow for the actual transfer.`);
+    return true;
+  } catch (error) {
+    onStatus?.(`Bluetooth discovery was cancelled or failed: ${error.message}`);
+    return false;
+  }
 }

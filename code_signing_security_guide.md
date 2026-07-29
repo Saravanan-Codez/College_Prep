@@ -1,66 +1,94 @@
-# CS College Prep OS — Code Signing & Security Guide (APK & EXE)
+# EngiPrep OS by Falkon Labs — Master Code Signing & Security Guide (APK, EXE, DEB, RPM)
 
-This guide provides instructions for code signing Android `.apk` / `.aab` bundles and Windows `.exe` / `.msi` installers to eliminate OS security warnings (such as "Unsigned Package" on Android or "Windows Protected Your PC" SmartScreen warnings).
+This document provides a comprehensive, production-grade guide for code signing **Android APKs**, **Windows EXEs/MSIs**, and **Linux DEB/RPM packages** to ensure error-free distribution across all platforms.
 
 ---
 
-## 📱 Part 1: Android APK Code Signing (`keytool` & `apksigner`)
+## 📱 1. Android APK & AAB Code Signing (PRE-CONFIGURED)
 
-By default, Tauri compiles Android apps in debug key mode. To generate a **signed production release APK** that installs seamlessly on all Android devices without security warnings:
+> [!IMPORTANT]
+> **Pre-Configured Status:** The release keystore has already been generated and configured in your repository!
+> - **Keystore Path:** `src-tauri/gen/android/release.keystore`
+> - **Properties Config:** `src-tauri/gen/android/key.properties`
+> - **Key Alias:** `engiprep_key`
+> - **Keystore Pass:** `FalkonLabs2026!`
 
-### Step 1: Generate a Release Keystore
-Open your terminal and run:
-
-```bash
-keytool -genkey -v -keystore release.keystore \
-  -alias cs_prep_key -keyalg RSA -keysize 2048 -validity 10000
-```
-- Set a secure password when prompted (e.g. `MySecurePassword123`).
-
-### Step 2: Configure `src-tauri/gen/android/key.properties`
-Create a file at `src-tauri/gen/android/key.properties`:
-
-```properties
-storePassword=MySecurePassword123
-keyPassword=MySecurePassword123
-keyAlias=cs_prep_key
-storeFile=/absolute/path/to/release.keystore
-```
-
-### Step 3: Build Signed Release APK
-Run the Bun Tauri build command:
+### How to Compile Signed Android APKs:
+When you are ready to build for Android, run:
 
 ```bash
 bun run tauri android build --apk
 ```
 
-The compiled APK at `src-tauri/gen/android/app/build/outputs/apk/release/app-release.apk` will now be **100% digitally signed**!
+The resulting binary at `src-tauri/gen/android/app/build/outputs/apk/release/app-release.apk` will be **100% digitally signed** with your release key.
+
+### Manual Verification of Signed APK:
+To verify the signature on any Android device or build system:
+```bash
+apksigner verify --verbose src-tauri/gen/android/app/build/outputs/apk/release/app-release.apk
+```
 
 ---
 
-## 🪟 Part 2: Windows EXE Code Signing & SmartScreen Bypass
+## 🪟 2. Windows EXE & MSI Code Signing (`signtool`)
 
-When running an unsigned `.exe` or `.msi` on Windows, Microsoft Defender SmartScreen may display a warning dialog ("Windows protected your PC").
+When distributing a Windows binary (`.exe` or `.msi`), Microsoft Defender SmartScreen displays a warning banner ("Windows protected your PC") unless the executable is signed with a valid digital certificate.
 
-### Option A: 1-Click Unblock for Local Users
-If running a self-built `.exe` on your Windows PC:
-1. Right-click the `.exe` file -> Select **Properties**.
-2. At the bottom under Security, check **Unblock** -> Click **Apply**.
+### Option A: Local Bypass (For Personal Testing)
+To run an unsigned `.exe` locally without warnings:
+1. Open PowerShell as Administrator.
+2. Run:
+   ```powershell
+   Unblock-File -Path .\EngiPrep-OS-Setup.exe
+   ```
 
-Alternatively via PowerShell:
-```powershell
-Unblock-File -Path .\cs-college-prep-os.exe
+### Option B: Self-Signed Certificate Setup (For Internal Distribution)
+1. **Create Self-Signed Certificate**:
+   ```powershell
+   $cert = New-SelfSignedCertificate -Type CodeSigningCert `
+     -Subject "CN=Falkon Labs, O=Falkon Labs, C=US" `
+     -CertStoreLocation "Cert:\CurrentUser\My" `
+     -KeyUsage DigitalSignature `
+     -FriendlyName "Falkon Labs Code Signing"
+   ```
+
+2. **Export to PFX File**:
+   ```powershell
+   Export-PfxCertificate -Cert $cert -FilePath .\FalkonLabsCert.pfx -Password (ConvertTo-SecureString -String "FalkonLabs2026!" -Force -AsPlainText)
+   ```
+
+3. **Sign Windows Executable**:
+   ```powershell
+   signtool sign /f .\FalkonLabsCert.pfx /p FalkonLabs2026! /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 .\EngiPrep-OS-Setup.exe
+   ```
+
+---
+
+## 🐧 3. Linux Package Signing (DEB & RPM GPG Keys)
+
+To sign `.deb` and `.rpm` packages for apt/dnf repository distribution:
+
+### 1. Generate GPG Key Pair:
+```bash
+gpg --full-generate-key
+```
+- Select `RSA and RSA` (4096-bit), specify `Falkon Labs <dev@falkonlabs.io>`.
+
+### 2. Sign Debian Package (`.deb`):
+```bash
+dpkg-sig --sign builder src-tauri/target/release/bundle/deb/CS\ College\ Prep\ OS_2.0.0_amd64.deb
 ```
 
-### Option B: Sign Binary with a Self-Signed / EV Certificate
-To sign your executable with `signtool` (included with Windows SDK):
+### 3. Sign RedHat/Fedora Package (`.rpm`):
+```bash
+rpm --addsign src-tauri/target/release/bundle/rpm/CS\ College\ Prep\ OS-2.0.0-1.x86_64.rpm
+```
 
-1. Generate a self-signed certificate in PowerShell:
-   ```powershell
-   New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=CS Prep OS" -CertStoreLocation Cert:\CurrentUser\My
-   ```
+---
 
-2. Sign the binary:
-   ```powershell
-   signtool sign /fd SHA256 /a /n "CS Prep OS" .\cs-college-prep-os.exe
-   ```
+## 🌐 Official Reference Documentation Links
+
+- 📖 [Android Developer APK Signing Guide](https://developer.android.com/studio/publish/app-signing)
+- 📖 [Tauri Mobile Android Guide](https://v2.tauri.app/start/migrate/from-tauri-1/#android-and-ios)
+- 📖 [Microsoft SignTool Documentation](https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool)
+- 📖 [Debian Package Signing Guide](https://wiki.debian.org/SecureApt)

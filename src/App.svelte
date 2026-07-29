@@ -10,6 +10,7 @@
   import { calculateSM2 } from './js/modules/sm2Engine.js';
   import { executeCCode } from './js/modules/cRunner.js';
   import { sendGeminiPrompt } from './js/modules/aiMentor.js';
+  import { buildSyncBundle, parseSyncPayload, attemptBluetoothDiscovery, describeSyncPayload } from './js/modules/p2pSync.js';
 
   let splashFinished = false;
   let currentDay = 1;
@@ -47,6 +48,11 @@
 
   let importStrategy = 'overwrite';
   let pendingImportData = null;
+  let syncCode = '';
+  let syncPayload = '';
+  let syncStatus = 'Choose a sync method to share your current study state.';
+  let syncBusy = false;
+  let syncImportText = '';
 
   // Gemini AI Assistant State
   let geminiApiKey = '';
@@ -229,10 +235,9 @@
     }
   }
 
-  function exportJSON() {
-    addXP(10, "JSON Export");
-    const fullMasterState = {
-      appVersion: "2.0.0",
+  function getMasterStateSnapshot() {
+    return {
+      appVersion: '2.0.0',
       exportTimestamp: new Date().toISOString(),
       currentDay,
       theme,
@@ -249,14 +254,117 @@
       geminiApiKey,
       chatMessages
     };
+  }
 
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullMasterState, null, 2));
+  function exportJSON() {
+    addXP(10, 'JSON Export');
+    const fullMasterState = getMasterStateSnapshot();
+
+    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(fullMasterState, null, 2));
     const dlAnchor = document.createElement('a');
-    dlAnchor.setAttribute("href", dataStr);
-    dlAnchor.setAttribute("download", `engi_prep_master_state_${new Date().toISOString().slice(0, 10)}.json`);
+    dlAnchor.setAttribute('href', dataStr);
+    dlAnchor.setAttribute('download', `engi_prep_master_state_${new Date().toISOString().slice(0, 10)}.json`);
     document.body.appendChild(dlAnchor);
     dlAnchor.click();
     dlAnchor.remove();
+  }
+
+  function openSyncModal() {
+    const bundle = buildSyncBundle(getMasterStateSnapshot());
+    syncCode = bundle.syncCode;
+    syncPayload = bundle.payload;
+    syncStatus = 'Ready to share. Use the sync code, QR code, or copy the payload to another device.';
+    syncImportText = '';
+    showP2PModal = true;
+  }
+
+  async function handleCopySyncPayload() {
+    if (!syncPayload) return;
+
+    try {
+      await navigator.clipboard.writeText(syncPayload);
+      syncStatus = 'Sync payload copied to your clipboard.';
+    } catch (error) {
+      syncStatus = 'Clipboard access was blocked, so copy the payload from the text box below.';
+    }
+  }
+
+  async function handleShareSyncPayload() {
+    if (!syncPayload) return;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'College Prep Sync Payload',
+          text: syncPayload
+        });
+        syncStatus = 'Sync payload shared successfully.';
+      } catch (error) {
+        syncStatus = 'Sharing was cancelled.';
+      }
+    } else {
+      await handleCopySyncPayload();
+    }
+  }
+
+  async function handleBluetoothScan() {
+    syncBusy = true;
+    const success = await attemptBluetoothDiscovery((message) => {
+      syncStatus = message;
+    });
+    syncBusy = false;
+
+    if (!success) {
+      syncStatus = syncStatus || 'Bluetooth sync was unavailable. Use the payload flow instead.';
+    }
+  }
+
+  function applyIncomingState(payloadText) {
+    const parsedPayload = parseSyncPayload(payloadText);
+    if (!parsedPayload) {
+      syncStatus = 'The pasted payload was not recognised. Try pasting the full sync payload from the other device.';
+      return false;
+    }
+
+    const incomingState = parsedPayload.state || {};
+    if (importStrategy === 'overwrite') {
+      currentDay = incomingState.currentDay || currentDay;
+      theme = incomingState.theme || theme;
+      completedTasks = incomingState.completedTasks || {};
+      customNotes = incomingState.customNotes || {};
+      problemLogs = incomingState.problemLogs || {};
+      quizScores = incomingState.quizScores || {};
+      xp = incomingState.xp || 0;
+      streakCount = incomingState.streakCount || streakCount;
+      unlockedBadges = incomingState.unlockedBadges || [];
+      flashcardsState = incomingState.flashcardsState || {};
+      spotifyPlaylistId = incomingState.spotifyPlaylistId || spotifyPlaylistId;
+      geminiApiKey = incomingState.geminiApiKey || geminiApiKey;
+      chatMessages = incomingState.chatMessages || chatMessages;
+    } else {
+      completedTasks = { ...completedTasks, ...(incomingState.completedTasks || {}) };
+      customNotes = { ...customNotes, ...(incomingState.customNotes || {}) };
+      problemLogs = { ...problemLogs, ...(incomingState.problemLogs || {}) };
+      quizScores = { ...quizScores, ...(incomingState.quizScores || {}) };
+      xp = Math.max(xp, incomingState.xp || 0);
+      streakCount = Math.max(streakCount, incomingState.streakCount || streakCount);
+      unlockedBadges = [...new Set([...(unlockedBadges || []), ...(incomingState.unlockedBadges || [])])];
+      flashcardsState = { ...flashcardsState, ...(incomingState.flashcardsState || {}) };
+      if (incomingState.spotifyPlaylistId) spotifyPlaylistId = incomingState.spotifyPlaylistId;
+      if (incomingState.geminiApiKey) geminiApiKey = incomingState.geminiApiKey;
+      if (incomingState.chatMessages) chatMessages = [...chatMessages, ...(incomingState.chatMessages || [])];
+    }
+
+    saveState();
+    syncStatus = `Sync complete. ${describeSyncPayload(parsedPayload)}`;
+    syncImportText = '';
+    showP2PModal = false;
+    return true;
+  }
+
+  function handleSyncImport() {
+    if (!syncImportText.trim()) return;
+    applyIncomingState(syncImportText.trim());
   }
 
   function handleFileSelect(e) {
@@ -383,7 +491,7 @@
           <i class="fa-brands fa-spotify mr-1.5"></i> <span class="hidden sm:inline">Spotify Player</span>
         </button>
 
-        <button on:click={() => showP2PModal = true} class="neu-btn text-xs text-cyan-500">
+        <button on:click={openSyncModal} class="neu-btn text-xs text-cyan-500">
           <i class="fa-bluetooth mr-1.5"></i> <span class="hidden sm:inline">P2P Sync</span>
         </button>
 
@@ -496,13 +604,13 @@
       <!-- TAB 3: ANKI SM-2 FLASHCARDS -->
       {:else if activeTab === 'flashcards'}
         <div class="max-w-xl mx-auto space-y-6">
-          <div class="perspective-1000 w-full min-h-[260px] cursor-pointer" on:click={flipCard}>
+          <button type="button" class="perspective-1000 w-full min-h-[260px] cursor-pointer text-left" on:click={flipCard} aria-label="Flip flashcard">
             <div class="relative w-full h-full transform-style-3d transition-transform duration-500 neu-card flex flex-col justify-between text-center">
               <span class="text-xs font-black text-purple-500 uppercase tracking-widest">{currentCard.category}</span>
               <h3 class="text-xl font-bold text-[var(--text-main)] my-6">{isFlashcardFlipped ? currentCard.answer : currentCard.question}</h3>
               <span class="text-[11px] font-mono text-[var(--text-muted)]">{isFlashcardFlipped ? currentCard.exp : 'Click to flip card 🔄'}</span>
             </div>
-          </div>
+          </button>
           <div class="grid grid-cols-4 gap-3">
             <button on:click={() => rateFlashcard(1)} class="neu-btn text-xs text-red-500">Again (1d)</button>
             <button on:click={() => rateFlashcard(2)} class="neu-btn text-xs text-amber-500">Hard (2d)</button>
@@ -630,7 +738,7 @@
 
         <!-- Embedded Spotify Player Iframe (Correct Embed Format: https://open.spotify.com/embed/playlist/<ID>) -->
         <div class="rounded-2xl overflow-hidden neu-panel-inset p-1">
-          <iframe title="Spotify Player Embed" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/{spotifyPlaylistId}?utm_source=generator&theme=0" width="100%" height="240" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <iframe title="Spotify Player Embed" style="border-radius:12px" src={`https://open.spotify.com/embed/playlist/${spotifyPlaylistId}?utm_source=generator&theme=0`} width="100%" height="240" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
       </div>
     </div>
@@ -641,14 +749,44 @@
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 backdrop-blur-md p-4">
       <div class="neu-card max-w-md w-full space-y-4 text-center">
         <div class="flex items-center justify-between border-b border-slate-700/10 pb-3">
-          <h3 class="text-base font-extrabold text-cyan-500"><i class="fa-bluetooth text-cyan-500 mr-2"></i>P2P Bluetooth Sync</h3>
+          <h3 class="text-base font-extrabold text-cyan-500"><i class="fa-bluetooth text-cyan-500 mr-2"></i>P2P Sync</h3>
           <button on:click={() => showP2PModal = false} class="neu-btn w-8 h-8 p-0 rounded-xl text-[var(--text-muted)]"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <p class="text-xs font-semibold text-[var(--text-muted)]">Pair phone and laptop offline over Web Bluetooth or QR code.</p>
-        <div class="p-4 neu-panel-inset font-mono text-2xl font-extrabold text-amber-500 tracking-widest">
-          {Math.floor(100000 + Math.random() * 900000)}
+        <p class="text-xs font-semibold text-[var(--text-muted)]">Share the current study state securely between devices with a sync code, QR payload, or clipboard import.</p>
+
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/70 p-3 space-y-3">
+          <div class="flex items-center justify-between gap-3">
+            <div class="text-left">
+              <p class="text-[10px] font-black uppercase tracking-[0.25em] text-cyan-400">Sync code</p>
+              <p class="text-2xl font-extrabold text-amber-500 tracking-[0.35em]">{syncCode}</p>
+            </div>
+            <div class="flex gap-2">
+              <button on:click={handleCopySyncPayload} class="neu-btn text-[11px] px-3 py-2">Copy</button>
+              <button on:click={handleShareSyncPayload} class="neu-btn text-[11px] px-3 py-2">Share</button>
+            </div>
+          </div>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
+            <img src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(syncPayload)}`} alt="Sync payload QR code" class="w-44 h-44 mx-auto rounded-xl" />
+          </div>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 p-3 text-left">
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-cyan-400">How it works</p>
+            <p class="text-[11px] mt-1 text-[var(--text-muted)]">The app packages your current task progress, XP, badges, and notes into a compact sync payload. Scan the QR code, copy the payload, or paste it into another device to import it.</p>
+          </div>
+
+          <button on:click={handleBluetoothScan} disabled={syncBusy} class="w-full neu-btn text-xs text-cyan-500 font-extrabold disabled:opacity-60">
+            {syncBusy ? 'Scanning...' : 'Scan Nearby Devices'}
+          </button>
+
+          <div class="rounded-xl border border-slate-800 bg-slate-900/40 px-3 py-2 text-left">
+            <p class="text-[10px] font-black uppercase tracking-[0.25em] text-cyan-400">Status</p>
+            <p class="text-[11px] mt-1 text-[var(--text-muted)]">{syncStatus}</p>
+          </div>
+
+          <textarea bind:value={syncImportText} rows="4" placeholder="Paste a sync payload or backup JSON here" class="w-full neu-field text-xs font-mono"></textarea>
+          <button on:click={handleSyncImport} class="w-full neu-btn text-xs text-cyan-500 font-extrabold">Import Shared State</button>
         </div>
-        <button on:click={() => showP2PModal = false} class="w-full neu-btn text-xs text-cyan-500 font-extrabold">Close Sync</button>
       </div>
     </div>
   {/if}
@@ -688,8 +826,8 @@
           </ol>
         </div>
         <div>
-          <label class="text-xs font-bold block mb-1">Your Gemini API Key:</label>
-          <input type="password" bind:value={geminiApiKey} placeholder="AIzaSy..." class="w-full neu-field text-xs font-mono text-purple-500">
+          <label for="gemini-api-key" class="text-xs font-bold block mb-1">Your Gemini API Key:</label>
+          <input id="gemini-api-key" type="password" bind:value={geminiApiKey} placeholder="AIzaSy..." class="w-full neu-field text-xs font-mono text-purple-500">
         </div>
         <div class="flex justify-end gap-2 pt-2">
           <button on:click={() => showAIKeyModal = false} class="neu-btn text-xs text-[var(--text-muted)]">Cancel</button>
