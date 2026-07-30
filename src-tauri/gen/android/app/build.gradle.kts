@@ -16,6 +16,19 @@ val tauriProperties = Properties().apply {
 android {
     compileSdk = 36
     namespace = "com.csprepos.desktop"
+
+    signingConfigs {
+        create("release") {
+            val ksFile = file("../falkon_labs.keystore")
+            if (ksFile.exists()) {
+                storeFile = ksFile
+                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "FalkonLabs2026!"
+                keyAlias = System.getenv("KEY_ALIAS") ?: "falkonlabs"
+                keyPassword = System.getenv("KEY_PASSWORD") ?: "FalkonLabs2026!"
+            }
+        }
+    }
+
     defaultConfig {
         manifestPlaceholders["usesCleartextTraffic"] = "true"
         applicationId = "com.csprepos.desktop"
@@ -37,6 +50,10 @@ android {
             }
         }
         getByName("release") {
+            val ksFile = file("../falkon_labs.keystore")
+            if (ksFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             proguardFiles(
                 *fileTree(".") { include("**/*.pro") }
