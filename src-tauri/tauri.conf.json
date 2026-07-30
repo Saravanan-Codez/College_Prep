@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "CS College Prep OS",
+  "productName": "EngiPrep",
   "version": "2.0.0",
   "identifier": "com.csprepos.desktop",
   "build": {
@@ -10,7 +10,7 @@
   "app": {
     "windows": [
       {
-        "title": "CS College Prep 20-Day Mastery OS",
+        "title": "EngiPrep",
         "width": 1280,
         "height": 850,
         "resizable": true,
