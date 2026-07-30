@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -32,6 +36,8 @@ jobs:
 
       - name: Setup Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform != 'macos-latest' && matrix.target || '' }}
 
       - name: Add macOS Universal Targets
         if: matrix.platform == 'macos-latest'
@@ -54,16 +60,15 @@ jobs:
       - name: Install Project Dependencies
         run: npm ci
 
-      - name: Build Desktop Release Packages
+      - name: Build Frontend Assets
+        run: npm run build
+
+      - name: Build Desktop Release Packages (Compilation Only)
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: ${{ github.event.release.tag_name || github.ref_name }}
-          releaseName: 'CS College Prep OS v${{ github.event.release.tag_name || github.ref_name }}'
-          releaseBody: 'Cross-platform native release compiled automatically via GitHub Actions.'
-          releaseDraft: false
-          prerelease: false
+          uploadToRelease: false
           args: ${{ matrix.target == 'universal-apple-darwin' && '--target universal-apple-darwin' || '' }}
 
       - name: Upload Desktop Artifacts
@@ -94,8 +99,8 @@ jobs:
 
       - name: Accept Android SDK Licenses & Install NDK
         run: |
-          yes | sdkmanager --licenses || true
-          yes | sdkmanager "ndk;26.1.10909125" "build-tools;34.0.0" || true
+          yes | sdkmanager --licenses
+          yes | sdkmanager "ndk;26.1.10909125" "build-tools;34.0.0"
 
       - name: Setup Node.js Environment
         uses: actions/setup-node@v4
@@ -116,6 +121,9 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Build Frontend Assets
+        run: npm run build
 
       - name: Decode Android Keystore (If GitHub Secret Set)
         if: secrets.KEYSTORE_BASE64 != ''
@@ -157,10 +165,10 @@ jobs:
       - name: Organize & Rename Release Binaries with Friendly Names
         run: |
           mkdir -p final-assets
-          for f in $(find release-assets/ -type f); do
+          find release-assets -type f -print0 | while IFS= read -r -d '' f; do
             case "$f" in
               *.msi) cp "$f" final-assets/CollegePrepOS-Windows-x64.msi ;;
-              *-setup.exe|*setup*.exe) cp "$f" final-assets/CollegePrepOS-Windows-x64-Setup.exe ;;
+              *setup*.exe|*-setup.exe) cp "$f" final-assets/CollegePrepOS-Windows-x64-Setup.exe ;;
               *.exe) cp "$f" final-assets/CollegePrepOS-Windows-x64.exe ;;
               *.AppImage) cp "$f" final-assets/CollegePrepOS-Linux-x64.AppImage ;;
               *.deb) cp "$f" final-assets/CollegePrepOS-Linux-x64.deb ;;
@@ -170,7 +178,6 @@ jobs:
             esac
           done
           
-          # Verification check
           COUNT=$(find final-assets -type f | wc -l)
           if [ "$COUNT" -eq 0 ]; then
             echo "❌ No release artifacts found!"
