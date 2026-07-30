@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "build:windows": "tauri build",
-    "build:android": "tauri android build --apk",
+    "build:android": "powershell -ExecutionPolicy Bypass -File ./scripts/build-android.ps1",
     "build:android:aab": "tauri android build --aab"
   },
   "dependencies": {

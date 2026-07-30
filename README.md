@@ -1,149 +1,214 @@
-# EngiPrep by Falkon Labs
+# 🎓 EngiPrep by Falkon Labs
 
-> **20-Day Engineering Mastery OS** — A cross-platform, offline-first study app for Computer Science & Engineering students.
+> **20-Day Engineering Mastery OS** — A cross-platform, offline-first study app for Computer Science & Engineering students preparing for college entrance and first-year coursework.
 
-![EngiPrep](https://img.shields.io/badge/Version-2.0.0-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-2.0.0-blue?style=for-the-badge)
 ![Tauri](https://img.shields.io/badge/Tauri-v2.0-FFC107?style=for-the-badge&logo=tauri&logoColor=white)
 ![Svelte](https://img.shields.io/badge/Svelte-v4.2-FF3E00?style=for-the-badge&logo=svelte&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-v5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Platforms](https://img.shields.io/badge/Platforms-Windows%20%7C%20Android%20%7C%20Linux%20%7C%20macOS-success?style=for-the-badge)
+![Videos](https://img.shields.io/badge/YouTube%20Links-Verified%20✓-brightgreen?style=for-the-badge)
 
 ---
 
 ## 🌟 Core Features
 
-- **📖 20-Day In-Depth Curriculum**: 100% hand-crafted roadmap covering Calculus, Physics, Chemistry, C Systems Programming, DSA, Web Dev, and Systems Reading (CSAPP / Clean Code).
-- **✅ Interactive Subtopic Progress Markers**: Check off individual subtopics (`+15 XP`) with automatic parent task completion (`+50 XP`).
+- **📖 20-Day Curriculum** — 100% hand-crafted daily roadmap covering **Calculus**, **Physics**, **Chemistry**, **C Systems Programming**, **DSA**, **Web Dev**, and Systems Reading (*CSAPP / Clean Code*). Every topic has 4 specific exam-ready subtopics and **3 verified YouTube video links** (all links audited ✅).
+- **✅ Interactive Subtopic Progress Markers** — Check off individual subtopics (`+15 XP`) with auto parent-task completion (`+50 XP`).
 - **⚡ Dual-Engine C Code Runner**:
-  - **Desktop / Mobile**: Compiles and executes native C code via **GCC / Clang** (`-O2 -Wall -lm`) inside Tauri.
-  - **Web Browser**: Runs client-side C Execution Engine & Interactive Stack RAM Inspector.
-- **🔊 Focus Soundscape & Music**: 10Hz Alpha Binaural Beats, Soft Rain, Focus Noise, Live Lofi Radio, and direct Spotify App integration.
-- **📡 WiFi LAN Sync**: Offline peer-to-peer sync over local network or mobile hotspot (Host/Client mode on port `7842`).
-- **🤖 Context-Aware Gemini AI Coach**: Integrates your current study day, subtopics, and C code context for targeted tutoring.
-- **💾 Full JSON Data Ownership**: Export and import your entire state (`engi_prep_state.json`).
+  - **Desktop / Mobile**: Compiles and executes native C via **GCC / Clang** (`-O2 -Wall -lm`) inside Tauri.
+  - **Web Browser**: Client-side C execution sandbox with a visual Stack RAM Inspector.
+- **🔊 Focus Soundscape & Music** — 10Hz Alpha Binaural Beats, Soft Rain, Focus Noise, Live Lofi Radio, and Spotify App integration.
+- **📡 WiFi LAN Sync** — Offline peer-to-peer sync over local network or hotspot (Host/Client on port `7842`).
+- **🤖 Context-Aware Gemini AI Coach** — Integrates your active day, subtopics, and C code for targeted tutoring.
+- **💾 Full JSON Data Ownership** — Export/import your entire progress state (`engi_prep_state.json`).
+- **🃏 Spaced Repetition Flashcards** — SM-2 algorithm for long-term retention of key definitions.
+- **📊 Gamification System** — XP, streaks, level-ups, and unlockable achievement badges.
 
 ---
 
-## 🚀 Build Commands by Platform
+## 📚 Curriculum At a Glance
 
-### Environment Setup (Prerequisites)
+| Subject | Topics Covered (20 Days) |
+|---|---|
+| 📐 **Mathematics** | Functions & Limits → Derivatives → Integration → ODEs → 3D Vectors → Linear Algebra → Laplace & Fourier → Probability |
+| ⚛️ **Physics** | Vectors & Units → Kinematics → Newton's Laws → Rotational Motion → SHM → Waves → Electromagnetism → Optics |
+| 🧪 **Chemistry** | Atomic Structure → Chemical Bonding → Periodic Trends → Gas Laws → Thermochemistry → Equilibrium → Organic Chemistry |
+| 💻 **C Programming** | Variables & I/O → Conditionals → Loops → Arrays → Strings → Functions → Pointers → Memory → Structs → Files → Capstone |
+| 🌲 **DSA** | Search & Sort → Linked Lists → Stacks & Queues → Trees → Graphs → Dynamic Programming |
+| 🌐 **Web Dev** | HTML5 → CSS Box/Flex/Grid → Responsive Design → JavaScript → DOM → Async/Await → REST API → Git → Deployment |
+
+> Each day: **3 verified YouTube lectures** per subject + specific coding exercises + a chapter from *Clean Code* or *CSAPP*.
+
+---
+
+## 🚀 Quick Start
 
 ```bash
-# Set Android & Java environment variables (Linux / macOS)
+# 1. Clone the repo
+git clone https://github.com/Saravanan-Codez/College_Prep.git
+cd College_Prep
+
+# 2. Install dependencies
+npm install
+
+# 3. Run web dev server (instant — no Rust required)
+npm run dev
+
+# 4. Run full desktop app with Tauri backend
+npm run tauri dev
+```
+
+**Prerequisites**: [Node.js v20+](https://nodejs.org) · [Rust stable](https://rustup.rs) · [VS Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) *(Windows only)*
+
+---
+
+## 🏗️ Build Commands by Platform
+
+### Environment Variables (Android / Linux / macOS)
+
+```bash
 export ANDROID_HOME="$HOME/Android/Sdk"
-export NDK_HOME="$ANDROID_HOME/ndk/26.1.10909125"
+export NDK_HOME="$ANDROID_HOME/ndk/29.0.13846066"
 export JAVA_HOME="/usr/lib/jvm/java-21-openjdk"
-export PATH="$HOME/.bun/bin:$HOME/.cargo/bin:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$HOME/.cargo/bin:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
 ```
+
+### 1. 🌐 Web Application
+
+```bash
+npm run build      # → dist/  (deploy to Netlify, Vercel, etc.)
+npm run preview    # preview production build locally
+```
+
+*Netlify: Build command `npm run build` · Publish directory `dist` · `NODE_VERSION=20`*
 
 ---
 
-### 1. 🌐 Web Application (Netlify / Vercel / Static Hosting)
+### 2. 📱 Android (APK & AAB)
 
 ```bash
-# Install dependencies
-bun install   # or: npm install
+# One-click release APK
+npm run build:android
 
-# Build static production bundle to dist/
-bun run build # or: npm run build
+# Debug APK (for direct device testing)
+npm run tauri android build --target aarch64 --apk --debug
 
-# Preview production build locally
-bun run preview
+# Google Play App Bundle
+npm run build:android:aab
 ```
 
-**Netlify Deployment Settings:**
-- **Build Command**: `npm run build`
-- **Publish Directory**: `dist`
-- **Environment Variable**: `NODE_VERSION = 20`
+*Output: `src-tauri/gen/android/app/build/outputs/apk/universal/`*
 
 ---
 
-### 2. 📱 Android Mobile (APK & AAB)
-
-#### Debug APK (For Immediate Device Testing)
-```bash
-bun run tauri android build --target aarch64 --apk --debug
-```
-*Output Location:* `src-tauri/gen/android/app/build/outputs/apk/universal/debug/app-universal-debug.apk`
-
-#### Release APK (Optimized for Distribution)
-```bash
-bun run tauri android build --target aarch64 --apk
-```
-*Output Location:* `src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk`
-
-#### Android App Bundle (Google Play Store AAB)
-```bash
-bun run tauri android build --target aarch64 --aab
-```
-
----
-
-### 3. 🐧 Linux Desktop (.AppImage / .deb)
-
-```bash
-# Add rust target
-rustup target add x86_64-unknown-linux-gnu
-
-# Build Linux AppImage and DEB packages
-bun run tauri build
-```
-*Output Location:* `src-tauri/target/release/bundle/appimage/` and `src-tauri/target/release/bundle/deb/`
-
----
-
-### 4. 🪟 Windows Desktop (.exe / .msi)
+### 3. 🪟 Windows Desktop (.exe / .msi)
 
 ```cmd
-:: On Windows machine (PowerShell / CMD)
-rustup target add x86_64-pc-windows-msvc
-
-:: Build Windows installer (.msi) and standalone executable (.exe)
-bun run tauri build
+npm run build:windows
 ```
-*Output Location:* `src-tauri\target\release\bundle\msi\` and `src-tauri\target\release\bundle\nsis\`
+
+*Outputs:*
+- `src-tauri\target\release\cs-college-prep-os.exe`
+- `src-tauri\target\release\bundle\msi\EngiPrep_2.0.0_x64_en-US.msi`
+- `src-tauri\target\release\bundle\nsis\EngiPrep_2.0.0_x64-setup.exe`
+
+---
+
+### 4. 🐧 Linux Desktop (.AppImage / .deb)
+
+```bash
+rustup target add x86_64-unknown-linux-gnu
+npm run tauri build
+```
+
+*Output: `src-tauri/target/release/bundle/{appimage,deb}/`*
 
 ---
 
 ### 5. 🍎 macOS Desktop (.dmg / .app)
 
 ```bash
-# On macOS machine (Intel / Apple Silicon)
-rustup target add aarch64-apple-darwin
-rustup target add x86_64-apple-darwin
-
-# Build macOS DMG and Application bundle
-bun run tauri build
+rustup target add aarch64-apple-darwin x86_64-apple-darwin
+npm run tauri build
 ```
-*Output Location:* `src-tauri/target/release/bundle/dmg/` and `src-tauri/target/release/bundle/macos/`
+
+*Output: `src-tauri/target/release/bundle/{dmg,macos}/`*
+
+---
+
+## ☁️ Automated CI/CD (GitHub Actions)
+
+Publishing a **GitHub Release** triggers 4 parallel runners (**Windows · Linux · macOS · Android**) that compile all release binaries and attach them to the Release Assets automatically.
+
+Workflow: [`.github/workflows/build.yml`](.github/workflows/build.yml)
 
 ---
 
 ## 🛠️ Project Structure
 
-```
+```text
 College_Prep/
-├── index.html                 # Main HTML entry with mobile viewport settings
-├── netlify.toml               # Netlify production build configuration
-├── package.json               # Node.js dependencies & scripts
+├── index.html                  # Main HTML entry point
+├── netlify.toml                # Netlify deployment config
+├── package.json                # Scripts & dependencies
+├── vite.config.js              # Vite bundler configuration
+├── .github/
+│   └── workflows/
+│       └── build.yml           # Multi-platform CI/CD release workflow
 ├── public/
-│   └── favicon.png            # Falkon Labs logo browser favicon
+│   └── favicon.png             # Falkon Labs logo
+├── scripts/
+│   └── build-android.ps1       # 1-click Android release script
 ├── src/
-│   ├── App.svelte             # Main Svelte UI Shell
+│   ├── App.svelte              # Main Svelte UI shell (tabs, state, layout)
 │   ├── components/
-│   │   └── SplashScreen.svelte# Animated Falkon Labs Splash Screen
+│   │   └── SplashScreen.svelte # Animated Falkon Labs splash screen
 │   ├── css/
-│   │   └── styles.css         # Dark glassmorphism design system
+│   │   └── styles.css          # Dark glassmorphism design system
 │   ├── js/
-│   │   ├── data/              # 20-day curriculum, quizzes, flashcards
-│   │   └── modules/           # Audio synth, AI mentor, C runner, P2P sync
+│   │   ├── app.js              # Core state manager & persistence layer
+│   │   ├── data/
+│   │   │   ├── curriculum.js   # ⭐ 20-day topics, subtopics & video links
+│   │   │   ├── quizzes.js      # Daily quiz question banks
+│   │   │   ├── flashcards.js   # SM-2 spaced repetition flashcard deck
+│   │   │   └── snippets.js     # Day-by-day C code snippet examples
+│   │   └── modules/
+│   │       ├── audio.js        # Soundscape synthesizer & Spotify integration
+│   │       ├── aiMentor.js     # Gemini AI coach API integration
+│   │       ├── cRunner.js      # C code execution bridge (native + WASM)
+│   │       ├── gamification.js # XP, levels, streaks & achievement badges
+│   │       ├── sm2Engine.js    # Spaced repetition SM-2 algorithm
+│   │       └── bluetoothP2PSync.js  # WiFi LAN peer-to-peer sync engine
 │   └── resources/
-│       └── images/            # Falkon Labs PNG logo asset
+│       └── images/             # Falkon Labs brand assets
 └── src-tauri/
-    ├── Cargo.toml             # Rust dependencies (lazy_static, get_if_addrs)
-    ├── tauri.conf.json        # EngiPrep app metadata & bundle configuration
+    ├── Cargo.toml              # Rust dependencies
+    ├── tauri.conf.json         # App metadata & bundle configuration
+    ├── gen/android/            # Generated Android Studio Gradle project
     └── src/
-        └── lib.rs             # Rust native HTTP sync server & GCC C compiler backend
+        ├── main.rs             # Windows GUI entry (hidden console mode)
+        └── lib.rs              # Rust HTTP sync server & GCC C compiler bridge
 ```
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions of all kinds. Whether you're fixing a typo, adding a flashcard, or improving a subtopic explanation — every improvement directly helps a student preparing for their exams.
+
+👉 Read the full **[CONTRIBUTING.md](CONTRIBUTING.md)** for setup, workflow, and code guidelines.
+
+**Quick ways to contribute:**
+
+| Area | File to Edit |
+|---|---|
+| 📝 Improve topic subtopics | [`src/js/data/curriculum.js`](src/js/data/curriculum.js) |
+| 🎬 Fix / suggest better YouTube videos | [`src/js/data/curriculum.js`](src/js/data/curriculum.js) |
+| 🃏 Add flashcard definitions | [`src/js/data/flashcards.js`](src/js/data/flashcards.js) |
+| ❓ Add quiz questions | [`src/js/data/quizzes.js`](src/js/data/quizzes.js) |
+| 💻 Add C code snippets | [`src/js/data/snippets.js`](src/js/data/snippets.js) |
+| 🐛 Report bugs / broken links | [GitHub Issues](../../issues) |
 
 ---
 

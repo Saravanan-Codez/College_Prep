@@ -1,4 +1,4 @@
-export const CURRICULUM_DATA = [
+﻿export const CURRICULUM_DATA = [
     {
         "day": 1,
         "phase": "Phase 1: Foundations",
@@ -15,8 +15,8 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "3Blue1Brown - What is a Function?",
-                    "embedId": "kvGlZuUveCg",
-                    "url": "https://www.youtube.com/watch?v=kvGlZuUveCg"
+                    "embedId": "WUvTyaaNkzM",
+                    "url": "https://www.youtube.com/watch?v=WUvTyaaNkzM"
                 },
                 {
                     "title": "Khan Academy - Domain and Range of Functions",
@@ -42,18 +42,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Flipping Physics - Intro to Vectors & Components",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Vectors & Scalar Quantities",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Vectors in Physics",
-                    "embedId": "ml4NSsn-S-8",
-                    "url": "https://www.youtube.com/watch?v=ml4NSsn-S-8"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 }
             ]
         },
@@ -74,13 +74,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Quantum Numbers Overview",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Electron Configuration",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
@@ -108,8 +108,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Variables & Data Types",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Syntax & Compiling with clang/gcc",
@@ -130,18 +130,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "CS50 - Arrays & Memory Layout",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Data Structures Arrays",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Array Representation in Memory",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
@@ -167,8 +167,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - HTML in 100 Seconds",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -190,13 +190,13 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "3Blue1Brown - Essence of Calculus Limits",
-                    "embedId": "kfF40MiXwge",
-                    "url": "https://www.youtube.com/watch?v=kfF40MiXwge"
+                    "embedId": "9vKqVkMQHKk",
+                    "url": "https://www.youtube.com/watch?v=9vKqVkMQHKk"
                 },
                 {
                     "title": "Professor Leonard - Calculus 1 Limits Introduction",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Limits and Continuity",
@@ -222,13 +222,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Physics Galaxy - Motion in One Dimension",
-                    "embedId": "rA97bWJ_h-Y",
-                    "url": "https://www.youtube.com/watch?v=rA97bWJ_h-Y"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Michel van Biezen - Physics Kinematics Overview",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
@@ -278,18 +278,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Neso Academy - C Control Flow Statements",
-                    "embedId": "1T-9GZ6B_W8",
-                    "url": "https://www.youtube.com/watch?v=1T-9GZ6B_W8"
+                    "embedId": "8Ib7nwc33uA",
+                    "url": "https://www.youtube.com/watch?v=8Ib7nwc33uA"
                 },
                 {
                     "title": "freeCodeCamp - C If Statements & Operators",
-                    "embedId": "xVawf_E_YQ8",
-                    "url": "https://www.youtube.com/watch?v=xVawf_E_YQ8"
+                    "embedId": "zYierUhIFNQ",
+                    "url": "https://www.youtube.com/watch?v=zYierUhIFNQ"
                 },
                 {
                     "title": "CodeWithHarry - C Switch Case Tutorial",
-                    "embedId": "Y3sXk2M_y8w",
-                    "url": "https://www.youtube.com/watch?v=Y3sXk2M_y8w"
+                    "embedId": "zYierUhIFNQ",
+                    "url": "https://www.youtube.com/watch?v=zYierUhIFNQ"
                 }
             ]
         },
@@ -305,8 +305,8 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "CS50 - Linear Search vs Binary Search",
-                    "embedId": "n0vJ_iB7Vvg",
-                    "url": "https://www.youtube.com/watch?v=n0vJ_iB7Vvg"
+                    "embedId": "P3YID7liBug",
+                    "url": "https://www.youtube.com/watch?v=P3YID7liBug"
                 },
                 {
                     "title": "MyCodeSchool - Binary Search Algorithm",
@@ -397,8 +397,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Walter Lewin MIT - Newton's Laws Lecture",
-                    "embedId": "wWnfJ0-smB8",
-                    "url": "https://www.youtube.com/watch?v=wWnfJ0-smB8"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "CrashCourse - Newton's Laws of Motion",
@@ -453,18 +453,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Neso Academy - C Loops for while do-while",
-                    "embedId": "wJ-gR3GkL1A",
-                    "url": "https://www.youtube.com/watch?v=wJ-gR3GkL1A"
+                    "embedId": "KJgsSFOSQv0",
+                    "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
                 },
                 {
                     "title": "freeCodeCamp - C Loops & Iteration",
-                    "embedId": "87SH2Rn048w",
-                    "url": "https://www.youtube.com/watch?v=87SH2Rn048w"
+                    "embedId": "KJgsSFOSQv0",
+                    "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
                 },
                 {
                     "title": "CodeWithHarry - C Loops Practice",
-                    "embedId": "hE7V1wM_gV4",
-                    "url": "https://www.youtube.com/watch?v=hE7V1wM_gV4"
+                    "embedId": "KJgsSFOSQv0",
+                    "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
                 }
             ]
         },
@@ -490,8 +490,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Abdul Bari - Selection Sort Algorithm",
-                    "embedId": "92BfagHl5vU",
-                    "url": "https://www.youtube.com/watch?v=92BfagHl5vU"
+                    "embedId": "Ns4TPTC8whw",
+                    "url": "https://www.youtube.com/watch?v=Ns4TPTC8whw"
                 }
             ]
         },
@@ -545,13 +545,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Maxima and Minima Calculus",
-                    "embedId": "PqFqE7w9xX8",
-                    "url": "https://www.youtube.com/watch?v=PqFqE7w9xX8"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Optimization Calculus",
-                    "embedId": "87SH2Rn048w",
-                    "url": "https://www.youtube.com/watch?v=87SH2Rn048w"
+                    "embedId": "KJgsSFOSQv0",
+                    "url": "https://www.youtube.com/watch?v=KJgsSFOSQv0"
                 }
             ]
         },
@@ -567,18 +567,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Flipping Physics - Work Energy Theorem",
-                    "embedId": "wWnfJ0-smB8",
-                    "url": "https://www.youtube.com/watch?v=wWnfJ0-smB8"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Physics Galaxy - Work Power Energy",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Physics Work & Energy",
-                    "embedId": "ml4NSsn-S-8",
-                    "url": "https://www.youtube.com/watch?v=ml4NSsn-S-8"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 }
             ]
         },
@@ -599,13 +599,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Ideal Gas Law Problems",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Gas Laws Introduction",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
@@ -628,8 +628,8 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Neso Academy - 2D Arrays in C",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "freeCodeCamp - C Arrays & Matrices",
@@ -638,8 +638,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "CS50 - Array Data Representation",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 }
             ]
         },
@@ -660,13 +660,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "MyCodeSchool - Insertion Sort Tutorial",
-                    "embedId": "i-SKeocBwVU",
-                    "url": "https://www.youtube.com/watch?v=i-SKeocBwVU"
+                    "embedId": "JU767SDMDvA",
+                    "url": "https://www.youtube.com/watch?v=JU767SDMDvA"
                 },
                 {
                     "title": "Abdul Bari - Insertion Sort Complexity",
-                    "embedId": "92BfagHl5vU",
-                    "url": "https://www.youtube.com/watch?v=92BfagHl5vU"
+                    "embedId": "Ns4TPTC8whw",
+                    "url": "https://www.youtube.com/watch?v=Ns4TPTC8whw"
                 }
             ]
         },
@@ -715,8 +715,8 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "3Blue1Brown - Integration & Fundamental Theorem",
-                    "embedId": "rfG8ce4nSr0",
-                    "url": "https://www.youtube.com/watch?v=rfG8ce4nSr0"
+                    "embedId": "FnJqaIESC2s",
+                    "url": "https://www.youtube.com/watch?v=FnJqaIESC2s"
                 },
                 {
                     "title": "Professor Leonard - Definite Integrals Calculus",
@@ -725,8 +725,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Khan Academy - Calculus Integration",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 }
             ]
         },
@@ -742,18 +742,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Flipping Physics - Conservation of Momentum",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Collisions & Impulse",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Center of Mass & Collisions",
-                    "embedId": "ml4NSsn-S-8",
-                    "url": "https://www.youtube.com/watch?v=ml4NSsn-S-8"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 }
             ]
         },
@@ -774,13 +774,13 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Hess's Law",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Enthalpy Calculations",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
@@ -803,8 +803,8 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "Neso Academy - Strings in C Language",
-                    "embedId": "V1J1K9h6O2A",
-                    "url": "https://www.youtube.com/watch?v=V1J1K9h6O2A"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "freeCodeCamp - C Strings & Character Manipulation",
@@ -830,18 +830,18 @@ export const CURRICULUM_DATA = [
             "videos": [
                 {
                     "title": "CS50 - String Algorithms & ASCII",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - String Traversal Data Structure",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - String Pattern Matching Intro",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
@@ -867,8 +867,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Responsive Design in 100 Seconds",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -881,10 +881,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Integration Techniques: Substitution & Parts",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "u-Substitution: Choosing the Correct Inner Function u",
+                "Integration by Parts: LIATE Rule & udv = uv - ∫v du",
+                "Reduction Formulas for ∫sinⁿx and ∫cosⁿx",
+                "Combining Substitution & Parts for Complex Integrands"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -895,8 +895,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Integration Techniques: Substitution & Parts",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Integration Techniques: Substitution & Parts",
@@ -908,37 +908,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Rotational Motion & Moment of Inertia",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Angular Displacement (θ), Velocity (ω) & Acceleration (α)",
+                "Moment of Inertia: I = Σmr² for Discrete & Continuous Bodies",
+                "Parallel Axis Theorem: I = Icm + Md²",
+                "Rotational KE = ½Iω² & Rolling Without Slipping"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Rotational Motion & Moment of Inertia",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Rotational Motion & Moment of Inertia",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Rotational Motion & Moment of Inertia",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Thermochemistry & Hess's Law",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Enthalpy Change ΔH at Constant Pressure (Bomb Calorimetry)",
+                "Standard Enthalpy of Formation ΔH°f for Compounds",
+                "Hess's Law: ΔH°rxn = ΣΔH°f(products) - ΣΔH°f(reactants)",
+                "Bond Energies & Estimating ΔH from Bond Breaking/Forming"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -949,29 +949,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Thermochemistry & Hess's Law",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Thermochemistry & Hess's Law",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Functions & Scope",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Function Prototype, Definition & Return Types",
+                "Stack Frame Allocation & Local Variable Scope",
+                "Global, Static & Register Variable Storage Classes",
+                "Recursive Functions: Base Case & Recursive Call"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 6 Program 1",
-                "Day 6 Program 2",
-                "Day 6 Program 3"
+                "Function Calculator (add, sub, mul, div)",
+                "Fibonacci with Recursion",
+                "GCD using Euclidean Algorithm"
             ],
             "snippetTitle": "Day 6: C Functions & Scope",
             "videos": [
@@ -982,8 +982,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Functions & Scope",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Functions & Scope",
@@ -995,37 +995,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Stack Data Structure (Array Implementation)",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "LIFO Principle: Push O(1) & Pop O(1) Operations",
+                "Fixed-Size Array Stack: top Pointer Management",
+                "Stack Overflow & Underflow Condition Checks",
+                "Applications: Expression Evaluation, Function Call Stack"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Stack Data Structure (Array Implementation)",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Stack Data Structure (Array Implementation)",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Stack Data Structure (Array Implementation)",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript Fundamentals: Variables & Types",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "var, let & const: Scope Differences & Hoisting",
+                "Primitive Types: number, string, boolean, null, undefined, Symbol",
+                "Type Coercion: == vs === & Truthy/Falsy Values",
+                "typeof Operator & Type Checking Patterns"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1041,8 +1041,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript Fundamentals: Variables & Types",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1055,10 +1055,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Trigonometric Substitution & Partial Fractions",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Trig Substitution: sqrt(a²-x²), sqrt(a²+x²), sqrt(x²-a²) Cases",
+                "Partial Fraction Decomposition for Distinct Linear Factors",
+                "Repeated Roots and Irreducible Quadratic Factors",
+                "Applying Partial Fractions to Improper Rational Functions"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1069,8 +1069,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Trigonometric Substitution & Partial Fractions",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Trigonometric Substitution & Partial Fractions",
@@ -1082,37 +1082,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Torque & Angular Momentum",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Torque as Cross Product: τ = r × F, Direction & Magnitude",
+                "Newton's 2nd Law for Rotation: τ_net = Iα",
+                "Angular Momentum L = Iω & Conservation Conditions",
+                "Precession of a Spinning Gyroscope"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Torque & Angular Momentum",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Torque & Angular Momentum",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Torque & Angular Momentum",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Chemical Equilibrium & Le Chatelier",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Equilibrium Constant Expression: Kc & Kp",
+                "Reaction Quotient Q vs K: Predicting Direction of Shift",
+                "Le Chatelier's Principle: Effect of Concentration, P, T Changes",
+                "Equilibrium Calculations: ICE Table Method"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1123,29 +1123,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Chemical Equilibrium & Le Chatelier",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Chemical Equilibrium & Le Chatelier",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Pass-by-Value vs Pass-by-Reference",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Stack Copies in Pass-by-Value: Side-Effect Free",
+                "Pass-by-Pointer: Modifying Caller's Memory",
+                "Array Decay to Pointer When Passed to Functions",
+                "const Qualifier to Protect Pointer Parameters"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 7 Program 1",
-                "Day 7 Program 2",
-                "Day 7 Program 3"
+                "Swap Without Temp (Pass-by-Pointer)",
+                "Find Max of Array via Pointer",
+                "Increment All Array Elements via Pointer"
             ],
             "snippetTitle": "Day 7: C Pass-by-Value vs Pass-by-Reference",
             "videos": [
@@ -1156,8 +1156,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Pass-by-Value vs Pass-by-Reference",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Pass-by-Value vs Pass-by-Reference",
@@ -1169,37 +1169,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Queue Data Structure (Circular Array)",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "FIFO Principle: Enqueue & Dequeue O(1) Operations",
+                "Circular Array: front & rear Pointer Wraparound",
+                "Full vs Empty Queue Distinction (One Slot Wasted)",
+                "Applications: BFS, Job Scheduling, Print Queues"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Queue Data Structure (Circular Array)",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Queue Data Structure (Circular Array)",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Queue Data Structure (Circular Array)",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript Functions & Arrow Functions",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Function Declaration vs Function Expression",
+                "Arrow Functions: Lexical this & Concise Syntax",
+                "Default Parameters, Rest Parameters & Spread Operator",
+                "Higher-Order Functions: map(), filter(), reduce()"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1215,8 +1215,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript Functions & Arrow Functions",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1229,10 +1229,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "First-Order Differential Equations",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Separable ODEs: Separating Variables & Integrating",
+                "Linear First-Order ODE with Integrating Factor",
+                "Exact Equations & Checking the Exactness Condition",
+                "Initial Value Problems & Direction Field Sketching"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1243,8 +1243,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - First-Order Differential Equations",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - First-Order Differential Equations",
@@ -1256,37 +1256,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Simple Harmonic Motion (SHM)",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Spring-Mass System: F = -kx → ODE d²x/dt² + ω²x = 0",
+                "Angular Frequency ω = √(k/m), Period T = 2π/ω",
+                "Energy in SHM: E = ½kA² = ½kx² + ½mv²",
+                "Simple Pendulum (θ small), Damped & Driven Oscillations"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Simple Harmonic Motion (SHM)",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Simple Harmonic Motion (SHM)",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Simple Harmonic Motion (SHM)",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Acids, Bases & pH Calculations",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Arrhenius, Brønsted-Lowry & Lewis Acid-Base Definitions",
+                "pH = -log[H⁺], Ka & Kb Constants, pKa & pKb",
+                "Buffer Solutions: Henderson-Hasselbalch Equation",
+                "Titration Curves, Equivalence Point & Indicators"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1297,29 +1297,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Acids, Bases & pH Calculations",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Acids, Bases & pH Calculations",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Pointers & Address-Of Operator (&, *)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Pointer Declaration: int *p & Dereferencing *p",
+                "Address-Of Operator & & Pointer Assignment",
+                "NULL Pointers & Null Checks Before Dereferencing",
+                "Pointer to Pointer (**) & Multi-Level Indirection"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 8 Program 1",
-                "Day 8 Program 2",
-                "Day 8 Program 3"
+                "Pointer Dereferencing Demo",
+                "Array of Pointers",
+                "Generic Swap via Void Pointer"
             ],
             "snippetTitle": "Day 8: C Pointers & Address-Of Operator (&, *)",
             "videos": [
@@ -1330,8 +1330,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Pointers & Address-Of Operator (&, *)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Pointers & Address-Of Operator (&, *)",
@@ -1343,37 +1343,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Singly Linked List Implementation",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Node Structure: Data + Next Pointer",
+                "Insert at Head O(1), Insert at Tail O(N)",
+                "Delete Node by Value: Pointer Juggling Technique",
+                "Reverse a Linked List: Iterative & Recursive Approach"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Singly Linked List Implementation",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Singly Linked List Implementation",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Singly Linked List Implementation",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript DOM Traversal & Selection",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "querySelector() & querySelectorAll() vs getElementById()",
+                "DOM Tree: parentNode, childNodes, siblings Navigation",
+                "createElement(), appendChild() & innerHTML vs textContent",
+                "DOM Manipulation Performance: Batching & DocumentFragment"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1389,8 +1389,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript DOM Traversal & Selection",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1403,10 +1403,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "3D Vectors & Cross/Dot Products",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "3D Vector Components: Position, Unit Vectors (i, j, k)",
+                "Dot Product: Projection, Angle Between Vectors, Work",
+                "Cross Product: Direction (Right-Hand Rule), Magnitude, Torque",
+                "Triple Scalar Product & Volume of Parallelepiped"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1417,8 +1417,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - 3D Vectors & Cross/Dot Products",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - 3D Vectors & Cross/Dot Products",
@@ -1430,37 +1430,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Wave Motion & Sound Wave Physics",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Transverse vs Longitudinal Waves: Properties & Speed Equation",
+                "Wave Equation: y(x,t) = A sin(kx - ωt + φ)",
+                "Sound Intensity, Loudness (dB) & Inverse Square Law",
+                "Doppler Effect, Resonance in Pipes & Beats Phenomenon"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Wave Motion & Sound Wave Physics",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Wave Motion & Sound Wave Physics",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Wave Motion & Sound Wave Physics",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Electrochemistry & Nernst Equation",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Galvanic vs Electrolytic Cells: Anode/Cathode Reactions",
+                "Standard Cell Potential: E°cell = E°cathode - E°anode",
+                "Nernst Equation: E = E° - (RT/nF)ln Q",
+                "Faraday's Laws of Electrolysis & Electroplating Calculations"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1471,29 +1471,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Electrochemistry & Nernst Equation",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Electrochemistry & Nernst Equation",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Pointer Arithmetic & Array Equivalence",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Pointer Arithmetic: p+n Moves n * sizeof(type) Bytes",
+                "Array Name as Pointer: arr[i] == *(arr + i)",
+                "Difference Between Pointers (ptrdiff_t)",
+                "Iterating Arrays with Pointers vs Index-Based Loops"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 9 Program 1",
-                "Day 9 Program 2",
-                "Day 9 Program 3"
+                "Pointer Arithmetic Walk",
+                "Array Sum via Pointer",
+                "String Length via Pointer"
             ],
             "snippetTitle": "Day 9: C Pointer Arithmetic & Array Equivalence",
             "videos": [
@@ -1504,8 +1504,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Pointer Arithmetic & Array Equivalence",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Pointer Arithmetic & Array Equivalence",
@@ -1517,37 +1517,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Doubly Linked List Operations",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Node Structure: Data + Next + Prev Pointers",
+                "Bidirectional Traversal Advantage Over Singly Linked",
+                "Insert Before/After a Given Node in O(1)",
+                "Delete Node Without Head Reference: Direct Pointer Fix"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Doubly Linked List Operations",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Doubly Linked List Operations",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Doubly Linked List Operations",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript Event Listeners & Event Loop",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "addEventListener(): Event Types & Handler Registration",
+                "Event Bubbling, Capturing & stopPropagation()",
+                "Call Stack, Web APIs, Callback Queue & Event Loop Model",
+                "setTimeout vs requestAnimationFrame for Animations"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1563,8 +1563,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript Event Listeners & Event Loop",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1577,10 +1577,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Partial Derivatives & Multivariable Calculus",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Partial Derivatives: Holding Other Variables Constant",
+                "Gradient Vector ∇f & Directional Derivatives",
+                "Chain Rule for Multivariable Functions",
+                "Lagrange Multipliers for Constrained Optimization"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1591,8 +1591,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Partial Derivatives & Multivariable Calculus",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Partial Derivatives & Multivariable Calculus",
@@ -1604,37 +1604,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Coulomb's Law & Electric Fields",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Coulomb's Law: F = k|q₁q₂|/r² & Vector Superposition",
+                "Electric Field E = F/q₀ for Point Charges and Distributions",
+                "Continuous Charge Distribution: Linear, Surface, Volume λ/σ/ρ",
+                "Field Lines, Flux ΦE = E·A & Solid Angle Concept"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Coulomb's Law & Electric Fields",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Coulomb's Law & Electric Fields",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Coulomb's Law & Electric Fields",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Chemical Kinetics & Rate Laws",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Rate Law: rate = k[A]^m[B]^n (Experimental Determination)",
+                "Integrated Rate Laws: Zero, First, Second Order",
+                "Arrhenius Equation: k = Ae^(-Ea/RT) & Activation Energy",
+                "Reaction Mechanisms: Elementary Steps & Rate-Determining Step"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1645,29 +1645,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Chemical Kinetics & Rate Laws",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Chemical Kinetics & Rate Laws",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Dynamic Memory Allocation (malloc, free)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "malloc(), calloc() & realloc() on the Heap",
+                "Memory Layout: Stack vs Heap vs BSS vs Data Segments",
+                "free() and Memory Leak Prevention Practices",
+                "Dangling Pointers & Double-Free Undefined Behavior"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 10 Program 1",
-                "Day 10 Program 2",
-                "Day 10 Program 3"
+                "Dynamic Array (malloc + free)",
+                "Dynamic 2D Matrix",
+                "Heap Memory Leak Demo & Fix"
             ],
             "snippetTitle": "Day 10: C Dynamic Memory Allocation (malloc, free)",
             "videos": [
@@ -1678,8 +1678,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Dynamic Memory Allocation (malloc, free)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Dynamic Memory Allocation (malloc, free)",
@@ -1691,37 +1691,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Circular Linked Lists & Applications",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Circular Singly vs Circular Doubly Linked List",
+                "Traversal Termination: Detecting Return to Head",
+                "Insert & Delete in Circular List O(1) with Tail Pointer",
+                "Applications: Round-Robin Scheduling, Josephus Problem"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Circular Linked Lists & Applications",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Circular Linked Lists & Applications",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Circular Linked Lists & Applications",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript Promises & Async/Await",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Promise States: Pending, Fulfilled, Rejected",
+                "Promise Chaining with .then() & Error Handling with .catch()",
+                "async/await Syntax: Writing Asynchronous Code Synchronously",
+                "Promise.all(), Promise.race() & Promise.allSettled()"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1737,8 +1737,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript Promises & Async/Await",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1751,10 +1751,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Double & Triple Integrals",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Iterated Double Integrals: Changing the Order of Integration",
+                "Double Integrals in Polar Coordinates (r, θ)",
+                "Triple Integrals in Cylindrical and Spherical Coordinates",
+                "Applications: Volume, Mass, Center of Mass"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1765,8 +1765,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Double & Triple Integrals",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Double & Triple Integrals",
@@ -1778,37 +1778,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Electric Flux & Gauss's Law",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Electric Flux: ΦE = ∮E·dA Through Closed Surfaces",
+                "Gauss's Law: ΦE = Qenc/ε₀",
+                "Applying Gauss's Law: Spherical, Cylindrical & Planar Symmetry",
+                "Conductors in Electrostatic Equilibrium & Shielding"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Electric Flux & Gauss's Law",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Electric Flux & Gauss's Law",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Electric Flux & Gauss's Law",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Surface Chemistry & Adsorption",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Physisorption vs Chemisorption: Energy Differences",
+                "Freundlich & Langmuir Adsorption Isotherms",
+                "Catalysis: Homogeneous, Heterogeneous & Enzyme Catalysis",
+                "Colloidal Systems: Types, Tyndall Effect & Coagulation"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1819,29 +1819,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Surface Chemistry & Adsorption",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Surface Chemistry & Adsorption",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Structures (struct) & Typedef",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "struct Definition, Member Access with . and ->",
+                "typedef for Custom Type Aliases",
+                "struct Padding, Alignment & Packed Attribute",
+                "Array of Structs & Passing Structs to Functions"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 11 Program 1",
-                "Day 11 Program 2",
-                "Day 11 Program 3"
+                "Student Record Struct",
+                "Array of Structs (Inventory System)",
+                "Struct with Function Pointer"
             ],
             "snippetTitle": "Day 11: C Structures (struct) & Typedef",
             "videos": [
@@ -1852,8 +1852,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Structures (struct) & Typedef",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Structures (struct) & Typedef",
@@ -1865,37 +1865,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Recursion & Call Stack Frames",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Base Case Definition & Stack Overflow Prevention",
+                "Tail Recursion: Optimization to Iteration by Compiler",
+                "Recursive Tree: Visualizing Call Hierarchy",
+                "Converting Recursion to Iteration with Explicit Stack"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Recursion & Call Stack Frames",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Recursion & Call Stack Frames",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Recursion & Call Stack Frames",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "JavaScript Fetch API & JSON Processing",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "fetch() API: Making HTTP GET & POST Requests",
+                "Response.json(), Response.text() & Status Codes",
+                "JSON.parse() & JSON.stringify() for Data Serialization",
+                "Error Handling: Network Errors vs HTTP Error Responses"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -1911,8 +1911,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - JavaScript Fetch API & JSON Processing",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -1925,10 +1925,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Line Integrals & Vector Fields",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Scalar Line Integrals: Arc Length & Mass of a Wire",
+                "Vector Line Integrals: Work Done by a Force Field",
+                "Conservative Vector Fields & Potential Functions",
+                "Path Independence & Fundamental Theorem for Line Integrals"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -1939,8 +1939,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Line Integrals & Vector Fields",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Line Integrals & Vector Fields",
@@ -1952,37 +1952,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Electric Potential & Capacitance",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Electric Potential V = kQ/r & Potential Difference ΔV",
+                "Relationship Between E & V: E = -∇V",
+                "Capacitance: C = Q/V for Parallel Plate, Cylindrical Capacitors",
+                "Energy Stored in Capacitor: U = ½CV² & Dielectrics"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Electric Potential & Capacitance",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Electric Potential & Capacitance",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Electric Potential & Capacitance",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Coordination Chemistry & Complexes",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Ligand Types: Monodentate, Bidentate & Chelating Agents",
+                "IUPAC Naming of Coordination Compounds",
+                "Crystal Field Theory: Splitting in Octahedral & Tetrahedral Fields",
+                "Magnetic Properties & Colour of Transition Metal Complexes"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -1993,29 +1993,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Coordination Chemistry & Complexes",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Coordination Chemistry & Complexes",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Unions & Bitfields Memory Layout",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Union: All Members Share the Same Memory Address",
+                "Union Size = Largest Member, Endianness Testing",
+                "Bitfields: Packing Multiple Values in One Integer",
+                "Practical Uses: Networking Headers, Hardware Registers"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 12 Program 1",
-                "Day 12 Program 2",
-                "Day 12 Program 3"
+                "Union Type-Punning Demo",
+                "Bitfield Status Register",
+                "Color Packing with Bitfields"
             ],
             "snippetTitle": "Day 12: C Unions & Bitfields Memory Layout",
             "videos": [
@@ -2026,8 +2026,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Unions & Bitfields Memory Layout",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Unions & Bitfields Memory Layout",
@@ -2039,37 +2039,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Merge Sort & Divide-and-Conquer",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Divide Step: Split Array into Two Halves Recursively",
+                "Merge Step: Two-Pointer Technique for Merging Sorted Halves",
+                "Time Complexity: O(N log N) All Cases; Space O(N)",
+                "Stability Property & External Sorting for Large Files"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Merge Sort & Divide-and-Conquer",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Merge Sort & Divide-and-Conquer",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Merge Sort & Divide-and-Conquer",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Modern CSS Animations & Transitions",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "CSS Transition: transition-property, duration, timing-function",
+                "@keyframes: Defining Animation Sequences with from/to & %",
+                "animation-fill-mode, iteration-count & direction Properties",
+                "Performance: transform & opacity for GPU-Accelerated Animations"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2085,8 +2085,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Modern CSS Animations & Transitions",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2099,10 +2099,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Green's Theorem & Divergence/Curl",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Green's Theorem: Relating Line Integrals to Area Integrals",
+                "Divergence (∇·F): Outward Flow & the Divergence Theorem",
+                "Curl (∇×F): Rotation of a Vector Field & Stokes' Theorem",
+                "Applications to Fluid Flow and Electromagnetic Theory"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2113,8 +2113,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Green's Theorem & Divergence/Curl",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Green's Theorem & Divergence/Curl",
@@ -2126,37 +2126,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Current, Resistance & Ohm's Law",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Current Density J = I/A & Drift Velocity of Electrons",
+                "Ohm's Law V = IR & Resistivity ρ = RA/L",
+                "Kirchhoff's Current Law (KCL) & Voltage Law (KVL)",
+                "Series & Parallel Circuits: Equivalent Resistance"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Current, Resistance & Ohm's Law",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Current, Resistance & Ohm's Law",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Current, Resistance & Ohm's Law",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Organic Chemistry IUPAC Nomenclature",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "IUPAC Naming of Alkanes, Cycloalkanes & Branched Chains",
+                "Functional Group Priority: RCOOH > RCOH > ROH > RNH₂",
+                "Stereochemistry: R/S Configuration & E/Z Isomers",
+                "Naming Aromatic Compounds: ortho, meta, para Substituents"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -2167,29 +2167,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Organic Chemistry IUPAC Nomenclature",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Organic Chemistry IUPAC Nomenclature",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C File I/O (fopen, fread, fwrite)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Text vs Binary File Modes: fopen() Mode Strings",
+                "fprintf(), fscanf(), fgets() for Text File Processing",
+                "fread()/fwrite() for Binary Structures",
+                "fseek(), ftell() & feof() for File Position Control"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 13 Program 1",
-                "Day 13 Program 2",
-                "Day 13 Program 3"
+                "Write & Read Text File",
+                "Binary File Write & Read Struct",
+                "File Copy Utility"
             ],
             "snippetTitle": "Day 13: C File I/O (fopen, fread, fwrite)",
             "videos": [
@@ -2200,8 +2200,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C File I/O (fopen, fread, fwrite)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C File I/O (fopen, fread, fwrite)",
@@ -2213,37 +2213,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Quick Sort & Partitioning Algorithms",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Quick Sort Partition Scheme: Lomuto vs Hoare",
+                "Pivot Selection Strategies: Last, First, Random, Median-of-3",
+                "Average O(N log N) & Worst O(N^2) Case Analysis",
+                "In-Place Sorting & Stability: Why Quick Sort is Unstable"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Quick Sort & Partitioning Algorithms",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Quick Sort & Partitioning Algorithms",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Quick Sort & Partitioning Algorithms",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Web Storage API (localStorage/sessionStorage)",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "localStorage vs sessionStorage: Persistence & Scope Differences",
+                "setItem(), getItem(), removeItem() & clear() API Methods",
+                "Storing Complex Objects with JSON.stringify()/parse()",
+                "Storage Limits (~5MB), Security Risks & IndexedDB for Large Data"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2259,8 +2259,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Web Storage API (localStorage/sessionStorage)",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2273,10 +2273,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Infinite Series & Taylor Expansions",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Convergence Tests: Ratio, Root, Integral & Comparison Tests",
+                "Power Series: Radius & Interval of Convergence",
+                "Taylor & Maclaurin Series for e^x, sin x, cos x, ln(1+x)",
+                "Lagrange Remainder Bound & Error Estimation"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2287,8 +2287,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Infinite Series & Taylor Expansions",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Infinite Series & Taylor Expansions",
@@ -2300,37 +2300,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "DC Circuits & Kirchhoff's Laws",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "KVL: Algebraic Sum of Voltages in Any Closed Loop = 0",
+                "KCL: Algebraic Sum of Currents at Any Node = 0",
+                "Node Voltage Method & Mesh Current Method",
+                "Thevenin & Norton Equivalent Circuits"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - DC Circuits & Kirchhoff's Laws",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - DC Circuits & Kirchhoff's Laws",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - DC Circuits & Kirchhoff's Laws",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Alkanes, Alkenes & Alkynes Mechanics",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Hybridization: sp³ (alkane), sp² (alkene), sp (alkyne)",
+                "Combustion, Halogenation & Free Radical Mechanism",
+                "Electrophilic Addition to Alkenes: Markovnikov's Rule",
+                "Alkynes: Terminal vs Internal, Acidity & Metal Acetylides"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -2341,29 +2341,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Alkanes, Alkenes & Alkynes Mechanics",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Alkanes, Alkenes & Alkynes Mechanics",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Command Line Arguments (argc, argv)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "int main(int argc, char *argv[]) Signature",
+                "Parsing argv[]: Converting Strings with atoi(), strtod()",
+                "Validating Argument Count & Printing Usage Messages",
+                "Building Simple CLI Tools: Calculator, File Processor"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 14 Program 1",
-                "Day 14 Program 2",
-                "Day 14 Program 3"
+                "Count Lines/Words in File",
+                "Sort File Lines",
+                "CSV Parser"
             ],
             "snippetTitle": "Day 14: C Command Line Arguments (argc, argv)",
             "videos": [
@@ -2374,8 +2374,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Command Line Arguments (argc, argv)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Command Line Arguments (argc, argv)",
@@ -2387,37 +2387,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Binary Trees & Traversal (Pre/In/Post)",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Binary Tree Node: Data, Left Child, Right Child",
+                "Preorder (Root-Left-Right), Inorder (Left-Root-Right), Postorder",
+                "Level-Order (BFS) Traversal Using Queue",
+                "Tree Height, Leaf Count & Checking Balanced Trees"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Binary Trees & Traversal (Pre/In/Post)",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Binary Trees & Traversal (Pre/In/Post)",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Binary Trees & Traversal (Pre/In/Post)",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Git Version Control & GitHub Workflow",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "git init, clone, add, commit, push & pull Workflow",
+                "Branching: git branch, checkout, merge & Resolving Conflicts",
+                "git rebase vs git merge: History Strategies",
+                "Pull Requests, Code Review & Collaborative GitHub Workflow"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2433,8 +2433,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Git Version Control & GitHub Workflow",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2447,10 +2447,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Complex Numbers & Euler's Identity",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Complex Plane: Cartesian (a+bi) vs Polar (re^{iθ}) Form",
+                "Euler's Formula: e^{iθ} = cos θ + i sin θ",
+                "De Moivre's Theorem & nth Roots of Complex Numbers",
+                "Applications in Phasors & AC Circuit Analysis"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2461,8 +2461,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Complex Numbers & Euler's Identity",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Complex Numbers & Euler's Identity",
@@ -2474,37 +2474,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Magnetic Fields & Biot-Savart Law",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Magnetic Force on Moving Charge: F = qv × B",
+                "Biot-Savart Law: dB = μ₀I(dl × r̂)/4πr²",
+                "Ampere's Law: ∮B·dl = μ₀Ienc for High-Symmetry Cases",
+                "Solenoids, Toroids & Helmholtz Coils"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Magnetic Fields & Biot-Savart Law",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Magnetic Fields & Biot-Savart Law",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Magnetic Fields & Biot-Savart Law",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Organic Reaction Mechanisms (SN1/SN2)",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "SN2: Backside Attack, Inversion of Configuration, Rate = k[substrate][nucleophile]",
+                "SN1: Carbocation Intermediate, Racemization, Rate = k[substrate]",
+                "E1 vs E2 Elimination: Zaitsev's Rule for Major Product",
+                "Nucleophile Strength, Leaving Group Ability & Solvent Effects"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -2515,29 +2515,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Organic Reaction Mechanisms (SN1/SN2)",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Organic Reaction Mechanisms (SN1/SN2)",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Preprocessor Macros (#define, #include)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "#define for Constants & Function-Like Macros",
+                "Macro Pitfalls: Side Effects & Operator Precedence",
+                "Conditional Compilation: #ifdef, #ifndef, #pragma once",
+                "Header Guards & Include Path Management"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 15 Program 1",
-                "Day 15 Program 2",
-                "Day 15 Program 3"
+                "Macro-Based Stack",
+                "Include Guard Demo",
+                "Variadic Macro Logger"
             ],
             "snippetTitle": "Day 15: C Preprocessor Macros (#define, #include)",
             "videos": [
@@ -2548,8 +2548,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Preprocessor Macros (#define, #include)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Preprocessor Macros (#define, #include)",
@@ -2561,37 +2561,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Binary Search Trees (BST) & Operations",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "BST Property: Left < Root < Right Maintained Recursively",
+                "Search, Insert & Delete in BST: Average O(log N)",
+                "Successor & Predecessor Finding in BST",
+                "Degenerate BST vs Balanced BST: Why AVL/Red-Black Trees?"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Binary Search Trees (BST) & Operations",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Binary Search Trees (BST) & Operations",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Binary Search Trees (BST) & Operations",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Linux Terminal & Bash Scripting",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Filesystem Navigation: ls, cd, pwd, mkdir, rm & cp",
+                "Text Processing: grep, sed, awk & pipe (|) Chaining",
+                "Bash Scripts: Variables, loops, if/else & Functions",
+                "chmod, chown Permissions & Process Management (ps, kill)"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2607,8 +2607,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Linux Terminal & Bash Scripting",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2621,10 +2621,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Linear Algebra: Matrix Determinants & Inverse",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Determinant Calculation: 2×2, 3×3 Cofactor Expansion",
+                "Properties of Determinants: Row Operations & Multiplicativity",
+                "Matrix Inverse via Adjugate: A⁻¹ = adj(A)/det(A)",
+                "Cramer's Rule for Solving Linear Systems"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2635,8 +2635,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Linear Algebra: Matrix Determinants & Inverse",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Linear Algebra: Matrix Determinants & Inverse",
@@ -2648,37 +2648,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Faraday's Law & Induction",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Faraday's Law: EMF = -dΦB/dt (Lenz's Law Direction)",
+                "Motional EMF: ε = BLv in a Moving Conductor",
+                "Self-Inductance L = NΦ/I & Inductor Energy UL = ½LI²",
+                "Mutual Inductance & Transformer Principle"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Faraday's Law & Induction",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Faraday's Law & Induction",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Faraday's Law & Induction",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Alcohols, Ethers & Functional Groups",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Alcohol Oxidation: Primary → Aldehyde → Carboxylic Acid",
+                "Ether Synthesis: Williamson Synthesis (SN2 Mechanism)",
+                "Epoxides: Ring-Opening Under Acidic & Basic Conditions",
+                "Nomenclature, Boiling Points & Hydrogen Bonding Trends"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -2689,29 +2689,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Alcohols, Ethers & Functional Groups",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Alcohols, Ethers & Functional Groups",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Multi-File Compilation & Header Files",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Translation Units & Linking: extern Declarations",
+                "Header File Design: Declarations vs Definitions",
+                "Static Functions for File-Level Scope Limitation",
+                "Makefile Basics: Targets, Dependencies & Rules"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 16 Program 1",
-                "Day 16 Program 2",
-                "Day 16 Program 3"
+                "Multi-File Calculator Project",
+                "Static Library Archive",
+                "Shared Header Design"
             ],
             "snippetTitle": "Day 16: C Multi-File Compilation & Header Files",
             "videos": [
@@ -2722,8 +2722,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Multi-File Compilation & Header Files",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Multi-File Compilation & Header Files",
@@ -2735,37 +2735,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Heaps & Priority Queues",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Max-Heap & Min-Heap Property: Parent >= Children",
+                "Heap as Array: Parent at i, Children at 2i+1 & 2i+2",
+                "Heapify-Up (Insert) & Heapify-Down (Extract-Max) O(log N)",
+                "Heap Sort & Priority Queue Applications: Dijkstra's Algorithm"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Heaps & Priority Queues",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Heaps & Priority Queues",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Heaps & Priority Queues",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Web Performance & Vite Build Tooling",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Core Web Vitals: LCP, FID, CLS Measurement & Optimization",
+                "Vite: Fast Dev Server (ESM-based) & Rollup Production Build",
+                "Code Splitting, Lazy Loading & Dynamic Imports",
+                "Image Optimization, Caching Strategies & Lighthouse Auditing"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2781,8 +2781,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Web Performance & Vite Build Tooling",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2795,10 +2795,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Eigenvalues & Eigenvectors",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Characteristic Equation: det(A - λI) = 0",
+                "Finding Eigenvectors for Each Eigenvalue",
+                "Diagonalization: A = PDP⁻¹ When Applicable",
+                "Applications: Principal Component Analysis, Differential Systems"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2809,8 +2809,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Eigenvalues & Eigenvectors",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Eigenvalues & Eigenvectors",
@@ -2822,37 +2822,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Alternating Current (AC) & RLC Circuits",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "AC Voltage/Current Phasors: v(t) = Vmcos(ωt + φ)",
+                "Impedance: Z = √(R² + (XL - XC)²)",
+                "Resonance Condition: XL = XC, ω₀ = 1/√(LC)",
+                "Power Factor, RMS Values & Average Power in AC Circuits"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Alternating Current (AC) & RLC Circuits",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Alternating Current (AC) & RLC Circuits",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Alternating Current (AC) & RLC Circuits",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Aldehydes, Ketones & Carboxylic Acids",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Nucleophilic Addition to Carbonyls: Aldehydes vs Ketones",
+                "Aldol Condensation & Crossed Aldol Reactions",
+                "Carboxylic Acid Derivatives: Acyl Chlorides, Esters, Amides",
+                "Fischer Esterification & Saponification (Soap Making)"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -2863,29 +2863,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Aldehydes, Ketones & Carboxylic Acids",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Aldehydes, Ketones & Carboxylic Acids",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Bitwise Operations (&, |, ^, ~, <<, >>)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "AND (&) for Masking Bits, OR (|) for Setting Bits",
+                "XOR (^) for Toggling Bits & NOT (~) for Complement",
+                "Left Shift (<<) * 2^n & Right Shift (>>) / 2^n",
+                "Practical Patterns: Flags, Bitmaps & Packing"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 17 Program 1",
-                "Day 17 Program 2",
-                "Day 17 Program 3"
+                "Bit Masking Flags",
+                "Bitset Implementation",
+                "Count Set Bits (Hamming Weight)"
             ],
             "snippetTitle": "Day 17: C Bitwise Operations (&, |, ^, ~, <<, >>)",
             "videos": [
@@ -2896,8 +2896,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Bitwise Operations (&, |, ^, ~, <<, >>)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Bitwise Operations (&, |, ^, ~, <<, >>)",
@@ -2909,37 +2909,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Hash Tables & Collision Resolution",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Hash Function Design: Division, Multiplication Methods",
+                "Chaining with Linked Lists: O(1) Average, O(N) Worst",
+                "Open Addressing: Linear Probing, Quadratic Probing, Double Hashing",
+                "Load Factor α & Rehashing for Performance Maintenance"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Hash Tables & Collision Resolution",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Hash Tables & Collision Resolution",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Hash Tables & Collision Resolution",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Web Security Basics (CORS, XSS, CSRF)",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Same-Origin Policy & CORS Headers: Access-Control-Allow-Origin",
+                "XSS Prevention: Output Encoding & Content Security Policy",
+                "CSRF Attacks & Defense: SameSite Cookies & CSRF Tokens",
+                "HTTPS, HSTS & Secure Headers Best Practices"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -2955,8 +2955,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Web Security Basics (CORS, XSS, CSRF)",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -2969,10 +2969,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Laplace Transforms & Differential Systems",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Definition of Laplace Transform & Region of Convergence",
+                "Transform Pairs: Exponentials, Step, Dirac Delta Functions",
+                "Solving ODEs with Laplace Transforms (s-domain)",
+                "Inverse Laplace via Partial Fractions & Convolution Theorem"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -2983,8 +2983,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Laplace Transforms & Differential Systems",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Laplace Transforms & Differential Systems",
@@ -2996,37 +2996,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Electromagnetic Waves & Spectrum",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Maxwell's Equations: Unification of E & B Fields",
+                "EM Wave Speed: c = 1/√(μ₀ε₀) ≈ 3×10⁸ m/s",
+                "Wave Intensity, Poynting Vector S = E × H/μ₀",
+                "Electromagnetic Spectrum: Radio to Gamma Ray Properties"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Electromagnetic Waves & Spectrum",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Electromagnetic Waves & Spectrum",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Electromagnetic Waves & Spectrum",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Polymers & Biomolecules Structure",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Addition vs Condensation Polymerization Mechanisms",
+                "Biopolymers: Proteins (Peptide Bonds), DNA (Phosphodiester)",
+                "Carbohydrates: Monosaccharides, Haworth Projection, Glycosidic Bond",
+                "Lipids: Triglycerides, Saponification Value & Fatty Acids"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -3037,29 +3037,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Polymers & Biomolecules Structure",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Polymers & Biomolecules Structure",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Function Pointers & Callbacks",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Declaring & Calling Function Pointers: int (*fp)(int, int)",
+                "Passing Functions as Arguments (Callbacks)",
+                "qsort() with Custom Comparator Using Function Pointer",
+                "Function Pointer Arrays for Dispatch Tables"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 18 Program 1",
-                "Day 18 Program 2",
-                "Day 18 Program 3"
+                "Function Pointer Table (Calculator)",
+                "Callback Sort with qsort()",
+                "Event Handler System"
             ],
             "snippetTitle": "Day 18: C Function Pointers & Callbacks",
             "videos": [
@@ -3070,8 +3070,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Function Pointers & Callbacks",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Function Pointers & Callbacks",
@@ -3083,37 +3083,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Graph Representation (Adjacency List/Matrix)",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Adjacency Matrix: O(V²) Space, O(1) Edge Lookup",
+                "Adjacency List: O(V+E) Space, Efficient for Sparse Graphs",
+                "Weighted vs Unweighted, Directed vs Undirected Graphs",
+                "Graph as Input: Parsing Edge Lists & Building Structures"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Graph Representation (Adjacency List/Matrix)",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Graph Representation (Adjacency List/Matrix)",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Graph Representation (Adjacency List/Matrix)",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Single Page Application (SPA) Architecture",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Client-Side Routing: History API & Hash Routing",
+                "Component-Based Architecture & Virtual DOM Concept",
+                "State Management: Lifting State, Context API, Stores",
+                "SPA SEO Challenges: SSR, SSG & Meta Tag Management"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -3129,8 +3129,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Single Page Application (SPA) Architecture",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -3143,10 +3143,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Fourier Series & Harmonics",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Fourier Coefficients: a₀, aₙ, bₙ for Periodic Functions",
+                "Odd & Even Function Symmetry in Fourier Series",
+                "Convergence of Fourier Series & Gibbs Phenomenon",
+                "Applications: Signal Processing, Heat Equation"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -3157,8 +3157,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Fourier Series & Harmonics",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Fourier Series & Harmonics",
@@ -3170,37 +3170,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Ray Optics: Reflection & Lenses",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Law of Reflection & Snell's Law of Refraction",
+                "Total Internal Reflection & Critical Angle",
+                "Lensmaker's Equation: 1/f = (n-1)(1/R₁ - 1/R₂)",
+                "Mirror & Lens Equation: 1/do + 1/di = 1/f"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Ray Optics: Reflection & Lenses",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Ray Optics: Reflection & Lenses",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Ray Optics: Reflection & Lenses",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Solid State Physics & Crystal Lattice",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Crystal Systems: Cubic (SC, BCC, FCC) & Packing Efficiency",
+                "Unit Cell: Atoms Per Unit Cell Calculation Method",
+                "Defects in Crystals: Frenkel, Schottky & Impurity Defects",
+                "Electrical Properties: Conductors, Semiconductors, Insulators"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -3211,29 +3211,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Solid State Physics & Crystal Lattice",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Solid State Physics & Crystal Lattice",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Memory Leak Prevention & Valgrind",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Common Memory Errors: Leak, Use-After-Free, Buffer Overflow",
+                "Valgrind Memcheck: Running & Interpreting Output",
+                "AddressSanitizer (-fsanitize=address) with GCC/Clang",
+                "Writing Memory-Safe Code: RAII-Like Patterns in C"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 19 Program 1",
-                "Day 19 Program 2",
-                "Day 19 Program 3"
+                "Memory Allocator Prototype",
+                "Custom String Library",
+                "Simple Shell Command Parser"
             ],
             "snippetTitle": "Day 19: C Memory Leak Prevention & Valgrind",
             "videos": [
@@ -3244,8 +3244,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Memory Leak Prevention & Valgrind",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Memory Leak Prevention & Valgrind",
@@ -3257,37 +3257,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Graph Search: BFS & DFS Algorithms",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "BFS with Queue: Shortest Path in Unweighted Graphs",
+                "DFS with Stack/Recursion: Connected Components & Cycles",
+                "Time & Space: Both O(V + E) for Adjacency List",
+                "BFS vs DFS Choice: Level-Order vs Backtracking Problems"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Graph Search: BFS & DFS Algorithms",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Graph Search: BFS & DFS Algorithms",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Graph Search: BFS & DFS Algorithms",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "RESTful API Design & Client Integration",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "REST Constraints: Stateless, Uniform Interface, Client-Server",
+                "HTTP Methods: GET, POST, PUT, PATCH, DELETE Semantics",
+                "JSON Request/Response Design, Status Codes & Error Bodies",
+                "Authentication: JWT Tokens & Bearer Authorization Header"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -3303,8 +3303,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - RESTful API Design & Client Integration",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },
@@ -3317,10 +3317,10 @@ export const CURRICULUM_DATA = [
         "math": {
             "topic": "Probability & Gaussian Distributions",
             "subtopics": [
-                "Theoretical Fundamentals & Definitions",
-                "Step-by-Step Problem Solving",
-                "Engineering Application Calculus",
-                "Graphical & Numerical Analysis"
+                "Sample Spaces, Events & Conditional Probability",
+                "Bayes' Theorem & Independent Events",
+                "Normal Distribution: μ, σ, Z-score Standardization",
+                "Central Limit Theorem & Sampling Distributions"
             ],
             "docsUrl": "https://ocw.mit.edu/courses/mathematics/",
             "videos": [
@@ -3331,8 +3331,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Professor Leonard - Probability & Gaussian Distributions",
-                    "embedId": "23nN9X_K10E",
-                    "url": "https://www.youtube.com/watch?v=23nN9X_K10E"
+                    "embedId": "WsQQvHm4lSw",
+                    "url": "https://www.youtube.com/watch?v=WsQQvHm4lSw"
                 },
                 {
                     "title": "Khan Academy - Probability & Gaussian Distributions",
@@ -3344,37 +3344,37 @@ export const CURRICULUM_DATA = [
         "physics": {
             "topic": "Wave Optics & Quantum Physics Intro",
             "subtopics": [
-                "Physical Principles & Formula Derivations",
-                "Experimental Observations",
-                "Vector & Calculus Applications",
-                "Core Problem Solving"
+                "Young's Double-Slit: Fringe Spacing Δy = λL/d",
+                "Diffraction Grating & Single-Slit Diffraction",
+                "Photoelectric Effect: KE_max = hf - φ",
+                "de Broglie Wavelength λ = h/p & Wave-Particle Duality"
             ],
             "docsUrl": "https://openstax.org/details/books/university-physics-volume-1",
             "videos": [
                 {
                     "title": "Flipping Physics - Wave Optics & Quantum Physics Intro",
-                    "embedId": "A3805m-e-uA",
-                    "url": "https://www.youtube.com/watch?v=A3805m-e-uA"
+                    "embedId": "ZM8ECpBuQYE",
+                    "url": "https://www.youtube.com/watch?v=ZM8ECpBuQYE"
                 },
                 {
                     "title": "Physics Galaxy - Wave Optics & Quantum Physics Intro",
-                    "embedId": "g4S3sZ3vK5o",
-                    "url": "https://www.youtube.com/watch?v=g4S3sZ3vK5o"
+                    "embedId": "kKKM8Y-u7ds",
+                    "url": "https://www.youtube.com/watch?v=kKKM8Y-u7ds"
                 },
                 {
                     "title": "Michel van Biezen - Wave Optics & Quantum Physics Intro",
-                    "embedId": "9E3W4xO_qV4",
-                    "url": "https://www.youtube.com/watch?v=9E3W4xO_qV4"
+                    "embedId": "x1-SibwIPM4",
+                    "url": "https://www.youtube.com/watch?v=x1-SibwIPM4"
                 }
             ]
         },
         "chem": {
             "topic": "Semiconductor Physics & P-N Junctions",
             "subtopics": [
-                "Molecular & Atomic Principles",
-                "Reaction Mechanism Walkthroughs",
-                "Quantitative Chemistry Calculations",
-                "Materials Science Applications"
+                "Intrinsic vs Extrinsic (n-type/p-type) Semiconductors",
+                "P-N Junction: Depletion Region & Built-in Potential",
+                "Forward vs Reverse Bias & Diode IV Characteristics",
+                "Applications: LEDs, Solar Cells & Zener Diodes"
             ],
             "docsUrl": "https://chem.libretexts.org/",
             "videos": [
@@ -3385,29 +3385,29 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Organic Chemistry Tutor - Semiconductor Physics & P-N Junctions",
-                    "embedId": "E3g5dZ2-X2M",
-                    "url": "https://www.youtube.com/watch?v=E3g5dZ2-X2M"
+                    "embedId": "hePb00CqvP0",
+                    "url": "https://www.youtube.com/watch?v=hePb00CqvP0"
                 },
                 {
                     "title": "Tyler DeWitt - Semiconductor Physics & P-N Junctions",
-                    "embedId": "ououFyp5rXY",
-                    "url": "https://www.youtube.com/watch?v=ououFyp5rXY"
+                    "embedId": "ywqg9PorTAw",
+                    "url": "https://www.youtube.com/watch?v=ywqg9PorTAw"
                 }
             ]
         },
         "prog": {
             "topic": "C Capstone Systems Project (Memory Allocator)",
             "subtopics": [
-                "Low-Level C Language Mechanics",
-                "Memory & Pointer Interactions",
-                "Standard C Library Functions",
-                "Best Practices & Optimization"
+                "Implementing malloc() with Free List & First-Fit Strategy",
+                "Header Block Design: Size, Status & Alignment Fields",
+                "Coalescing Free Blocks to Prevent Fragmentation",
+                "Testing with Stress Tests & Comparing to libc malloc"
             ],
             "docsUrl": "https://en.cppreference.com/w/c",
             "programs": [
-                "Day 20 Program 1",
-                "Day 20 Program 2",
-                "Day 20 Program 3"
+                "Memory Pool Allocator",
+                "Valgrind-Clean linked list",
+                "Full Data Structure Library"
             ],
             "snippetTitle": "Day 20: C Capstone Systems Project (Memory Allocator)",
             "videos": [
@@ -3418,8 +3418,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Neso Academy - C Capstone Systems Project (Memory Allocator)",
-                    "embedId": "2n7l91W2W94",
-                    "url": "https://www.youtube.com/watch?v=2n7l91W2W94"
+                    "embedId": "2ybLD6_2gKM",
+                    "url": "https://www.youtube.com/watch?v=2ybLD6_2gKM"
                 },
                 {
                     "title": "CS50 - C Capstone Systems Project (Memory Allocator)",
@@ -3431,37 +3431,37 @@ export const CURRICULUM_DATA = [
         "dsa": {
             "topic": "Dynamic Programming (Memoization & Tabulation)",
             "subtopics": [
-                "Data Structure Architecture",
-                "Operation Complexities (Access, Insert, Delete)",
-                "Implementation in C/C++",
-                "Algorithm Walkthroughs & Trade-offs"
+                "Overlapping Subproblems & Optimal Substructure Properties",
+                "Top-Down DP (Memoization): Recursive + Cache",
+                "Bottom-Up DP (Tabulation): Iterative Table Filling",
+                "Classic DP Problems: 0/1 Knapsack, LCS, Coin Change"
             ],
             "docsUrl": "https://visualgo.net/en",
             "videos": [
                 {
                     "title": "CS50 - Dynamic Programming (Memoization & Tabulation)",
-                    "embedId": "LfaMVlDaQ4g",
-                    "url": "https://www.youtube.com/watch?v=LfaMVlDaQ4g"
+                    "embedId": "oBt53YbR9Kk",
+                    "url": "https://www.youtube.com/watch?v=oBt53YbR9Kk"
                 },
                 {
                     "title": "MyCodeSchool - Dynamic Programming (Memoization & Tabulation)",
-                    "embedId": "gDqQfQ_A_c8",
-                    "url": "https://www.youtube.com/watch?v=gDqQfQ_A_c8"
+                    "embedId": "B31LgI4Y4DQ",
+                    "url": "https://www.youtube.com/watch?v=B31LgI4Y4DQ"
                 },
                 {
                     "title": "Abdul Bari - Dynamic Programming (Memoization & Tabulation)",
-                    "embedId": "0eQ4C1_1zR8",
-                    "url": "https://www.youtube.com/watch?v=0eQ4C1_1zR8"
+                    "embedId": "0IAPZzGSbME",
+                    "url": "https://www.youtube.com/watch?v=0IAPZzGSbME"
                 }
             ]
         },
         "web": {
             "topic": "Full-Stack Web Architecture Capstone",
             "subtopics": [
-                "Core Web Technologies & APIs",
-                "Syntax & Implementation Walkthrough",
-                "Browser Architecture & Rendering",
-                "Modern Developer Workflow"
+                "Three-Tier Architecture: Frontend, API, Database",
+                "Database Design: SQL Schema, ORM vs Raw Queries",
+                "Deployment: Containerization with Docker, CI/CD Pipelines",
+                "Environment Variables, Secrets Management & 12-Factor App"
             ],
             "docsUrl": "https://developer.mozilla.org/en-US/",
             "videos": [
@@ -3477,8 +3477,8 @@ export const CURRICULUM_DATA = [
                 },
                 {
                     "title": "Fireship - Full-Stack Web Architecture Capstone",
-                    "embedId": "ok-plXXH4-g",
-                    "url": "https://www.youtube.com/watch?v=ok-plXXH4-g"
+                    "embedId": "DHjqpvDnNGE",
+                    "url": "https://www.youtube.com/watch?v=DHjqpvDnNGE"
                 }
             ]
         },

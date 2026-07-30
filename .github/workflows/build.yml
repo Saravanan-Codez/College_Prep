@@ -1,8 +1,6 @@
-name: Build Cross-Platform Apps (Windows, Android, Linux, macOS)
+name: Release Cross-Platform Apps (Windows, Android, Linux, macOS)
 
 on:
-  push:
-    branches: [ main ]
   release:
     types: [published]
   workflow_dispatch:
@@ -11,138 +9,92 @@ permissions:
   contents: write
 
 jobs:
-  build-tauri:
-    # per-job permissions are optional now since top-level is set
+  build-desktop:
     strategy:
       fail-fast: false
       matrix:
         include:
           - platform: 'ubuntu-22.04'
-            args: ''
+            target: 'x86_64-unknown-linux-gnu'
           - platform: 'windows-latest'
-            args: ''
+            target: 'x86_64-pc-windows-msvc'
           - platform: 'macos-latest'
-            args: ''
+            target: 'aarch64-apple-darwin'
 
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Bun Runtime
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 20
+          cache: 'npm'
 
       - name: Setup Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.target }}
 
-      - name: Install Linux Dependencies (Ubuntu only)
+      - name: Install Linux Build Dependencies (Ubuntu)
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install Bun Dependencies
-        run: bun install
+      - name: Install Project Dependencies
+        run: npm ci || npm install
 
-      - name: Build Vite Svelte Bundle
-        run: bun run build
-
-      - name: Build Tauri Desktop Native App
+      - name: Build Desktop Release & Attach to GitHub Release
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: 'CS College Prep OS v__VERSION__'
+          tagName: ${{ github.event.release.tag_name || github.ref_name }}
+          releaseName: 'CS College Prep OS ${{ github.event.release.tag_name || github.ref_name }}'
           releaseBody: 'Cross-platform native release compiled automatically via GitHub Actions.'
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
-
-      - name: List bundle outputs
-        run: |
-          echo "Listing possible bundle outputs:"
-          ls -la src-tauri/target/release/bundle || true
-          ls -la src-tauri/target/release || true
-          ls -la dist || true
-
-      - name: Upload Desktop Bundles
-        uses: actions/upload-artifact@v4
-        with:
-          name: CS-College-Prep-${{ matrix.platform }}-bundle
-          path: |
-            src-tauri/target/release/bundle/**
-            src-tauri/target/release/**
-            dist/**
 
   build-android:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Java JDK 17
+      - name: Setup Java JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
-          java-version: '17'
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Setup Android SDK & NDK
         uses: android-actions/setup-android@v3
 
-      - name: Setup Bun Runtime
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
 
       - name: Setup Rust Android Targets
-        run: |
-          rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
 
       - name: Install Dependencies & Build Frontend
         run: |
-          bun install
-          bun run build
+          npm ci || npm install
+          npm run build
 
-      - name: Build Android APK via Tauri
+      - name: Build Android Release APK
         run: |
-          bun run tauri android init
-          bun run tauri android build --apk
-        continue-on-error: true
+          npx tauri android init --skip-targets-install
+          npx tauri android build --apk
 
-      - name: Upload Android APK Artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Android APK Asset to GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'release'
         with:
-          name: CS-College-Prep-Android-APK
-          path: src-tauri/gen/android/app/build/outputs/apk/
-
-  attach-release-assets:
-    needs: [build-tauri, build-android]
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: List downloaded artifacts
-        run: |
-          echo "Artifacts downloaded to workspace:/artifacts"
-          ls -la artifacts || true
-
-      - name: Create or get GitHub Release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: ${{ github.event.release.tag_name || github.ref_name || 'v' + github.run_id }}
-          release_name: "CS College Prep ${{ github.event.release.tag_name || github.ref_name || github.run_id }}"
-          body: "Automated release assets uploaded by CI"
-          draft: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifacts to Release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: artifacts/**
+          files: src-tauri/gen/android/app/build/outputs/apk/**/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

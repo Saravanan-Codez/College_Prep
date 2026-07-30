@@ -1,102 +1,45 @@
-# CS College Prep OS — Tauri v2 Cross-Compilation Guide (Windows & Android)
+# CS College Prep OS — Tauri v2 Cross-Compilation Guide
 
-This guide provides step-by-step instructions for compiling the **CS College Prep OS** into native **Windows (`.exe` / `.msi`)** installers and **Android (`.apk` / `.aab`)** packages.
+This guide provides step-by-step instructions for compiling **EngiPrep** into native **Windows (`.exe` / `.msi`)** installers and **Android (`.apk`)** packages.
 
 ---
 
-## 🪟 Part 1: How to Compile for Windows (`.exe` / `.msi`)
+## 🪟 Part 1: Compiling for Windows (`.exe` / `.msi`)
 
-### Option A: Compiling Directly on Windows (Recommended for Local Build)
-
-#### 1. Prerequisites (One-Time Setup):
-- **Windows 10 / 11**
-- **Install C++ Build Tools**:
-  1. Download [Visual Studio Installer](https://visualstudio.microsoft.com/visual-cpp-build-tools/).
-  2. Select **"Desktop development with C++"** workload and install.
-- **Install Rust**:
-  - Download and run [rustup-init.exe](https://rustup.rs/).
-- **Install Bun**:
-  - Open PowerShell and run:
-    ```powershell
-    powershell -c "irm bun.sh/install.ps1 | iex"
-    ```
-
-#### 2. Build Commands:
+### Quick Build Command
 Open PowerShell / Command Prompt inside the repository folder:
 
 ```powershell
-# 1. Install project dependencies
-bun install
+# Build Windows Executable (.exe & .msi installer)
+npm run build:windows
+```
 
-# 2. Build Vite frontend bundle
-bun run build
+- **Output Locations**:
+  - Standalone Executable: `src-tauri\target\release\cs-college-prep-os.exe`
+  - MSI Installer: `src-tauri\target\release\bundle\msi\EngiPrep_2.0.0_x64_en-US.msi`
+  - NSIS Setup: `src-tauri\target\release\bundle\nsis\EngiPrep_2.0.0_x64-setup.exe`
 
-# 3. Build Windows Executable (.exe & .msi installer)
-bun run tauri build
+*(Note: The build is configured with `windows_subsystem = "windows"` so no background console window appears when running the app.)*
+
+---
+
+## 📱 Part 2: Compiling for Android (`.apk`)
+
+### Quick Build Command
+Run the single automated build command in PowerShell:
+
+```powershell
+npm run build:android
 ```
 
 - **Output Location**:
-  `src-tauri\target\release\bundle\msi\CS College Prep OS_2.0.0_x64_en-US.msi`
-  `src-tauri\target\release\cs-college-prep-os.exe`
+  `src-tauri/gen/android/app/build/outputs/apk/universal/release/app-universal-release-unsigned.apk`
 
 ---
 
-### Option B: Building Windows Binary from Linux using `cargo-xwin`
+## ☁️ Part 3: Automated Cloud Builds (GitHub Releases)
 
-If you are on Linux and want to build a Windows binary:
+We have configured **GitHub Actions CI/CD** in `.github/workflows/build.yml`!
 
-```bash
-# 1. Install cargo-xwin cross-compiler helper
-cargo install cargo-xwin
-
-# 2. Add Windows target
-rustup target add x86_64-pc-windows-msvc
-
-# 3. Run Tauri build with target flag
-bun run tauri build --target x86_64-pc-windows-msvc
-```
-
----
-
-## 📱 Part 2: How to Compile for Android (`.apk` / `.aab`)
-
-### 1. Prerequisites (One-Time Setup):
-- **Install Android Studio & SDK**:
-  1. Download [Android Studio](https://developer.android.com/studio).
-  2. Open SDK Manager, install **Android SDK Platform 33/34** and **Android NDK (Side by side)**.
-  3. Set Environment Variables:
-     ```bash
-     export ANDROID_HOME=$HOME/Android/Sdk
-     export NDK_HOME=$ANDROID_HOME/ndk/25.2.9519653
-     ```
-- **Install Rust Android Targets**:
-  ```bash
-  rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
-  ```
-
-### 2. Android Build Commands:
-
-```bash
-# 1. Initialize Android project files inside Tauri (One-time)
-bun run tauri android init
-
-# 2. Build Release APK package
-bun run tauri android build --apk
-
-# Or build Android App Bundle (.aab for Google Play Store)
-bun run tauri android build --aab
-```
-
-- **Output APK Location**:
-  `src-tauri/gen/android/app/build/outputs/apk/release/app-release.apk`
-
----
-
-## ☁️ Part 3: Automated Cloud Builds (Zero Setup required!)
-
-We have already set up **GitHub Actions CI/CD** in `.github/workflows/build.yml`!
-
-Whenever you push your code to GitHub:
-1. GitHub automatically spins up virtual machines for **Windows**, **Linux**, **macOS**, and **Android**.
-2. Compiles `.exe`, `.msi`, `.apk`, `.deb`, and `.dmg` installers in parallel.
-3. Automatically attaches all compiled binaries to your GitHub Releases page!
+- Everyday git commits do **not** trigger slow builds.
+- When you publish a **GitHub Release**, GitHub Actions automatically spins up parallel runners (**Windows**, **Linux**, **macOS**, and **Android**), compiles all release binaries, and attaches them directly under the **Assets** section of your GitHub Release page!
