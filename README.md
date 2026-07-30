@@ -100,6 +100,8 @@ npm run build:android:aab
 
 *Output: `src-tauri/gen/android/app/build/outputs/apk/universal/`*
 
+👉 **Installing APK on your phone via ADB?** See the step-by-step **[ADB Installation Guide (Windows, Linux, macOS)](adb_installation_guide.md)**.
+
 ---
 
 ### 3. 🪟 Windows Desktop (.exe / .msi)
