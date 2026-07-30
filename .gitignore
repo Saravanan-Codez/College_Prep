@@ -1,7 +1,6 @@
 # Node / Bun dependencies
 node_modules/
 bun.lockb
-package-lock.json
 ~/
 
 # Build outputs
@@ -11,8 +10,10 @@ build/
 
 # Tauri Rust build outputs
 src-tauri/target/
-src-tauri/gen/
-src-tauri/Cargo.lock
+src-tauri/gen/schemas/
+src-tauri/gen/android/app/build/
+src-tauri/gen/android/.gradle/
+src-tauri/gen/android/local.properties
 
 # Environment & local secrets
 .env
