@@ -2,7 +2,6 @@ use std::net::{TcpListener, TcpStream};
 use std::io::{Read, Write};
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::net::SocketAddr;
 use std::process::Command;
 use std::fs;
 
@@ -75,7 +74,7 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
         ("OPTIONS", _) => http_response(200, "OK", "text/plain", ""),
         ("GET", "/ping") => http_response(200, "OK", "application/json", r#"{"app":"EngiPrep","status":"ready"}"#),
         ("GET", "/state") => {
-            let state = sync_state.lock().unwrap();
+            let state = sync_state.lock().unwrap_or_else(|e| e.into_inner());
             match state.as_ref() {
                 Some(s) => http_response(200, "OK", "application/json", s),
                 None    => http_response(404, "Not Found", "application/json", r#"{"error":"No state stored yet"}"#),
@@ -87,7 +86,7 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
             } else {
                 match serde_json::from_str::<serde_json::Value>(&body) {
                     Ok(_) => {
-                        let mut state = sync_state.lock().unwrap();
+                        let mut state = sync_state.lock().unwrap_or_else(|e| e.into_inner());
                         *state = Some(body.clone());
                         http_response(200, "OK", "application/json", r#"{"ok":true}"#)
                     }
@@ -109,7 +108,11 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
 fn compile_and_run_c(code: String) -> Result<String, String> {
     let temp_dir = std::env::temp_dir();
     let src_path = temp_dir.join("engi_prep_temp.c");
-    let bin_path = temp_dir.join("engi_prep_temp_bin");
+    let bin_path = if cfg!(target_os = "windows") {
+        temp_dir.join("engi_prep_temp_bin.exe")
+    } else {
+        temp_dir.join("engi_prep_temp_bin")
+    };
 
     if let Err(e) = fs::write(&src_path, &code) {
         return Err(format!("Failed to write source file: {}", e));
