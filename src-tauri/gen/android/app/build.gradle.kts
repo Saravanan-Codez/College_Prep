@@ -22,9 +22,9 @@ android {
             val ksFile = file("../falkon_labs.keystore")
             if (ksFile.exists()) {
                 storeFile = ksFile
-                storePassword = System.getenv("KEYSTORE_PASSWORD") ?: "FalkonLabs2026!"
-                keyAlias = System.getenv("KEY_ALIAS") ?: "falkonlabs"
-                keyPassword = System.getenv("KEY_PASSWORD") ?: "FalkonLabs2026!"
+                storePassword = System.getenv("KEYSTORE_PASSWORD")?.takeIf { it.isNotBlank() } ?: "FalkonLabs2026!"
+                keyAlias = System.getenv("KEY_ALIAS")?.takeIf { it.isNotBlank() } ?: "falkonlabs"
+                keyPassword = System.getenv("KEY_PASSWORD")?.takeIf { it.isNotBlank() } ?: "FalkonLabs2026!"
             }
         }
     }
