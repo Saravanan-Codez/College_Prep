@@ -3,6 +3,8 @@ use std::io::{Read, Write};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::net::SocketAddr;
+use std::process::Command;
+use std::fs;
 
 // ── Shared sync state ──────────────────────────────────────────────
 type SharedState = Arc<Mutex<Option<String>>>;
@@ -45,10 +47,8 @@ fn parse_request(buf: &[u8]) -> (String, String, String) {
         }
     }
 
-    // Body is after double CRLF
     if let Some(body_start) = raw.find("\r\n\r\n") {
         body = raw[body_start + 4..].to_string();
-        // Trim trailing null bytes
         body = body.trim_end_matches('\0').to_string();
     }
 
@@ -63,7 +63,7 @@ fn http_response(status: u16, status_text: &str, content_type: &str, body: &str)
 }
 
 fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
-    let mut buf = vec![0u8; 1024 * 512]; // 512KB buffer
+    let mut buf = vec![0u8; 1024 * 512];
     let n = match stream.read(&mut buf) {
         Ok(n) => n,
         Err(_) => return,
@@ -72,17 +72,8 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
     let (method, path, body) = parse_request(&buf[..n]);
 
     let response = match (method.as_str(), path.as_str()) {
-        // CORS preflight
-        ("OPTIONS", _) => {
-            http_response(200, "OK", "text/plain", "")
-        }
-
-        // Health check
-        ("GET", "/ping") => {
-            http_response(200, "OK", "application/json", r#"{"app":"EngiPrep","status":"ready"}"#)
-        }
-
-        // Pull state from this device
+        ("OPTIONS", _) => http_response(200, "OK", "text/plain", ""),
+        ("GET", "/ping") => http_response(200, "OK", "application/json", r#"{"app":"EngiPrep","status":"ready"}"#),
         ("GET", "/state") => {
             let state = sync_state.lock().unwrap();
             match state.as_ref() {
@@ -90,13 +81,10 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
                 None    => http_response(404, "Not Found", "application/json", r#"{"error":"No state stored yet"}"#),
             }
         }
-
-        // Push state to this device
         ("POST", "/state") => {
             if body.is_empty() {
                 http_response(400, "Bad Request", "application/json", r#"{"error":"Empty body"}"#)
             } else {
-                // Validate it's JSON
                 match serde_json::from_str::<serde_json::Value>(&body) {
                     Ok(_) => {
                         let mut state = sync_state.lock().unwrap();
@@ -110,15 +98,84 @@ fn handle_client(mut stream: TcpStream, sync_state: SharedState) {
                 }
             }
         }
-
         _ => http_response(404, "Not Found", "text/plain", "Not found"),
     };
 
     let _ = stream.write_all(response.as_bytes());
 }
 
-// ── Tauri Commands ─────────────────────────────────────────────────
+// ── Native GCC / Clang C Compiler Engine ───────────────────────────
+#[tauri::command]
+fn compile_and_run_c(code: String) -> Result<String, String> {
+    let temp_dir = std::env::temp_dir();
+    let src_path = temp_dir.join("engi_prep_temp.c");
+    let bin_path = temp_dir.join("engi_prep_temp_bin");
 
+    if let Err(e) = fs::write(&src_path, &code) {
+        return Err(format!("Failed to write source file: {}", e));
+    }
+
+    // Determine compiler: GCC first, then Clang
+    let compiler = if Command::new("gcc").arg("--version").output().is_ok() {
+        "gcc"
+    } else if Command::new("clang").arg("--version").output().is_ok() {
+        "clang"
+    } else {
+        return Err("Neither 'gcc' nor 'clang' compiler binary found on host system.".to_string());
+    };
+
+    let compile_output = Command::new(compiler)
+        .arg("-O2")
+        .arg("-Wall")
+        .arg(&src_path)
+        .arg("-o")
+        .arg(&bin_path)
+        .arg("-lm")
+        .output();
+
+    match compile_output {
+        Ok(output) => {
+            if !output.status.success() {
+                let stderr = String::from_utf8_lossy(&output.stderr);
+                let _ = fs::remove_file(&src_path);
+                return Err(format!("❌ GCC/Clang Compilation Error:\n{}", stderr));
+            }
+        }
+        Err(e) => {
+            let _ = fs::remove_file(&src_path);
+            return Err(format!("Failed to execute compiler binary: {}", e));
+        }
+    }
+
+    // Execute compiled native binary
+    let run_output = Command::new(&bin_path).output();
+
+    let _ = fs::remove_file(&src_path);
+    let _ = fs::remove_file(&bin_path);
+
+    match run_output {
+        Ok(output) => {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            let exit_code = output.status.code().unwrap_or(-1);
+
+            let mut res = String::new();
+            res.push_str(&format!("⚡ Native Compilation with {} (-O2 -lm) succeeded.\n", compiler));
+            res.push_str("--------------------------------------------------\n");
+            if !stdout.is_empty() {
+                res.push_str(&stdout);
+            }
+            if !stderr.is_empty() {
+                res.push_str(&format!("\n[stderr]:\n{}", stderr));
+            }
+            res.push_str(&format!("\n--------------------------------------------------\n[Process exited with status code {}]", exit_code));
+            Ok(res)
+        }
+        Err(e) => Err(format!("Failed to execute compiled binary: {}", e)),
+    }
+}
+
+// ── Tauri Commands ─────────────────────────────────────────────────
 #[tauri::command]
 fn get_local_network_ips() -> Vec<String> {
     get_local_ips()
@@ -130,7 +187,6 @@ fn start_sync_server(port: u16, initial_state: Option<String>) -> Result<String,
         return Err("Server already running".to_string());
     }
 
-    // Store initial state if provided
     if let Some(state) = initial_state {
         let mut s = SYNC_STATE.lock().unwrap();
         *s = Some(state);
@@ -197,6 +253,7 @@ pub fn run() {
             stop_sync_server,
             update_server_state,
             is_server_running,
+            compile_and_run_c,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

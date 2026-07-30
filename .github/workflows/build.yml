@@ -3,12 +3,16 @@ name: Build Cross-Platform Apps (Windows, Android, Linux, macOS)
 on:
   push:
     branches: [ main ]
+  release:
+    types: [published]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build-tauri:
-    permissions:
-      contents: write
+    # per-job permissions are optional now since top-level is set
     strategy:
       fail-fast: false
       matrix:
@@ -57,6 +61,22 @@ jobs:
           releaseDraft: true
           prerelease: false
 
+      - name: List bundle outputs
+        run: |
+          echo "Listing possible bundle outputs:"
+          ls -la src-tauri/target/release/bundle || true
+          ls -la src-tauri/target/release || true
+          ls -la dist || true
+
+      - name: Upload Desktop Bundles
+        uses: actions/upload-artifact@v4
+        with:
+          name: CS-College-Prep-${{ matrix.platform }}-bundle
+          path: |
+            src-tauri/target/release/bundle/**
+            src-tauri/target/release/**
+            dist/**
+
   build-android:
     runs-on: ubuntu-22.04
     steps:
@@ -94,3 +114,35 @@ jobs:
         with:
           name: CS-College-Prep-Android-APK
           path: src-tauri/gen/android/app/build/outputs/apk/
+
+  attach-release-assets:
+    needs: [build-tauri, build-android]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List downloaded artifacts
+        run: |
+          echo "Artifacts downloaded to workspace:/artifacts"
+          ls -la artifacts || true
+
+      - name: Create or get GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ github.event.release.tag_name || github.ref_name || 'v' + github.run_id }}
+          release_name: "CS College Prep ${{ github.event.release.tag_name || github.ref_name || github.run_id }}"
+          body: "Automated release assets uploaded by CI"
+          draft: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts to Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

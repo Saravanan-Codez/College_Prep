@@ -23,10 +23,11 @@
 
   // ── Core State ─────────────────────────────────────────────────────
   let splashFinished = false;
-  let activeTab = 'dashboard';
+  let activeTab = 'home';
   let currentDay = 1;
   let theme = 'dark';
   let completedTasks = {};
+  let completedSubtasks = {};
   let customNotes = {};
   let problemLogs = {};
   let quizScores = {};
@@ -109,7 +110,7 @@
   // ── Persistence ────────────────────────────────────────────────────
   function getFullStateObj() {
     return {
-      currentDay, theme, completedTasks, customNotes, problemLogs, quizScores,
+      currentDay, theme, completedTasks, completedSubtasks, customNotes, problemLogs, quizScores,
       xp, streakCount, unlockedBadges, soundMuted, flashcardsState,
       spotifyPlaylistId, geminiApiKey, chatMessages
     };
@@ -123,6 +124,7 @@
         currentDay           = p.currentDay || 1;
         theme                = p.theme || 'dark';
         completedTasks       = p.completedTasks || {};
+        completedSubtasks    = p.completedSubtasks || {};
         customNotes          = p.customNotes || {};
         problemLogs          = p.problemLogs || {};
         quizScores           = p.quizScores || {};
@@ -326,11 +328,64 @@
     } catch(e) {}
   }
 
+
+  // ── Toast & Notifications ──────────────────────────────────────────
+  let toastMsg = '';
+  let toastTimeout = null;
+  function showToast(msg) {
+    toastMsg = msg;
+    if (toastTimeout) clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => { toastMsg = ''; }, 3200);
+  }
+
+  function toggleSubtask(subKey, taskKey, totalSubcount) {
+    completedSubtasks[subKey] = !completedSubtasks[subKey];
+    completedSubtasks = completedSubtasks;
+
+    let finishedCount = 0;
+    for (let i = 0; i < totalSubcount; i++) {
+      if (completedSubtasks[`${taskKey}_sub${i}`]) finishedCount++;
+    }
+
+    if (finishedCount === totalSubcount) {
+      if (!completedTasks[taskKey]) {
+        completedTasks[taskKey] = true;
+        addXP(50, "All Subtopics Mastered!");
+      }
+    } else {
+      if (completedSubtasks[subKey]) {
+        addXP(15, "Subtopic Mastered");
+      }
+    }
+    completedTasks = completedTasks;
+    saveState();
+  }
+
+  function handleOpenVideo(vid) {
+    const url = vid.url || `https://www.youtube.com/results?search_query=${encodeURIComponent(vid.title || vid)}`;
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobile && vid.embedId) {
+      window.location.href = `vnd.youtube:${vid.embedId}`;
+      setTimeout(() => { window.open(url, '_blank'); }, 600);
+    } else {
+      window.open(url, '_blank');
+    }
+  }
+
+  function handleCopyVideoLink(vid) {
+    const url = vid.url || `https://www.youtube.com/results?search_query=${encodeURIComponent(vid.title || vid)}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url);
+      showToast("Exact YouTube link copied to clipboard! 📋");
+    }
+  }
+
   // ── Soundscape ─────────────────────────────────────────────────────
   function handleToggleSoundscape(type) {
     activeSoundscape = type;
-    toggleAmbientSound(type, soundMuted);
+    toggleAmbientSound(type, showToast);
   }
+
 
   // ── JSON Export ────────────────────────────────────────────────────
   function exportJSON() {
@@ -369,7 +424,7 @@
         flashcardsStudied: Object.keys(flashcardsState).length, currentFlashcardIndex
       },
       activityLog: allDaysProgress,
-      completedTasks, customNotes, problemLogs, quizScores, flashcardsState,
+      completedTasks, completedSubtasks, customNotes, problemLogs, quizScores, flashcardsState,
       syncChain: { pairedDevices, myPasscode },
       aiChatHistory: chatMessages.map((m, i) => ({ index: i, role: m.role, text: m.text })),
       settings: { theme, soundMuted, spotifyPlaylistId, hasGeminiKey: !!geminiApiKey }
@@ -423,6 +478,7 @@
 
   // ── Page meta per tab ──────────────────────────────────────────────
   const tabMeta = {
+    'home':         { icon: 'fa-house',          label: 'Dashboard'        },
     'dashboard':    { icon: 'fa-calendar-day',  label: '20-Day Schedule'  },
     'snippets':     { icon: 'fa-terminal',       label: 'C Playground'     },
     'flashcards':   { icon: 'fa-layer-group',    label: 'Anki SM-2'        },
@@ -431,7 +487,7 @@
     'settings':     { icon: 'fa-gear',           label: 'Settings'         },
   };
 
-  $: currentTabMeta = tabMeta[activeTab] || tabMeta['dashboard'];
+  $: currentTabMeta = tabMeta[activeTab] || tabMeta['home'];
 </script>
 
 <SplashScreen onFinish={() => splashFinished = true} />
@@ -452,6 +508,11 @@
 
     <!-- Nav Items -->
     <nav class="sidebar-nav-items">
+      <button class="nav-item {activeTab === 'home' ? 'active' : ''}"
+              on:click={() => activeTab = 'home'}>
+        <i class="fa-solid fa-house"></i> Dashboard
+      </button>
+
       <span class="nav-section-label">Study</span>
 
       <button class="nav-item {activeTab === 'dashboard' ? 'active' : ''}"
@@ -530,8 +591,120 @@
     <!-- Page Content -->
     <div class="page-content">
 
+      <!-- ═══════════════════ TAB: HOME DASHBOARD -->
+      {#if activeTab === 'home'}
+        {@const totalDone = Object.keys(completedTasks).filter(k => completedTasks[k]).length}
+        {@const totalSlots = CURRICULUM_DATA.length * 6}
+        {@const pct = Math.round((totalDone / totalSlots) * 100)}
+        {@const hour = new Date().getHours()}
+        {@const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'}
+
+        <!-- Greeting Hero -->
+        <div class="card" style="background: linear-gradient(135deg, rgba(56,139,253,0.12), rgba(163,113,247,0.08)); border-color: rgba(56,139,253,0.2); gap: 14px; padding: 28px;">
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; justify-content: space-between;">
+            <div>
+              <p style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">{greeting} 👋</p>
+              <h2 style="font-size: 1.75rem; font-weight: 900; letter-spacing: -0.03em; color: var(--text-main); line-height: 1.2;">
+                Ready to grind,<br/>Engineer?
+              </h2>
+              <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 8px;">
+                Day {currentDay} of {CURRICULUM_DATA.length} · {currentDayData.phase}
+              </p>
+            </div>
+            <div style="text-align: center; background: rgba(56,139,253,0.1); border: 1px solid rgba(56,139,253,0.2); border-radius: 20px; padding: 20px 28px; min-width: 120px;">
+              <div style="font-size: 2.25rem; font-weight: 900; color: var(--accent-blue); font-family: 'JetBrains Mono', monospace; line-height: 1;">{pct}%</div>
+              <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px;">Complete</div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 600; color: var(--text-muted);">
+              <span>Overall Progress</span>
+              <span>{totalDone} / {totalSlots} sessions</span>
+            </div>
+            <div class="progress-track" style="height: 8px;">
+              <div class="progress-fill" style="width: {pct}%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px;">
+          {#each [
+            { label: 'XP Earned',   value: xp,                  icon: 'fa-bolt',           color: 'var(--accent-blue)',   mono: true },
+            { label: 'Streak',      value: streakCount + 'd',   icon: 'fa-fire',            color: 'var(--accent-red)',    mono: false },
+            { label: 'Level',       value: levelInfo.level,      icon: 'fa-medal',          color: 'var(--accent-amber)',  mono: true },
+            { label: "Today's Done",value: completedTodayCount + '/6', icon: 'fa-check-circle', color: 'var(--accent-green)', mono: false },
+          ] as s}
+            <div class="card" style="align-items: center; text-align: center; gap: 8px; padding: 18px 12px; cursor: default;">
+              <div style="width: 36px; height: 36px; border-radius: 10px; background: color-mix(in srgb, {s.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {s.color};">
+                <i class="fa-solid {s.icon}"></i>
+              </div>
+              <div style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); {s.mono ? "font-family: 'JetBrains Mono', monospace;" : ''}">{s.value}</div>
+              <div style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">{s.label}</div>
+            </div>
+          {/each}
+        </div>
+
+        <!-- Today's Focus -->
+        <div class="card" style="gap: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <div class="card-title">
+              <i class="fa-solid fa-calendar-day" style="color: var(--accent-blue);"></i>
+              Today's Focus — Day {currentDay}
+            </div>
+            <button on:click={() => activeTab = 'dashboard'} class="btn btn-sm btn-primary">
+              Open Schedule <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+            {#each [
+              { icon: 'fa-calculator',     color: 'var(--accent-blue)',   label: 'Math',    topic: currentDayData.math?.topic,    id: 0 },
+              { icon: 'fa-atom',           color: 'var(--accent-purple)', label: 'Physics', topic: currentDayData.physics?.topic,  id: 1 },
+              { icon: 'fa-code',           color: 'var(--accent-green)',  label: 'C Prog',  topic: currentDayData.prog?.topic,     id: 2 },
+              { icon: 'fa-diagram-project',color: 'var(--accent-amber)',  label: 'DSA',     topic: currentDayData.dsa?.topic,      id: 3 },
+            ] as s}
+              {@const done = !!completedTasks[`day${currentDay}_slot${s.id}`]}
+              <div class="card-inset" style="display: flex; align-items: center; gap: 10px; padding: 12px; opacity: {done ? 0.5 : 1};">
+                <div style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; background: color-mix(in srgb, {s.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {s.color}; font-size: 0.85rem;">
+                  <i class="fa-solid {s.icon}"></i>
+                </div>
+                <div style="min-width: 0;">
+                  <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{s.label}</div>
+                  <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
+                </div>
+                {#if done}<i class="fa-solid fa-circle-check" style="color: var(--accent-green); flex-shrink: 0; margin-left: auto;"></i>{/if}
+              </div>
+            {/each}
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
+          {#each [
+            { icon: 'fa-layer-group',  color: 'var(--accent-purple)', tab: 'flashcards',   label: 'Practice Flashcards', sub: `${Object.keys(flashcardsState).length} cards studied` },
+            { icon: 'fa-terminal',     color: 'var(--accent-green)',  tab: 'snippets',     label: 'C Playground',         sub: 'Write & run C code'  },
+            { icon: 'fa-robot',        color: 'var(--accent-purple)', tab: 'ai-mentor',    label: 'AI Study Coach',        sub: geminiApiKey ? 'API key active' : 'Set up Gemini key' },
+            { icon: 'fa-trophy',       color: 'var(--accent-amber)',  tab: 'gamification', label: 'XP & Badges',           sub: `${unlockedBadges.length}/${ACHIEVEMENTS.length} unlocked` },
+          ] as a}
+            <button on:click={() => activeTab = a.tab}
+                    class="card" style="text-align: left; cursor: pointer; gap: 10px; padding: 18px; border: none; background: var(--bg-surface); transition: all 0.2s ease;"
+                    on:mouseenter={(e) => e.currentTarget.style.borderColor = a.color.replace('var(', '').replace(')', '')}
+                    on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}>
+              <div style="width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, {a.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {a.color}; font-size: 1rem;">
+                <i class="fa-solid {a.icon}"></i>
+              </div>
+              <div>
+                <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-main);">{a.label}</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">{a.sub}</div>
+              </div>
+              <i class="fa-solid fa-arrow-right" style="color: var(--text-muted); font-size: 0.75rem; margin-left: auto; margin-top: auto;"></i>
+            </button>
+          {/each}
+        </div>
+
       <!-- ═══════════════════ TAB: 20-DAY SCHEDULE -->
-      {#if activeTab === 'dashboard'}
+      {:else if activeTab === 'dashboard'}
+
         <!-- Day Selector -->
         <div class="card" style="flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
           <div>
@@ -589,22 +762,39 @@
 
               <div>
                 <h4 class="task-title" style="font-size: 0.9375rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">{slot.subject.topic}</h4>
-                <ul style="font-size: 0.775rem; color: var(--text-sub); padding-left: 14px; display: flex; flex-direction: column; gap: 3px; line-height: 1.5;">
-                  {#each slot.subject.subtopics as st}<li>{st}</li>{/each}
-                </ul>
+
+                <!-- Subtopic Checkbox Markers -->
+                <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+                  {#each slot.subject.subtopics as st, stIdx}
+                    {@const subKey = `${taskKey}_sub${stIdx}`}
+                    {@const isSubDone = !!completedSubtasks[subKey]}
+                    <button on:click={() => toggleSubtask(subKey, taskKey, slot.subject.subtopics.length)}
+                            style="display: flex; align-items: flex-start; gap: 8px; background: var(--bg-elevated); border: 1px solid {isSubDone ? 'rgba(63,185,80,0.3)' : 'var(--border)'}; padding: 6px 10px; border-radius: var(--radius-sm); text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%;">
+                      <i class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
+                         style="color: {isSubDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;"></i>
+                      <span style="font-size: 0.775rem; color: {isSubDone ? 'var(--text-muted)' : 'var(--text-main)'}; {isSubDone ? 'text-decoration: line-through;' : ''} line-height: 1.4;">
+                        {st}
+                      </span>
+                    </button>
+                  {/each}
+                </div>
               </div>
 
               {#if slot.subject.videos && slot.subject.videos.length > 0}
-                <div style="border-top: 1px solid var(--border); padding-top: 10px; display: flex; flex-direction: column; gap: 4px;">
+                <div style="border-top: 1px solid var(--border); padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
                   <span style="font-size: 0.6rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; display: flex; align-items: center; gap: 5px;">
                     <i class="fa-brands fa-youtube" style="color: #f85149;"></i> Video Lessons
                   </span>
                   {#each slot.subject.videos as vid}
-                    <a href="https://www.youtube.com/results?search_query={encodeURIComponent(vid.title)}"
-                       target="_blank" rel="noopener noreferrer" class="lesson-link">
-                      <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem; color: #f85149;"></i>
-                      {vid.title}
-                    </a>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+                      <button on:click={() => handleOpenVideo(vid)} class="lesson-link" style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
+                        <i class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
+                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
+                      </button>
+                      <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
+                        <i class="fa-solid fa-copy"></i> Copy
+                      </button>
+                    </div>
                   {/each}
                 </div>
               {/if}
@@ -866,15 +1056,14 @@
 
           <!-- Soundscape -->
           <div class="card" style="gap: 18px;">
-            <div class="settings-section-title">🔊 Focus Soundscape</div>
-            <div class="settings-row">
-              <div>
-                <div class="settings-row-label">Binaural Beat / Ambient</div>
-                <div class="settings-row-sub">Background audio to boost focus while studying</div>
-              </div>
-              <div class="toggle-group">
+            <div class="settings-section-title">🔊 Focus Soundscape & Ambient Noises</div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="settings-row-label">Select Ambient Track / Beat:</div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                 <button class="btn {activeSoundscape === 'alpha' ? 'active' : ''}" on:click={() => handleToggleSoundscape('alpha')}>🧠 10Hz Alpha</button>
-                <button class="btn {activeSoundscape === 'rain' ? 'active' : ''}" on:click={() => handleToggleSoundscape('rain')}>🌧️ Rain</button>
+                <button class="btn {activeSoundscape === 'rain' ? 'active' : ''}" on:click={() => handleToggleSoundscape('rain')}>🌧️ Soft Rain</button>
+                <button class="btn {activeSoundscape === 'pink' ? 'active' : ''}" on:click={() => handleToggleSoundscape('pink')}>📻 Focus Noise</button>
+                <button class="btn {activeSoundscape === 'lofi' ? 'active' : ''}" on:click={() => handleToggleSoundscape('lofi')}>🎧 Live Lofi Stream</button>
                 <button class="btn {activeSoundscape === 'off' ? 'active' : ''}" on:click={() => handleToggleSoundscape('off')}>🔇 Off</button>
               </div>
             </div>
@@ -882,7 +1071,13 @@
 
           <!-- Spotify -->
           <div class="card" style="gap: 18px;">
-            <div class="settings-section-title">🎵 Spotify Focus Player</div>
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+              <div class="settings-section-title" style="border: none; padding: 0;">🎵 Spotify Focus Player</div>
+              <a href="https://open.spotify.com/playlist/{spotifyPlaylistId}" target="_blank" rel="noopener noreferrer"
+                 class="btn btn-sm" style="color: var(--accent-green); border-color: rgba(63,185,80,0.3);">
+                <i class="fa-brands fa-spotify"></i> Open in Spotify App
+              </a>
+            </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
               <button on:click={() => setSpotifyPlaylist('37i9dQZF1DWWQR0awA2vA8')} class="btn btn-sm" style="color: var(--accent-green);">🎧 Focus Lofi</button>
               <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="btn btn-sm" style="color: var(--accent-green);">🎹 Deep Focus</button>
@@ -922,68 +1117,106 @@
             {/if}
           </div>
 
-          <!-- P2P Sync -->
+          <!-- WiFi LAN Sync (Tauri app only) -->
+          {#if isTauriApp}
           <div class="card" style="gap: 18px; border-color: rgba(57,208,216,0.2);">
-            <div class="settings-section-title">🔗 Cross-Device P2P Sync</div>
+            <div class="settings-section-title">📡 WiFi LAN Sync</div>
 
-            <div class="card-inset" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-              <div>
-                <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">This Device's Passcode</div>
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 900; color: var(--accent-amber); letter-spacing: 0.12em;">{myPasscode}</div>
+            <div class="card-inset" style="font-size: 0.8rem; color: var(--text-sub); line-height: 1.7;">
+              <strong style="color: var(--accent-cyan);">How it works:</strong>
+              Both devices must be on the same network (mobile hotspot works perfectly).
+              One device starts the server and shares its IP. The other enters that IP and syncs.
+            </div>
+
+            <!-- Step 1: This device as server -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">
+                Step 1 — Host: Start server on this device
               </div>
-              <button on:click={handleNativeBluetoothScan} class="btn" style="color: var(--accent-cyan); border-color: rgba(57,208,216,0.3);">
-                <i class="fa-solid fa-bluetooth"></i> BLE Scan
-              </button>
+
+              {#if !wifiServerRunning}
+                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;">
+                  <i class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
+                </button>
+              {:else}
+                <div class="card-inset" style="border-color: rgba(63,185,80,0.3);">
+                  <div style="font-size: 0.65rem; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
+                    <i class="fa-solid fa-circle"></i> Server Running on port {wifiServerPort}
+                  </div>
+                  <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">Share one of these IPs with the other device:</div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    {#each wifiServerIPs as ip}
+                      <button on:click={() => navigator.clipboard?.writeText(ip)}
+                              class="btn btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
+                        <i class="fa-solid fa-copy"></i> {ip}
+                      </button>
+                    {/each}
+                  </div>
+                </div>
+                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;">
+                  <i class="fa-solid fa-stop"></i> Stop Server
+                </button>
+              {/if}
             </div>
 
-            <div class="card-inset" style="font-size: 0.78rem; color: var(--text-sub); line-height: 1.6;">
-              <i class="fa-solid fa-lightbulb" style="color: var(--accent-amber); margin-right: 6px;"></i>
-              Open EngiPrep on another device, copy its passcode, and enter it below to sync your progress instantly.
-            </div>
+            <div class="divider"></div>
 
-            <div style="display: flex; gap: 8px;">
-              <input type="text" bind:value={inputPasscode} placeholder="Enter passcode (e.g. 798-002)"
-                     class="field field-mono" style="flex: 1; text-align: center;" />
-              <button on:click={handleStartUniversalP2PSync} disabled={isSyncing} class="btn btn-primary">
-                <i class="fa-solid fa-bolt"></i> {isSyncing ? 'Syncing...' : 'Sync Now'}
+            <!-- Step 2: This device as client -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">
+                Step 2 — Client: Connect to the other device
+              </div>
+
+              <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                <input type="text" bind:value={wifiConnectIP}
+                       placeholder="Enter IP (e.g. 192.168.43.5)"
+                       class="field field-mono" style="flex: 1; min-width: 160px;" />
+                <span style="font-size: 0.8rem; color: var(--text-muted);">:</span>
+                <input type="number" bind:value={wifiConnectPort}
+                       class="field field-mono" style="width: 80px;" min="1024" max="65535" />
+              </div>
+
+              <div class="toggle-group">
+                <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}"
+                        on:click={() => wifiSyncMode = 'pull'}>
+                  <i class="fa-solid fa-download"></i> Pull from server
+                </button>
+                <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}"
+                        on:click={() => wifiSyncMode = 'push'}>
+                  <i class="fa-solid fa-upload"></i> Push to server
+                </button>
+              </div>
+
+              <div class="card-inset" style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
+                {#if wifiSyncMode === 'pull'}
+                  <i class="fa-solid fa-download" style="color: var(--accent-blue); margin-right: 5px;"></i>
+                  <strong>Pull</strong>: Downloads and merges the server state into this device. XP keeps the higher value.
+                {:else}
+                  <i class="fa-solid fa-upload" style="color: var(--accent-amber); margin-right: 5px;"></i>
+                  <strong>Push</strong>: Uploads this device state to the server, overwriting it.
+                {/if}
+              </div>
+
+              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary">
+                <i class="fa-solid fa-bolt"></i>
+                {isSyncing ? 'Syncing...' : (wifiSyncMode === 'pull' ? 'Pull State' : 'Push State')}
               </button>
             </div>
 
             {#if syncStatusMsg}
               <div class="card-inset" style="font-size: 0.78rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
                 {syncStatusMsg}
-                {#if isSyncing}
+                {#if isSyncing || syncProgress > 0}
                   <div class="progress-track" style="margin-top: 8px;">
                     <div class="progress-fill" style="width: {syncProgress}%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));"></div>
                   </div>
                 {/if}
               </div>
             {/if}
-
-            {#if pairedDevices.length > 0}
-              <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;">
-                  Paired Devices ({pairedDevices.length})
-                </div>
-                {#each pairedDevices as pDev}
-                  <div class="card-inset" style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                      <i class="fa-solid fa-laptop-mobile" style="color: var(--accent-green); font-size: 1.1rem;"></i>
-                      <div>
-                        <div style="font-size: 0.8375rem; font-weight: 700; color: var(--text-main);">{pDev.name}</div>
-                        <div style="font-size: 0.65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">
-                          Last synced: {new Date(pDev.lastSynced).toLocaleTimeString()}
-                        </div>
-                      </div>
-                    </div>
-                    <button on:click={() => handleRemoveConnection(pDev.id)} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3);">
-                      <i class="fa-solid fa-trash"></i> Remove
-                    </button>
-                  </div>
-                {/each}
-              </div>
-            {/if}
           </div>
+
+
+          {/if}<!-- /isTauriApp -->
 
           <!-- Data Management -->
           <div class="card" style="gap: 18px;">
@@ -1009,8 +1242,19 @@
   </main>
 </div>
 
+{#if toastMsg}
+  <div style="position: fixed; bottom: 85px; right: 20px; z-index: 99999; background: var(--bg-elevated); border: 1px solid var(--accent-blue); color: var(--text-main); font-size: 0.8rem; font-weight: 600; padding: 10px 18px; border-radius: var(--radius-md); box-shadow: var(--shadow-hover); display: flex; align-items: center; gap: 8px; animation: slideUp 0.25s ease;">
+    {toastMsg}
+  </div>
+{/if}
+
+
 <!-- ════════════════════════════════════════ MOBILE BOTTOM NAV -->
 <nav class="mobile-nav">
+  <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}"
+          on:click={() => activeTab = 'home'}>
+    <i class="fa-solid fa-house"></i> Home
+  </button>
   <button class="mobile-nav-item {activeTab === 'dashboard' ? 'active' : ''}"
           on:click={() => activeTab = 'dashboard'}>
     <i class="fa-solid fa-calendar-day"></i> Schedule
