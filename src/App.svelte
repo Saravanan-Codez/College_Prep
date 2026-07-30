@@ -500,7 +500,7 @@
               <div style="display: flex; flex-direction: column; gap: 12px;">
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                   <span style="font-size: 0.625rem; font-weight: 900; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em;">{slot.title}</span>
-                  <button on:click={() => toggleTask(taskKey)} class="neu-btn neu-btn-icon {isChecked ? 'active' : ''}">
+                  <button aria-label={isChecked ? `Mark ${slot.title} as incomplete` : `Mark ${slot.title} as complete`} aria-pressed={isChecked} on:click={() => toggleTask(taskKey)} class="neu-btn neu-btn-icon {isChecked ? 'active' : ''}">
                     <i class="fa-solid {isChecked ? 'fa-circle-check' : 'fa-circle-check'}" style="font-size: 1.25rem; color: {isChecked ? 'var(--accent-green)' : 'var(--text-muted)'}; opacity: {isChecked ? '1' : '0.4'};"></i>
                   </button>
                 </div>
@@ -669,7 +669,7 @@
     <div class="modal-content" style="max-width: 560px;">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(113, 128, 150, 0.1); padding-bottom: 12px;">
         <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-cyan); display: flex; align-items: center; gap: 8px;"><i class="fa-bluetooth"></i> Universal P2P Sync Engine</h3>
-        <button on:click={() => showP2PModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
+        <button aria-label="Close P2P Sync modal" on:click={() => showP2PModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <!-- Passcode Display Card -->
@@ -752,7 +752,7 @@
     <div class="modal-content">
       <div style="display: flex; align-items: center; justify-content: space-between;">
         <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-green); display: flex; align-items: center; gap: 8px;"><i class="fa-brands fa-spotify"></i> Spotify Focus Player</h3>
-        <button on:click={() => showMusicModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
+        <button aria-label="Close Spotify player modal" on:click={() => showMusicModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div style="display: flex; gap: 8px; font-size: 0.75rem;">
@@ -779,7 +779,7 @@
     <div class="modal-content">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(113, 128, 150, 0.1); padding-bottom: 12px;">
         <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-color);"><i class="fa-solid fa-upload mr-2"></i>Load Master State JSON</h3>
-        <button on:click={() => showImportModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
+        <button aria-label="Close import modal" on:click={() => showImportModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <input type="file" accept=".json" on:change={handleFileSelect} style="font-size: 0.75rem; color: var(--text-muted); cursor: pointer;">
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem; font-weight: 700; color: var(--text-muted);">
@@ -797,7 +797,7 @@
     <div class="modal-content">
       <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(113, 128, 150, 0.1); padding-bottom: 12px;">
         <h3 style="font-size: 1rem; font-weight: 800; color: var(--accent-purple);"><i class="fa-solid fa-key mr-2"></i>Set Gemini API Key (BYOK)</h3>
-        <button on:click={() => showAIKeyModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
+        <button aria-label="Close API key modal" on:click={() => showAIKeyModal = false} class="neu-btn neu-btn-icon" style="width: 32px; height: 32px;"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="neu-panel-inset" style="padding: 16px; font-size: 0.75rem; color: var(--accent-purple); display: flex; flex-direction: column; gap: 8px;">
         <strong style="font-weight: 800;">How to get your free Gemini API key:</strong>
