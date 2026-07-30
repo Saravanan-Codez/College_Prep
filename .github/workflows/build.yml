@@ -3,7 +3,6 @@ name: Release Cross-Platform Apps (Windows, Android, Linux, macOS)
 on:
   release:
     types: [published]
-  workflow_dispatch:
 
 permissions:
   contents: write
