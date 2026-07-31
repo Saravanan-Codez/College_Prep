@@ -755,6 +755,7 @@
                   <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{slot.title}</span>
                 </div>
                 <button on:click={() => toggleTask(taskKey)}
+                        aria-label={isDone ? "Mark task as incomplete" : "Mark task as complete"}
                         style="background: none; border: none; cursor: pointer; padding: 4px; color: {isDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 1.25rem; opacity: {isDone ? 1 : 0.35}; transition: all 0.2s ease;">
                   <i class="fa-solid fa-circle-check"></i>
                 </button>
@@ -1287,7 +1288,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-title"><i class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
-        <button on:click={() => showImportModal = false} class="btn btn-icon">
+        <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
