@@ -507,7 +507,7 @@
     </div>
 
     <!-- Nav Items -->
-    <nav class="sidebar-nav-items">
+    <nav aria-label="Main Navigation" class="sidebar-nav-items">
       <button class="nav-item {activeTab === 'home' ? 'active' : ''}"
               on:click={() => activeTab = 'home'}>
         <i class="fa-solid fa-house"></i> Dashboard
@@ -716,7 +716,7 @@
             <h2 style="font-size: 1.375rem; font-weight: 800; letter-spacing: -0.025em; color: var(--text-main);">{currentDayData.dateStr}</h2>
             <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">{currentDayData.math.topic} · {currentDayData.physics.topic}</p>
           </div>
-          <select bind:value={currentDay} on:change={saveState} class="field" style="width: auto; min-width: 200px; cursor: pointer;">
+          <select aria-label="Select study day" bind:value={currentDay} on:change={saveState} class="field" style="width: auto; min-width: 200px; cursor: pointer;">
             {#each CURRICULUM_DATA as dayObj}
               <option value={dayObj.day}>Day {dayObj.day}: {dayObj.dateStr.split(' (')[0]}</option>
             {/each}
@@ -814,7 +814,7 @@
               <i class="fa-solid fa-play"></i> Run C Code
             </button>
           </div>
-          <textarea id="c-app-editor" rows="14" class="field field-mono"
+          <textarea id="c-app-editor" aria-label="C code editor" rows="14" class="field field-mono"
                     style="height: auto; resize: vertical; color: var(--accent-green); line-height: 1.6;"
           >{currentSnippet.code}</textarea>
         </div>
@@ -1009,7 +1009,7 @@
 
           <!-- Input -->
           <div style="display: flex; gap: 10px;">
-            <input type="text" bind:value={aiUserPrompt}
+            <input type="text" aria-label="AI Coach prompt" bind:value={aiUserPrompt}
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" />
@@ -1085,7 +1085,7 @@
               <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm" style="color: var(--accent-green);">🎻 Classical</button>
             </div>
             <div style="display: flex; gap: 8px;">
-              <input type="text" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
+              <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
               <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);">Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
@@ -1169,11 +1169,11 @@
               </div>
 
               <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                <input type="text" bind:value={wifiConnectIP}
+                <input type="text" aria-label="WiFi Connect IP" bind:value={wifiConnectIP}
                        placeholder="Enter IP (e.g. 192.168.43.5)"
                        class="field field-mono" style="flex: 1; min-width: 160px;" />
                 <span style="font-size: 0.8rem; color: var(--text-muted);">:</span>
-                <input type="number" bind:value={wifiConnectPort}
+                <input type="number" aria-label="WiFi Connect Port" bind:value={wifiConnectPort}
                        class="field field-mono" style="width: 80px;" min="1024" max="65535" />
               </div>
 
@@ -1251,7 +1251,7 @@
 
 
 <!-- ════════════════════════════════════════ MOBILE BOTTOM NAV -->
-<nav class="mobile-nav">
+<nav aria-label="Mobile Navigation" class="mobile-nav">
   <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}"
           on:click={() => activeTab = 'home'}>
     <i class="fa-solid fa-house"></i> Home
@@ -1292,7 +1292,7 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
-      <input type="file" accept=".json" on:change={handleFileSelect}
+      <input type="file" aria-label="Select state JSON file" accept=".json" on:change={handleFileSelect}
              style="font-size: 0.8rem; color: var(--text-sub); cursor: pointer;" />
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
         <label style="display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--text-main); cursor: pointer;">
