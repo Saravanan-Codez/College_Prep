@@ -98,6 +98,24 @@
         syncStatusMsg = "✅ Auto-Synced state file from paired device!";
       }
     });
+
+    const handleBeforeUnload = () => {
+      if (pendingSave) performSave();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && pendingSave) {
+        performSave();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   });
 
   function getFullStateObj() {
@@ -106,6 +124,9 @@
       xp, streakCount, unlockedBadges, soundMuted, flashcardsState, spotifyPlaylistId, geminiApiKey, chatMessages
     };
   }
+
+  let saveTimeoutId = null;
+  let pendingSave = false;
 
   function loadState() {
     const saved = localStorage.getItem('college_prep_state');
@@ -132,11 +153,21 @@
     }
   }
 
-  function saveState() {
+  function performSave() {
+    if (!pendingSave) return;
     localStorage.setItem('college_prep_state', JSON.stringify(getFullStateObj()));
     if (geminiApiKey) {
       localStorage.setItem('gemini_api_key', geminiApiKey);
     }
+    pendingSave = false;
+  }
+
+  function saveState() {
+    pendingSave = true;
+    if (saveTimeoutId) clearTimeout(saveTimeoutId);
+    saveTimeoutId = setTimeout(() => {
+      performSave();
+    }, 500);
   }
 
   function toggleTheme() {
