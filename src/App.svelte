@@ -750,13 +750,15 @@
               <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent-blue); font-size: 0.8rem;">
-                    <i class="fa-solid {slot.icon}"></i>
+                    <i class="fa-solid {slot.icon}" aria-hidden="true"></i>
                   </div>
                   <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{slot.title}</span>
                 </div>
                 <button on:click={() => toggleTask(taskKey)}
+                        aria-label={isDone ? "Mark task as incomplete" : "Mark task as complete"}
+                        aria-pressed={isDone}
                         style="background: none; border: none; cursor: pointer; padding: 4px; color: {isDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 1.25rem; opacity: {isDone ? 1 : 0.35}; transition: all 0.2s ease;">
-                  <i class="fa-solid fa-circle-check"></i>
+                  <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
                 </button>
               </div>
 
@@ -769,8 +771,10 @@
                     {@const subKey = `${taskKey}_sub${stIdx}`}
                     {@const isSubDone = !!completedSubtasks[subKey]}
                     <button on:click={() => toggleSubtask(subKey, taskKey, slot.subject.subtopics.length)}
+                            aria-pressed={isSubDone}
                             style="display: flex; align-items: flex-start; gap: 8px; background: var(--bg-elevated); border: 1px solid {isSubDone ? 'rgba(63,185,80,0.3)' : 'var(--border)'}; padding: 6px 10px; border-radius: var(--radius-sm); text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%;">
                       <i class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
+                         aria-hidden="true"
                          style="color: {isSubDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;"></i>
                       <span style="font-size: 0.775rem; color: {isSubDone ? 'var(--text-muted)' : 'var(--text-main)'}; {isSubDone ? 'text-decoration: line-through;' : ''} line-height: 1.4;">
                         {st}
@@ -1009,6 +1013,7 @@
           <!-- Input -->
           <div style="display: flex; gap: 10px;">
             <input type="text" bind:value={aiUserPrompt}
+                   aria-label="AI Chat message"
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" />
@@ -1084,7 +1089,7 @@
               <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm" style="color: var(--accent-green);">🎻 Classical</button>
             </div>
             <div style="display: flex; gap: 8px;">
-              <input type="text" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
+              <input type="text" bind:value={customSpotifyUrl} aria-label="Custom Spotify playlist URL" placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
               <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);">Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
@@ -1169,10 +1174,12 @@
 
               <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                 <input type="text" bind:value={wifiConnectIP}
+                       aria-label="Target device IP address"
                        placeholder="Enter IP (e.g. 192.168.43.5)"
                        class="field field-mono" style="flex: 1; min-width: 160px;" />
-                <span style="font-size: 0.8rem; color: var(--text-muted);">:</span>
+                <span style="font-size: 0.8rem; color: var(--text-muted);" aria-hidden="true">:</span>
                 <input type="number" bind:value={wifiConnectPort}
+                       aria-label="Target device Port"
                        class="field field-mono" style="width: 80px;" min="1024" max="65535" />
               </div>
 
@@ -1286,9 +1293,9 @@
   <div class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
-        <div class="modal-title"><i class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
-        <button on:click={() => showImportModal = false} class="btn btn-icon">
-          <i class="fa-solid fa-xmark"></i>
+        <div class="modal-title"><i class="fa-solid fa-upload" style="color: var(--accent-blue);" aria-hidden="true"></i> Import State JSON</div>
+        <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
         </button>
       </div>
       <input type="file" accept=".json" on:change={handleFileSelect}

@@ -1,0 +1,3 @@
+## 2026-07-30 - Improve Accessibility of Icon-Only Buttons and Unlabeled Inputs
+**Learning:** Found multiple instances where interactive elements like icon-only buttons (`fa-solid fa-circle-check`, `fa-solid fa-xmark`) and input fields (AI chat, custom Spotify URL, target device IP and Port) lacked `aria-label` or `<label>` associations, leading to poor screen reader accessibility. Also, decorative icons inside buttons were being read out by screen readers.
+**Action:** Added `aria-label`, `aria-pressed`, and `aria-hidden="true"` attributes to icon-only buttons and unlabeled inputs in `App.svelte` to enhance keyboard and screen reader accessibility without changing the visual design. Always verify screen reader contexts on newly created interactive UI components.
