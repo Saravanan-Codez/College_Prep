@@ -770,6 +770,8 @@
                     {@const subKey = `${taskKey}_sub${stIdx}`}
                     {@const isSubDone = !!completedSubtasks[subKey]}
                     <button on:click={() => toggleSubtask(subKey, taskKey, slot.subject.subtopics.length)}
+                            role="checkbox"
+                            aria-checked={isSubDone}
                             style="display: flex; align-items: flex-start; gap: 8px; background: var(--bg-elevated); border: 1px solid {isSubDone ? 'rgba(63,185,80,0.3)' : 'var(--border)'}; padding: 6px 10px; border-radius: var(--radius-sm); text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%;">
                       <i class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
                          style="color: {isSubDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;"></i>
