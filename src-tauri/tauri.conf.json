@@ -1,16 +1,17 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "CS College Prep OS",
+  "productName": "EngiPrep",
   "version": "2.0.0",
   "identifier": "com.csprepos.desktop",
   "build": {
+    "beforeBuildCommand": "npm run build",
     "devUrl": "http://localhost:5173",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "CS College Prep 20-Day Mastery OS",
+        "title": "EngiPrep",
         "width": 1280,
         "height": 850,
         "resizable": true,
@@ -23,7 +24,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["deb", "rpm"],
+    "targets": "all",
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",

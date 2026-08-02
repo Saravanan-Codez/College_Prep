@@ -113,11 +113,37 @@ export async function executeUniversalP2PSync(targetPasscode, masterState, onPro
 }
 
 /**
+ * Detect if running inside Android WebView (Tauri mobile app)
+ * Web Bluetooth is not available in Android WebView — it's Chrome-browser only.
+ */
+export function isAndroidWebView() {
+  const ua = navigator.userAgent || '';
+  return /wv/.test(ua) || /Android/.test(ua) && /Version\/[0-9]/.test(ua);
+}
+
+/**
+ * Detect if Web Bluetooth is actually usable (not just declared)
+ */
+export function isWebBluetoothAvailable() {
+  return typeof navigator !== 'undefined' &&
+    'bluetooth' in navigator &&
+    !isAndroidWebView();
+}
+
+/**
  * Optional Web Bluetooth Scanner Trigger
+ * Falls back gracefully on Android WebView / unsupported environments.
  */
 export async function requestNativeBluetoothDevice(onDeviceConnected, onError) {
+  // Android WebView (Tauri mobile) — Web Bluetooth is not available
+  if (isAndroidWebView()) {
+    onError("📱 On Android, use the 6-Digit Passcode Sync — it works perfectly across all devices without Bluetooth permissions!");
+    return;
+  }
+
+  // Desktop browsers without Web Bluetooth (Firefox, etc.)
   if (!navigator.bluetooth) {
-    onError("Web Bluetooth API is restricted on this browser/OS. Use Universal 6-Digit Passcode Sync above!");
+    onError("Web Bluetooth is not supported in this browser. Use the 6-Digit Passcode Sync above — it works on all platforms!");
     return;
   }
 
@@ -137,12 +163,15 @@ export async function requestNativeBluetoothDevice(onDeviceConnected, onError) {
     }
   } catch (err) {
     if (err.name === 'NotFoundError') {
-      onError('Bluetooth scanner was closed or no device selected. Use 6-digit passcode sync above!');
+      onError('No device selected. Use the 6-digit passcode sync to pair devices!');
+    } else if (err.name === 'SecurityError') {
+      onError('Bluetooth blocked by browser security. Try from https:// or enable the Web Bluetooth flag in browser settings.');
     } else {
-      onError(`Bluetooth access restricted by browser. Use 6-digit passcode sync above!`);
+      onError(`Bluetooth error: ${err.message}. Use 6-digit passcode sync above!`);
     }
   }
 }
+
 
 /**
  * Auto-Sync listener on startup
