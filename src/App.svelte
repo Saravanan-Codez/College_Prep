@@ -508,34 +508,34 @@
 
     <!-- Nav Items -->
     <nav class="sidebar-nav-items">
-      <button class="nav-item {activeTab === 'home' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'home' ? 'active' : ''}"
               on:click={() => activeTab = 'home'}>
         <i class="fa-solid fa-house"></i> Dashboard
       </button>
 
       <span class="nav-section-label">Study</span>
 
-      <button class="nav-item {activeTab === 'dashboard' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'dashboard' ? 'active' : ''}"
               on:click={() => activeTab = 'dashboard'}>
         <i class="fa-solid fa-calendar-day"></i> 20-Day Schedule
       </button>
 
-      <button class="nav-item {activeTab === 'snippets' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'snippets' ? 'active' : ''}"
               on:click={() => activeTab = 'snippets'}>
         <i class="fa-solid fa-terminal"></i> C Playground
       </button>
 
-      <button class="nav-item {activeTab === 'flashcards' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'flashcards' ? 'active' : ''}"
               on:click={() => activeTab = 'flashcards'}>
         <i class="fa-solid fa-layer-group"></i> Anki SM-2
       </button>
 
-      <button class="nav-item {activeTab === 'gamification' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'gamification' ? 'active' : ''}"
               on:click={() => activeTab = 'gamification'}>
         <i class="fa-solid fa-trophy"></i> XP & Achievements
       </button>
 
-      <button class="nav-item {activeTab === 'ai-mentor' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'ai-mentor' ? 'active' : ''}"
               on:click={() => activeTab = 'ai-mentor'}>
         <i class="fa-solid fa-robot"></i> AI Study Coach
       </button>
@@ -543,7 +543,7 @@
       <div class="divider" style="margin: 8px 0;"></div>
       <span class="nav-section-label">App</span>
 
-      <button class="nav-item {activeTab === 'settings' ? 'active' : ''}"
+      <button class="nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'settings' ? 'active' : ''}"
               on:click={() => activeTab = 'settings'}>
         <i class="fa-solid fa-gear"></i> Settings
       </button>
@@ -652,7 +652,7 @@
               <i class="fa-solid fa-calendar-day" style="color: var(--accent-blue);"></i>
               Today's Focus — Day {currentDay}
             </div>
-            <button on:click={() => activeTab = 'dashboard'} class="btn btn-sm btn-primary">
+            <button on:click={() => activeTab = 'dashboard'} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm btn-primary">
               Open Schedule <i class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
@@ -792,7 +792,7 @@
                         <i class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
-                      <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
+                      <button on:click={() => handleCopyVideoLink(vid)} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
                         <i class="fa-solid fa-copy"></i> Copy
                       </button>
                     </div>
@@ -810,7 +810,7 @@
             <div class="card-title">
               <i class="fa-solid fa-terminal"></i> {currentSnippet.title}
             </div>
-            <button on:click={handleRunCCode} class="btn btn-success">
+            <button on:click={handleRunCCode} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-success">
               <i class="fa-solid fa-play"></i> Run C Code
             </button>
           </div>
@@ -866,16 +866,16 @@
 
           {#if isFlashcardFlipped}
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-              <button on:click={() => rateFlashcard(1)} class="btn" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+              <button on:click={() => rateFlashcard(1)} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
                 <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
               </button>
-              <button on:click={() => rateFlashcard(2)} class="btn" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+              <button on:click={() => rateFlashcard(2)} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
                 <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
               </button>
-              <button on:click={() => rateFlashcard(3)} class="btn" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+              <button on:click={() => rateFlashcard(3)} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
                 <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
               </button>
-              <button on:click={() => rateFlashcard(4)} class="btn" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+              <button on:click={() => rateFlashcard(4)} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
                 <span style="font-size: 1rem;">😄</span><span style="font-size: 0.7rem; font-weight: 700;">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);">7d</span>
               </button>
             </div>
@@ -965,7 +965,7 @@
               </div>
             </div>
             {#if !geminiApiKey}
-              <button on:click={() => activeTab = 'settings'} class="btn" style="color: var(--accent-purple); border-color: rgba(163,113,247,0.3);">
+              <button on:click={() => activeTab = 'settings'} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-purple); border-color: rgba(163,113,247,0.3);">
                 <i class="fa-solid fa-key"></i> Set API Key in Settings
               </button>
             {:else}
@@ -976,15 +976,15 @@
           <!-- Quick Prompts -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
-                    class="btn btn-sm" style="color: var(--accent-blue);">
+                    class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-blue);">
               💡 Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
-                    class="btn btn-sm" style="color: var(--accent-green);">
+                    class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-green);">
               🐞 Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
-                    class="btn btn-sm" style="color: var(--accent-amber);">
+                    class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-amber);">
               🏆 Evaluate Progress
             </button>
           </div>
@@ -1013,7 +1013,7 @@
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" />
-            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking}>
+            <button on:click={() => handleSendAiChat()} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-primary" disabled={isAiThinking}>
               <i class="fa-solid fa-paper-plane"></i> Send
             </button>
           </div>
@@ -1045,10 +1045,10 @@
                 <div class="settings-row-sub">Switch between dark and light mode</div>
               </div>
               <div class="toggle-group">
-                <button class="btn {theme === 'dark' ? 'active' : ''}" on:click={() => { theme = 'dark'; saveState(); }}>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {theme === 'dark' ? 'active' : ''}" on:click={() => { theme = 'dark'; saveState(); }}>
                   <i class="fa-solid fa-moon"></i> Dark
                 </button>
-                <button class="btn {theme === 'light' ? 'active' : ''}" on:click={() => { theme = 'light'; saveState(); }}>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {theme === 'light' ? 'active' : ''}" on:click={() => { theme = 'light'; saveState(); }}>
                   <i class="fa-solid fa-sun"></i> Light
                 </button>
               </div>
@@ -1061,11 +1061,11 @@
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <div class="settings-row-label">Select Ambient Track / Beat:</div>
               <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button class="btn {activeSoundscape === 'alpha' ? 'active' : ''}" on:click={() => handleToggleSoundscape('alpha')}>🧠 10Hz Alpha</button>
-                <button class="btn {activeSoundscape === 'rain' ? 'active' : ''}" on:click={() => handleToggleSoundscape('rain')}>🌧️ Soft Rain</button>
-                <button class="btn {activeSoundscape === 'pink' ? 'active' : ''}" on:click={() => handleToggleSoundscape('pink')}>📻 Focus Noise</button>
-                <button class="btn {activeSoundscape === 'lofi' ? 'active' : ''}" on:click={() => handleToggleSoundscape('lofi')}>🎧 Live Lofi Stream</button>
-                <button class="btn {activeSoundscape === 'off' ? 'active' : ''}" on:click={() => handleToggleSoundscape('off')}>🔇 Off</button>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {activeSoundscape === 'alpha' ? 'active' : ''}" on:click={() => handleToggleSoundscape('alpha')}>🧠 10Hz Alpha</button>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {activeSoundscape === 'rain' ? 'active' : ''}" on:click={() => handleToggleSoundscape('rain')}>🌧️ Soft Rain</button>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {activeSoundscape === 'pink' ? 'active' : ''}" on:click={() => handleToggleSoundscape('pink')}>📻 Focus Noise</button>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {activeSoundscape === 'lofi' ? 'active' : ''}" on:click={() => handleToggleSoundscape('lofi')}>🎧 Live Lofi Stream</button>
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {activeSoundscape === 'off' ? 'active' : ''}" on:click={() => handleToggleSoundscape('off')}>🔇 Off</button>
               </div>
             </div>
           </div>
@@ -1075,18 +1075,18 @@
             <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
               <div class="settings-section-title" style="border: none; padding: 0;">🎵 Spotify Focus Player</div>
               <a href="https://open.spotify.com/playlist/{spotifyPlaylistId}" target="_blank" rel="noopener noreferrer"
-                 class="btn btn-sm" style="color: var(--accent-green); border-color: rgba(63,185,80,0.3);">
+                 class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-green); border-color: rgba(63,185,80,0.3);">
                 <i class="fa-brands fa-spotify"></i> Open in Spotify App
               </a>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DWWQR0awA2vA8')} class="btn btn-sm" style="color: var(--accent-green);">🎧 Focus Lofi</button>
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="btn btn-sm" style="color: var(--accent-green);">🎹 Deep Focus</button>
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm" style="color: var(--accent-green);">🎻 Classical</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DWWQR0awA2vA8')} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-green);">🎧 Focus Lofi</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-green);">🎹 Deep Focus</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-green);">🎻 Classical</button>
             </div>
             <div style="display: flex; gap: 8px;">
               <input type="text" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
-              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);">Load</button>
+              <button on:click={parseAndSetCustomSpotify} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-green);">Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
               <iframe title="Spotify Player" style="border-radius: 10px;"
@@ -1109,7 +1109,7 @@
               <label for="gemini-key-input" style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap;">API Key:</label>
               <input id="gemini-key-input" type="password" bind:value={geminiApiKey}
                      placeholder="AIzaSy..." class="field field-mono" style="color: var(--accent-purple);" />
-              <button on:click={saveState} class="btn btn-sm" style="color: var(--accent-purple); white-space: nowrap;">
+              <button on:click={saveState} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-purple); white-space: nowrap;">
                 <i class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
@@ -1136,7 +1136,7 @@
               </div>
 
               {#if !wifiServerRunning}
-                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;">
+                <button on:click={startWifiServer} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-success" style="height: 44px;">
                   <i class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
                 </button>
               {:else}
@@ -1148,13 +1148,13 @@
                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                     {#each wifiServerIPs as ip}
                       <button on:click={() => navigator.clipboard?.writeText(ip)}
-                              class="btn btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
+                              class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
                         <i class="fa-solid fa-copy"></i> {ip}
                       </button>
                     {/each}
                   </div>
                 </div>
-                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;">
+                <button on:click={stopWifiServer} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;">
                   <i class="fa-solid fa-stop"></i> Stop Server
                 </button>
               {/if}
@@ -1178,11 +1178,11 @@
               </div>
 
               <div class="toggle-group">
-                <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}"
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {wifiSyncMode === 'pull' ? 'active' : ''}"
                         on:click={() => wifiSyncMode = 'pull'}>
                   <i class="fa-solid fa-download"></i> Pull from server
                 </button>
-                <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}"
+                <button class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 {wifiSyncMode === 'push' ? 'active' : ''}"
                         on:click={() => wifiSyncMode = 'push'}>
                   <i class="fa-solid fa-upload"></i> Push to server
                 </button>
@@ -1198,7 +1198,7 @@
                 {/if}
               </div>
 
-              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary">
+              <button on:click={connectToDevice} disabled={isSyncing} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-primary">
                 <i class="fa-solid fa-bolt"></i>
                 {isSyncing ? 'Syncing...' : (wifiSyncMode === 'pull' ? 'Pull State' : 'Push State')}
               </button>
@@ -1223,10 +1223,10 @@
           <div class="card" style="gap: 18px;">
             <div class="settings-section-title">💾 Data Management</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <button on:click={exportJSON} class="btn" style="color: var(--accent-amber); border-color: rgba(227,179,65,0.3); height: 48px;">
+              <button on:click={exportJSON} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-amber); border-color: rgba(227,179,65,0.3); height: 48px;">
                 <i class="fa-solid fa-download"></i> Export State JSON
               </button>
-              <button on:click={() => showImportModal = true} class="btn" style="color: var(--accent-blue); border-color: rgba(56,139,253,0.3); height: 48px;">
+              <button on:click={() => showImportModal = true} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2" style="color: var(--accent-blue); border-color: rgba(56,139,253,0.3); height: 48px;">
                 <i class="fa-solid fa-upload"></i> Import State JSON
               </button>
             </div>
@@ -1252,31 +1252,31 @@
 
 <!-- ════════════════════════════════════════ MOBILE BOTTOM NAV -->
 <nav class="mobile-nav">
-  <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'home' ? 'active' : ''}"
           on:click={() => activeTab = 'home'}>
     <i class="fa-solid fa-house"></i> Home
   </button>
-  <button class="mobile-nav-item {activeTab === 'dashboard' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'dashboard' ? 'active' : ''}"
           on:click={() => activeTab = 'dashboard'}>
     <i class="fa-solid fa-calendar-day"></i> Schedule
   </button>
-  <button class="mobile-nav-item {activeTab === 'snippets' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'snippets' ? 'active' : ''}"
           on:click={() => activeTab = 'snippets'}>
     <i class="fa-solid fa-terminal"></i> C Code
   </button>
-  <button class="mobile-nav-item {activeTab === 'flashcards' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'flashcards' ? 'active' : ''}"
           on:click={() => activeTab = 'flashcards'}>
     <i class="fa-solid fa-layer-group"></i> Anki
   </button>
-  <button class="mobile-nav-item {activeTab === 'gamification' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'gamification' ? 'active' : ''}"
           on:click={() => activeTab = 'gamification'}>
     <i class="fa-solid fa-trophy"></i> XP
   </button>
-  <button class="mobile-nav-item {activeTab === 'ai-mentor' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'ai-mentor' ? 'active' : ''}"
           on:click={() => activeTab = 'ai-mentor'}>
     <i class="fa-solid fa-robot"></i> AI
   </button>
-  <button class="mobile-nav-item {activeTab === 'settings' ? 'active' : ''}"
+  <button class="mobile-nav-item focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:-outline-offset-2 {activeTab === 'settings' ? 'active' : ''}"
           on:click={() => activeTab = 'settings'}>
     <i class="fa-solid fa-gear"></i> Settings
   </button>
@@ -1288,7 +1288,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-title"><i class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
-        <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
+        <button on:click={() => showImportModal = false} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-icon" aria-label="Close import modal">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
@@ -1303,8 +1303,8 @@
         </label>
       </div>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
-        <button on:click={() => showImportModal = false} class="btn">Cancel</button>
-        <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary">
+        <button on:click={() => showImportModal = false} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2">Cancel</button>
+        <button on:click={executeImport} disabled={!pendingImportData} class="btn focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--accent-blue)] focus-visible:outline-offset-2 btn-primary">
           <i class="fa-solid fa-file-import"></i> Load Backup
         </button>
       </div>
