@@ -4,3 +4,7 @@
 ## 2026-08-01 - Form Inputs and Landmark Accessibility
 **Learning:** Encountered an accessibility issue pattern where inputs (such as text inputs, selectors, and textareas) lacked associated labels, preventing screen readers from identifying their purpose. Additionally, multiple navigation landmarks (`<nav>`) existed without descriptive names, causing confusion for structural navigation.
 **Action:** When implementing or reviewing components, always verify that interactive form elements have visible `<label>`s or `aria-label` attributes, and ensure `<nav>` tags include descriptive `aria-label`s to distinguish different navigation areas (e.g., Main Navigation vs. Mobile Navigation).
+
+## 2024-10-27 - Screen Reader Support for Custom Checkboxes
+**Learning:** Found an accessibility issue pattern where custom visually-styled toggles (e.g., the subtask markers) lacked semantic screen-reader states. While they visually represented checked/unchecked states through colors and icons, they were announced simply as buttons, leaving screen reader users unaware of their state.
+**Action:** Always verify that interactive buttons functioning as checkboxes have explicit `role="checkbox"` and `aria-checked` attributes matching their internal state to maintain full screen reader accessibility.

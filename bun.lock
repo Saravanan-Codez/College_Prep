@@ -1,6 +1,5 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 1,
   "workspaces": {
     "": {
       "name": "cs-college-prep-os",
@@ -11,7 +10,7 @@
       },
       "devDependencies": {
         "@sveltejs/vite-plugin-svelte": "^3.0.1",
-        "@tauri-apps/cli": "^2.0.0-rc",
+        "@tauri-apps/cli": "^2.11.0",
         "@vitejs/plugin-vue": "^5.0.3",
         "autoprefixer": "^10.4.17",
         "postcss": "^8.4.33",
