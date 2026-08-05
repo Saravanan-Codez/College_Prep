@@ -1037,8 +1037,12 @@
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" />
-            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking}>
-              <i class="fa-solid fa-paper-plane"></i> Send
+            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking} aria-busy={isAiThinking}>
+              {#if isAiThinking}
+                <i class="fa-solid fa-spinner fa-spin"></i> Sending...
+              {:else}
+                <i class="fa-solid fa-paper-plane"></i> Send
+              {/if}
             </button>
           </div>
         </div>
