@@ -1226,9 +1226,13 @@
                 {/if}
               </div>
 
-              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary">
-                <i class="fa-solid fa-bolt"></i>
-                {isSyncing ? 'Syncing...' : (wifiSyncMode === 'pull' ? 'Pull State' : 'Push State')}
+              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary" aria-busy={isSyncing}>
+                {#if isSyncing}
+                  <i class="fa-solid fa-spinner fa-spin"></i> Syncing...
+                {:else}
+                  <i class="fa-solid fa-bolt"></i>
+                  {wifiSyncMode === 'pull' ? 'Pull State' : 'Push State'}
+                {/if}
               </button>
             </div>
 
