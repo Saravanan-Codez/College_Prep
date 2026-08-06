@@ -6,6 +6,16 @@
 
 import { invoke } from '@tauri-apps/api/core';
 
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 export function extractAndRenderMemoryTable(env, tableContainer) {
     if (!tableContainer) return;
 
@@ -29,10 +39,10 @@ export function extractAndRenderMemoryTable(env, tableContainer) {
             <tbody>
                 ${vars.map(v => `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
-                        <td style="padding: 6px; color: var(--accent-purple); font-weight: 600;">${v.addr}</td>
-                        <td style="padding: 6px; color: var(--accent-blue);">${v.type}</td>
-                        <td style="padding: 6px; color: var(--accent-green); font-weight: 700;">${v.name}</td>
-                        <td style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${v.displayValue}</td>
+                        <td style="padding: 6px; color: var(--accent-purple); font-weight: 600;">${escapeHtml(v.addr)}</td>
+                        <td style="padding: 6px; color: var(--accent-blue);">${escapeHtml(v.type)}</td>
+                        <td style="padding: 6px; color: var(--accent-green); font-weight: 700;">${escapeHtml(v.name)}</td>
+                        <td style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(v.val !== undefined ? v.val : v.displayValue)}</td>
                     </tr>
                 `).join('')}
             </tbody>
