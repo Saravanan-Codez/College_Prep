@@ -91,6 +91,17 @@ class CInterpreterVM {
                      .replace(/\bfloor\b/g, 'Math.floor')
                      .replace(/\bceil\b/g, 'Math.ceil');
 
+        // Validation: Remove single/double-quoted string/character literals, safe Math functions, and hex prefixes
+        let testStr = clean.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, '')
+                           .replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, '')
+                           .replace(/\bMath\.(abs|sqrt|pow|floor|ceil)\b/g, '')
+                           .replace(/\b0[xX][0-9a-fA-F]+\b/g, '');
+
+        // Reject if there are any characters outside the strict whitelist (only digits, basic math operators, parentheses, commas, dots, and spaces)
+        if (!/^[0-9.+\-*/%(),\s]*$/.test(testStr)) {
+            return 0;
+        }
+
         try {
             return Function(`"use strict"; return (${clean});`)();
         } catch(e) {
