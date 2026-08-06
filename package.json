@@ -10,7 +10,8 @@
     "tauri": "tauri",
     "build:windows": "tauri build",
     "build:android": "powershell -ExecutionPolicy Bypass -File ./scripts/build-android.ps1",
-    "build:android:aab": "tauri android build --aab"
+    "build:android:aab": "tauri android build --aab",
+    "test": "bun test"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.11.1",
