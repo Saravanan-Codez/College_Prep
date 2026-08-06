@@ -1037,8 +1037,12 @@
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" />
-            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking}>
-              <i class="fa-solid fa-paper-plane"></i> Send
+            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking} aria-busy={isAiThinking}>
+              {#if isAiThinking}
+                <i class="fa-solid fa-spinner fa-spin"></i> Sending...
+              {:else}
+                <i class="fa-solid fa-paper-plane"></i> Send
+              {/if}
             </button>
           </div>
         </div>
@@ -1222,9 +1226,13 @@
                 {/if}
               </div>
 
-              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary">
-                <i class="fa-solid fa-bolt"></i>
-                {isSyncing ? 'Syncing...' : (wifiSyncMode === 'pull' ? 'Pull State' : 'Push State')}
+              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary" aria-busy={isSyncing}>
+                {#if isSyncing}
+                  <i class="fa-solid fa-spinner fa-spin"></i> Syncing...
+                {:else}
+                  <i class="fa-solid fa-bolt"></i>
+                  {wifiSyncMode === 'pull' ? 'Pull State' : 'Push State'}
+                {/if}
               </button>
             </div>
 

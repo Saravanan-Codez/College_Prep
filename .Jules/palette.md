@@ -8,3 +8,7 @@
 ## 2024-10-27 - Screen Reader Support for Custom Checkboxes
 **Learning:** Found an accessibility issue pattern where custom visually-styled toggles (e.g., the subtask markers) lacked semantic screen-reader states. While they visually represented checked/unchecked states through colors and icons, they were announced simply as buttons, leaving screen reader users unaware of their state.
 **Action:** Always verify that interactive buttons functioning as checkboxes have explicit `role="checkbox"` and `aria-checked` attributes matching their internal state to maintain full screen reader accessibility.
+
+## 2024-05-24 - Async Button State and Accessibility
+**Learning:** Found that async buttons (like the AI Mentor chat send button) lacked visual loading states and screen reader announcements while operations were pending, leaving users unsure if an action was processing.
+**Action:** Always ensure async action buttons visually indicate their loading state (e.g. replacing icons with spinners) and include the `aria-busy="true"` attribute to explicitly announce the loading state to screen readers.

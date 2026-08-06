@@ -109,7 +109,7 @@ function checkBadges() {
         if (currentState.completedTasks[k]) {
             completedTasksCount++;
             if (k.includes('slot0')) mathCount++;
-            if (k.includes('slot5')) readingCount++;
+            else if (k.includes('slot5')) readingCount++;
         }
     }
 
@@ -419,11 +419,11 @@ function renderAnalytics() {
         if (currentState.completedTasks[k]) {
             totalTasksCompleted++;
             if (k.includes('slot0')) mathDone++;
-            if (k.includes('slot1')) physicsDone++;
-            if (k.includes('slot2')) progDone++;
-            if (k.includes('slot3')) dsaDone++;
-            if (k.includes('slot4')) webDone++;
-            if (k.includes('slot5')) readingDone++;
+            else if (k.includes('slot1')) physicsDone++;
+            else if (k.includes('slot2')) progDone++;
+            else if (k.includes('slot3')) dsaDone++;
+            else if (k.includes('slot4')) webDone++;
+            else if (k.includes('slot5')) readingDone++;
         }
     }
 

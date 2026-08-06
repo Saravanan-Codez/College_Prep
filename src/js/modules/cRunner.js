@@ -6,6 +6,16 @@
 
 import { invoke } from '@tauri-apps/api/core';
 
+function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
 export function extractAndRenderMemoryTable(env, tableContainer) {
     if (!tableContainer) return;
 
@@ -29,10 +39,10 @@ export function extractAndRenderMemoryTable(env, tableContainer) {
             <tbody>
                 ${vars.map(v => `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
-                        <td style="padding: 6px; color: var(--accent-purple); font-weight: 600;">${v.addr}</td>
-                        <td style="padding: 6px; color: var(--accent-blue);">${v.type}</td>
-                        <td style="padding: 6px; color: var(--accent-green); font-weight: 700;">${v.name}</td>
-                        <td style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${v.displayValue}</td>
+                        <td style="padding: 6px; color: var(--accent-purple); font-weight: 600;">${escapeHtml(v.addr)}</td>
+                        <td style="padding: 6px; color: var(--accent-blue);">${escapeHtml(v.type)}</td>
+                        <td style="padding: 6px; color: var(--accent-green); font-weight: 700;">${escapeHtml(v.name)}</td>
+                        <td style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(v.val !== undefined ? v.val : v.displayValue)}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -90,6 +100,17 @@ class CInterpreterVM {
                      .replace(/\bpow\b/g, 'Math.pow')
                      .replace(/\bfloor\b/g, 'Math.floor')
                      .replace(/\bceil\b/g, 'Math.ceil');
+
+        // Validation: Remove single/double-quoted string/character literals, safe Math functions, and hex prefixes
+        let testStr = clean.replace(/"[^"\\]*(?:\\.[^"\\]*)*"/g, '')
+                           .replace(/'[^'\\]*(?:\\.[^'\\]*)*'/g, '')
+                           .replace(/\bMath\.(abs|sqrt|pow|floor|ceil)\b/g, '')
+                           .replace(/\b0[xX][0-9a-fA-F]+\b/g, '');
+
+        // Reject if there are any characters outside the strict whitelist (only digits, basic math operators, parentheses, commas, dots, and spaces)
+        if (!/^[0-9.+\-*/%(),\s]*$/.test(testStr)) {
+            return 0;
+        }
 
         try {
             return Function(`"use strict"; return (${clean});`)();
