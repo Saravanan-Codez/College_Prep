@@ -1039,7 +1039,7 @@
                    class="field" style="flex: 1;" />
             <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking} aria-busy={isAiThinking}>
               {#if isAiThinking}
-                <i class="fa-solid fa-spinner fa-spin"></i> Thinking...
+                <i class="fa-solid fa-spinner fa-spin"></i> Sending...
               {:else}
                 <i class="fa-solid fa-paper-plane"></i> Send
               {/if}

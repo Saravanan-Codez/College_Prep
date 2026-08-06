@@ -9,6 +9,6 @@
 **Learning:** Found an accessibility issue pattern where custom visually-styled toggles (e.g., the subtask markers) lacked semantic screen-reader states. While they visually represented checked/unchecked states through colors and icons, they were announced simply as buttons, leaving screen reader users unaware of their state.
 **Action:** Always verify that interactive buttons functioning as checkboxes have explicit `role="checkbox"` and `aria-checked` attributes matching their internal state to maintain full screen reader accessibility.
 
-## 2024-11-20 - Async Action Buttons and Loading States
-**Learning:** Found an accessibility issue pattern where async action buttons (such as the AI Coach send button and the WiFi sync button) lacked proper ARIA attributes to indicate loading states. They disabled correctly but screen readers were unaware that a background process was running, leaving users hanging.
-**Action:** Always ensure that buttons triggering asynchronous actions explicitly use the `aria-busy` attribute dynamically tied to their loading state, and include a visual indicator like a spinning icon (`fa-spinner fa-spin`) to signal activity.
+## 2024-05-24 - Async Button State and Accessibility
+**Learning:** Found that async buttons (like the AI Mentor chat send button) lacked visual loading states and screen reader announcements while operations were pending, leaving users unsure if an action was processing.
+**Action:** Always ensure async action buttons visually indicate their loading state (e.g. replacing icons with spinners) and include the `aria-busy="true"` attribute to explicitly announce the loading state to screen readers.
