@@ -12,3 +12,6 @@
 ## 2024-05-24 - Async Button State and Accessibility
 **Learning:** Found that async buttons (like the AI Mentor chat send button) lacked visual loading states and screen reader announcements while operations were pending, leaving users unsure if an action was processing.
 **Action:** Always ensure async action buttons visually indicate their loading state (e.g. replacing icons with spinners) and include the `aria-busy="true"` attribute to explicitly announce the loading state to screen readers.
+## 2026-08-07 - Add aria-labels to dynamically generated buttons
+**Learning:** When using loops (`{#each}`) to dynamically render buttons that contain dynamic text and icons, screen readers may not accurately describe the button's action if only an icon or generic text is provided.
+**Action:** Ensure dynamic action buttons like 'Copy IP' or 'Copy Link' have descriptive `aria-label` attributes that fully describe what action will be taken, such as interpolating variables directly into the `aria-label` (e.g., `aria-label="Copy IP {ip} to clipboard"`).

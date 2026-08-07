@@ -816,7 +816,7 @@
                         <i class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
-                      <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
+                      <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" aria-label="Copy video link" style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
                         <i class="fa-solid fa-copy"></i> Copy
                       </button>
                     </div>
@@ -1176,6 +1176,7 @@
                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                     {#each wifiServerIPs as ip}
                       <button on:click={() => navigator.clipboard?.writeText(ip)}
+                              aria-label="Copy IP address {ip} to clipboard"
                               class="btn btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
                         <i class="fa-solid fa-copy"></i> {ip}
                       </button>
