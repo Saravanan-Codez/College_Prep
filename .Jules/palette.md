@@ -15,3 +15,7 @@
 ## 2026-08-07 - Add aria-labels to dynamically generated buttons
 **Learning:** When using loops (`{#each}`) to dynamically render buttons that contain dynamic text and icons, screen readers may not accurately describe the button's action if only an icon or generic text is provided.
 **Action:** Ensure dynamic action buttons like 'Copy IP' or 'Copy Link' have descriptive `aria-label` attributes that fully describe what action will be taken, such as interpolating variables directly into the `aria-label` (e.g., `aria-label="Copy IP {ip} to clipboard"`).
+
+## 2024-11-20 - Navigation Items and aria-current
+**Learning:** Found an accessibility issue pattern where active navigation buttons relied solely on visual cues (the `.active` class) to denote their state, leaving screen reader users unaware of the current page/section.
+**Action:** When implementing or reviewing navigation items (tabs, links, or buttons acting as navigation), always verify they include the `aria-current="page"` attribute dynamically bound to their active state to ensure structural context for screen readers.

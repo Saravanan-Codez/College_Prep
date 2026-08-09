@@ -530,34 +530,34 @@
 
     <!-- Nav Items -->
     <nav aria-label="Main Navigation" class="sidebar-nav-items">
-      <button class="nav-item {activeTab === 'home' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'home' ? 'active' : ''}" aria-current={activeTab === 'home' ? 'page' : undefined}
               on:click={() => activeTab = 'home'}>
         <i class="fa-solid fa-house"></i> Dashboard
       </button>
 
       <span class="nav-section-label">Study</span>
 
-      <button class="nav-item {activeTab === 'dashboard' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'dashboard' ? 'active' : ''}" aria-current={activeTab === 'dashboard' ? 'page' : undefined}
               on:click={() => activeTab = 'dashboard'}>
         <i class="fa-solid fa-calendar-day"></i> 20-Day Schedule
       </button>
 
-      <button class="nav-item {activeTab === 'snippets' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'snippets' ? 'active' : ''}" aria-current={activeTab === 'snippets' ? 'page' : undefined}
               on:click={() => activeTab = 'snippets'}>
         <i class="fa-solid fa-terminal"></i> C Playground
       </button>
 
-      <button class="nav-item {activeTab === 'flashcards' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'flashcards' ? 'active' : ''}" aria-current={activeTab === 'flashcards' ? 'page' : undefined}
               on:click={() => activeTab = 'flashcards'}>
         <i class="fa-solid fa-layer-group"></i> Anki SM-2
       </button>
 
-      <button class="nav-item {activeTab === 'gamification' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'gamification' ? 'active' : ''}" aria-current={activeTab === 'gamification' ? 'page' : undefined}
               on:click={() => activeTab = 'gamification'}>
         <i class="fa-solid fa-trophy"></i> XP & Achievements
       </button>
 
-      <button class="nav-item {activeTab === 'ai-mentor' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'ai-mentor' ? 'active' : ''}" aria-current={activeTab === 'ai-mentor' ? 'page' : undefined}
               on:click={() => activeTab = 'ai-mentor'}>
         <i class="fa-solid fa-robot"></i> AI Study Coach
       </button>
@@ -565,7 +565,7 @@
       <div class="divider" style="margin: 8px 0;"></div>
       <span class="nav-section-label">App</span>
 
-      <button class="nav-item {activeTab === 'settings' ? 'active' : ''}"
+      <button class="nav-item {activeTab === 'settings' ? 'active' : ''}" aria-current={activeTab === 'settings' ? 'page' : undefined}
               on:click={() => activeTab = 'settings'}>
         <i class="fa-solid fa-gear"></i> Settings
       </button>
@@ -1285,31 +1285,31 @@
 
 <!-- ════════════════════════════════════════ MOBILE BOTTOM NAV -->
 <nav aria-label="Mobile Navigation" class="mobile-nav">
-  <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}" aria-current={activeTab === 'home' ? 'page' : undefined}
           on:click={() => activeTab = 'home'}>
     <i class="fa-solid fa-house"></i> Home
   </button>
-  <button class="mobile-nav-item {activeTab === 'dashboard' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'dashboard' ? 'active' : ''}" aria-current={activeTab === 'dashboard' ? 'page' : undefined}
           on:click={() => activeTab = 'dashboard'}>
     <i class="fa-solid fa-calendar-day"></i> Schedule
   </button>
-  <button class="mobile-nav-item {activeTab === 'snippets' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'snippets' ? 'active' : ''}" aria-current={activeTab === 'snippets' ? 'page' : undefined}
           on:click={() => activeTab = 'snippets'}>
     <i class="fa-solid fa-terminal"></i> C Code
   </button>
-  <button class="mobile-nav-item {activeTab === 'flashcards' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'flashcards' ? 'active' : ''}" aria-current={activeTab === 'flashcards' ? 'page' : undefined}
           on:click={() => activeTab = 'flashcards'}>
     <i class="fa-solid fa-layer-group"></i> Anki
   </button>
-  <button class="mobile-nav-item {activeTab === 'gamification' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'gamification' ? 'active' : ''}" aria-current={activeTab === 'gamification' ? 'page' : undefined}
           on:click={() => activeTab = 'gamification'}>
     <i class="fa-solid fa-trophy"></i> XP
   </button>
-  <button class="mobile-nav-item {activeTab === 'ai-mentor' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'ai-mentor' ? 'active' : ''}" aria-current={activeTab === 'ai-mentor' ? 'page' : undefined}
           on:click={() => activeTab = 'ai-mentor'}>
     <i class="fa-solid fa-robot"></i> AI
   </button>
-  <button class="mobile-nav-item {activeTab === 'settings' ? 'active' : ''}"
+  <button class="mobile-nav-item {activeTab === 'settings' ? 'active' : ''}" aria-current={activeTab === 'settings' ? 'page' : undefined}
           on:click={() => activeTab = 'settings'}>
     <i class="fa-solid fa-gear"></i> Settings
   </button>
