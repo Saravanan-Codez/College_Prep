@@ -256,15 +256,18 @@ export async function executeCCode(code, outputEl, tableContainer) {
     }
 
     // Web Browser execution engine fallback
-    setTimeout(() => {
-        try {
-            const vm = new CInterpreterVM();
-            const result = vm.execute(code);
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            try {
+                const vm = new CInterpreterVM();
+                const result = vm.execute(code);
 
-            outputEl.textContent = "[Web WASM Engine Output]:\n" + (result || "Program finished with exit code 0.");
-            extractAndRenderMemoryTable(vm, tableContainer);
-        } catch(err) {
-            outputEl.textContent = `❌ Execution Error:\n${err.message}`;
-        }
-    }, 100);
+                outputEl.textContent = "[Web WASM Engine Output]:\n" + (result || "Program finished with exit code 0.");
+                extractAndRenderMemoryTable(vm, tableContainer);
+            } catch(err) {
+                outputEl.textContent = `❌ Execution Error:\n${err.message}`;
+            }
+            resolve();
+        }, 100);
+    });
 }
