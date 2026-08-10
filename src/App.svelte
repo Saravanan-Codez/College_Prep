@@ -67,6 +67,7 @@
   let geminiApiKey = '';
   let aiUserPrompt = '';
   let isAiThinking = false;
+  let isRunningCCode = false;
   let chatMessages = [
     { role: 'assistant', text: "👋 Hello! I'm your Context-Aware Gemini AI Study Coach. I monitor your active day, topics, and C code to help you excel. How can I help?" }
   ];
@@ -201,13 +202,18 @@
   }
 
   // ── C Playground ───────────────────────────────────────────────────
-  function handleRunCCode() {
+  async function handleRunCCode() {
     const editor = document.getElementById('c-app-editor');
     const output = document.getElementById('c-app-output');
     const table  = document.getElementById('c-app-table');
     if (editor && output && table) {
-      executeCCode(editor.value, output, table);
-      addXP(25, "C Code Executed");
+      isRunningCCode = true;
+      try {
+        await executeCCode(editor.value, output, table);
+        addXP(25, "C Code Executed");
+      } finally {
+        isRunningCCode = false;
+      }
     }
   }
 
@@ -834,8 +840,12 @@
             <div class="card-title">
               <i class="fa-solid fa-terminal"></i> {currentSnippet.title}
             </div>
-            <button on:click={handleRunCCode} class="btn btn-success">
-              <i class="fa-solid fa-play"></i> Run C Code
+            <button on:click={handleRunCCode} class="btn btn-success" disabled={isRunningCCode} aria-busy={isRunningCCode}>
+              {#if isRunningCCode}
+                <i class="fa-solid fa-spinner fa-spin"></i> Running...
+              {:else}
+                <i class="fa-solid fa-play"></i> Run C Code
+              {/if}
             </button>
           </div>
           <textarea id="c-app-editor" aria-label="C code editor" rows="14" class="field field-mono"

@@ -19,3 +19,7 @@
 ## 2024-11-20 - Navigation Items and aria-current
 **Learning:** Found an accessibility issue pattern where active navigation buttons relied solely on visual cues (the `.active` class) to denote their state, leaving screen reader users unaware of the current page/section.
 **Action:** When implementing or reviewing navigation items (tabs, links, or buttons acting as navigation), always verify they include the `aria-current="page"` attribute dynamically bound to their active state to ensure structural context for screen readers.
+
+## 2024-05-24 - Async Button State for Execution Pipelines
+**Learning:** Found that long-running operations like compiling and running C code lacked visual loading states and screen reader announcements, leaving users unsure if an action was processing.
+**Action:** When implementing UI loading states for execution pipelines, ensure both Tauri IPC calls and web browser fallbacks explicitly return Promises (e.g., wrapping `setTimeout`) so the frontend can correctly `await` their completion, show a visual loading spinner, and set `aria-busy="true"`.
