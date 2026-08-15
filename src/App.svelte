@@ -582,7 +582,7 @@
       <div class="xp-label">
         <i class="fa-solid fa-medal"></i> {levelInfo.title}
       </div>
-      <div class="xp-bar-track">
+      <div class="xp-bar-track" role="progressbar" aria-label="XP to next level" aria-valuenow={xp % 200} aria-valuemin="0" aria-valuemax="200">
         <div class="xp-bar-fill" style="width: {(xp % 200) / 2}%"></div>
       </div>
       <div class="xp-stats">
@@ -649,7 +649,7 @@
               <span>Overall Progress</span>
               <span>{totalDone} / {totalSlots} sessions</span>
             </div>
-            <div class="progress-track" style="height: 8px;">
+            <div class="progress-track" style="height: 8px;" role="progressbar" aria-label="Overall curriculum progress" aria-valuenow={pct} aria-valuemin="0" aria-valuemax="100">
               <div class="progress-fill" style="width: {pct}%;"></div>
             </div>
           </div>
@@ -757,7 +757,7 @@
             <span>Today's Progress</span>
             <span>{completedTodayCount}/6 sessions</span>
           </div>
-          <div class="progress-track">
+          <div class="progress-track" role="progressbar" aria-label="Today's progress" aria-valuenow={completedTodayCount} aria-valuemin="0" aria-valuemax="6">
             <div class="progress-fill" style="width: {(completedTodayCount / 6) * 100}%"></div>
           </div>
         </div>
@@ -933,7 +933,7 @@
                 <i class="fa-solid fa-medal"></i> Level {levelInfo.level}
               </span>
               <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--text-main);">{levelInfo.title}</h2>
-              <div class="progress-track">
+              <div class="progress-track" role="progressbar" aria-label="XP to next level" aria-valuenow={xp % 200} aria-valuemin="0" aria-valuemax="200">
                 <div class="progress-fill" style="width: {(xp % 200) / 2}%; background: linear-gradient(90deg, #e3b341, #f59e0b);"></div>
               </div>
               <p style="font-size: 0.75rem; color: var(--text-muted);">Earn XP completing sessions, running C code, and rating flashcards.</p>
@@ -1251,7 +1251,7 @@
               <div class="card-inset" style="font-size: 0.78rem; color: var(--text-sub); font-family: 'JetBrains Mono', monospace;">
                 {syncStatusMsg}
                 {#if isSyncing || syncProgress > 0}
-                  <div class="progress-track" style="margin-top: 8px;">
+                  <div class="progress-track" style="margin-top: 8px;" role="progressbar" aria-label="Sync progress" aria-valuenow={syncProgress} aria-valuemin="0" aria-valuemax="100">
                     <div class="progress-fill" style="width: {syncProgress}%; background: linear-gradient(90deg, var(--accent-cyan), var(--accent-green));"></div>
                   </div>
                 {/if}
