@@ -23,3 +23,7 @@
 ## 2024-05-24 - Async Button State for Execution Pipelines
 **Learning:** Found that long-running operations like compiling and running C code lacked visual loading states and screen reader announcements, leaving users unsure if an action was processing.
 **Action:** When implementing UI loading states for execution pipelines, ensure both Tauri IPC calls and web browser fallbacks explicitly return Promises (e.g., wrapping `setTimeout`) so the frontend can correctly `await` their completion, show a visual loading spinner, and set `aria-busy="true"`.
+
+## 2024-05-24 - Semantic Roles for Custom Progress Bars
+**Learning:** Found an accessibility issue pattern where custom visual progress bars (using `div`s with animated widths) lacked semantic meaning, rendering them invisible to screen readers.
+**Action:** When implementing custom progress bars, always ensure the container element includes `role="progressbar"` along with dynamic `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and a descriptive `aria-label` to provide accurate context to screen readers.
