@@ -27,3 +27,7 @@
 ## 2024-05-24 - Semantic Roles for Custom Progress Bars
 **Learning:** Found an accessibility issue pattern where custom visual progress bars (using `div`s with animated widths) lacked semantic meaning, rendering them invisible to screen readers.
 **Action:** When implementing custom progress bars, always ensure the container element includes `role="progressbar"` along with dynamic `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and a descriptive `aria-label` to provide accurate context to screen readers.
+
+## 2024-11-20 - Toggle Buttons and aria-pressed
+**Learning:** Found an accessibility issue pattern where toggle buttons (like Theme selectors or Soundscape presets) indicated their active state visually via an `.active` class but lacked semantic meaning, leaving screen reader users unaware of which option was currently selected or "pressed".
+**Action:** When implementing toggle buttons (or buttons acting as radio/selection options), always ensure they include the `aria-pressed` attribute dynamically bound to their active state (e.g., `aria-pressed={isActive}`) to accurately announce their status to screen readers.

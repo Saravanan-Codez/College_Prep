@@ -168,6 +168,15 @@
     if (geminiApiKey) localStorage.setItem('gemini_api_key', geminiApiKey);
   }
 
+  function saveState() {
+    pendingSave = true;
+    if (saveTimeoutId) clearTimeout(saveTimeoutId);
+    saveTimeoutId = setTimeout(() => {
+      performSave();
+      pendingSave = false;
+    }, 1000);
+  }
+
   // ── XP & Gamification ──────────────────────────────────────────────
   function addXP(amount, reason) {
     const oldLvl = getUserLevelInfo(xp).level;
@@ -1083,10 +1092,10 @@
                 <div class="settings-row-sub">Switch between dark and light mode</div>
               </div>
               <div class="toggle-group">
-                <button class="btn {theme === 'dark' ? 'active' : ''}" on:click={() => { theme = 'dark'; saveState(); }}>
+                <button class="btn {theme === 'dark' ? 'active' : ''}" aria-pressed={theme === 'dark'} on:click={() => { theme = 'dark'; saveState(); }}>
                   <i class="fa-solid fa-moon"></i> Dark
                 </button>
-                <button class="btn {theme === 'light' ? 'active' : ''}" on:click={() => { theme = 'light'; saveState(); }}>
+                <button class="btn {theme === 'light' ? 'active' : ''}" aria-pressed={theme === 'light'} on:click={() => { theme = 'light'; saveState(); }}>
                   <i class="fa-solid fa-sun"></i> Light
                 </button>
               </div>
@@ -1099,11 +1108,11 @@
             <div style="display: flex; flex-direction: column; gap: 10px;">
               <div class="settings-row-label">Select Ambient Track / Beat:</div>
               <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <button class="btn {activeSoundscape === 'alpha' ? 'active' : ''}" on:click={() => handleToggleSoundscape('alpha')}>🧠 10Hz Alpha</button>
-                <button class="btn {activeSoundscape === 'rain' ? 'active' : ''}" on:click={() => handleToggleSoundscape('rain')}>🌧️ Soft Rain</button>
-                <button class="btn {activeSoundscape === 'pink' ? 'active' : ''}" on:click={() => handleToggleSoundscape('pink')}>📻 Focus Noise</button>
-                <button class="btn {activeSoundscape === 'lofi' ? 'active' : ''}" on:click={() => handleToggleSoundscape('lofi')}>🎧 Live Lofi Stream</button>
-                <button class="btn {activeSoundscape === 'off' ? 'active' : ''}" on:click={() => handleToggleSoundscape('off')}>🔇 Off</button>
+                <button class="btn {activeSoundscape === 'alpha' ? 'active' : ''}" aria-pressed={activeSoundscape === 'alpha'} on:click={() => handleToggleSoundscape('alpha')}>🧠 10Hz Alpha</button>
+                <button class="btn {activeSoundscape === 'rain' ? 'active' : ''}" aria-pressed={activeSoundscape === 'rain'} on:click={() => handleToggleSoundscape('rain')}>🌧️ Soft Rain</button>
+                <button class="btn {activeSoundscape === 'pink' ? 'active' : ''}" aria-pressed={activeSoundscape === 'pink'} on:click={() => handleToggleSoundscape('pink')}>📻 Focus Noise</button>
+                <button class="btn {activeSoundscape === 'lofi' ? 'active' : ''}" aria-pressed={activeSoundscape === 'lofi'} on:click={() => handleToggleSoundscape('lofi')}>🎧 Live Lofi Stream</button>
+                <button class="btn {activeSoundscape === 'off' ? 'active' : ''}" aria-pressed={activeSoundscape === 'off'} on:click={() => handleToggleSoundscape('off')}>🔇 Off</button>
               </div>
             </div>
           </div>
@@ -1118,9 +1127,9 @@
               </a>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DWWQR0awA2vA8')} class="btn btn-sm" style="color: var(--accent-green);">🎧 Focus Lofi</button>
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="btn btn-sm" style="color: var(--accent-green);">🎹 Deep Focus</button>
-              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm" style="color: var(--accent-green);">🎻 Classical</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DWWQR0awA2vA8')} class="btn btn-sm {spotifyPlaylistId === '37i9dQZF1DWWQR0awA2vA8' ? 'active' : ''}" aria-pressed={spotifyPlaylistId === '37i9dQZF1DWWQR0awA2vA8'} style="color: var(--accent-green);">🎧 Focus Lofi</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DXdLENHPmIOXM')} class="btn btn-sm {spotifyPlaylistId === '37i9dQZF1DXdLENHPmIOXM' ? 'active' : ''}" aria-pressed={spotifyPlaylistId === '37i9dQZF1DXdLENHPmIOXM'} style="color: var(--accent-green);">🎹 Deep Focus</button>
+              <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm {spotifyPlaylistId === '37i9dQZF1DX0smYrA8MsOG' ? 'active' : ''}" aria-pressed={spotifyPlaylistId === '37i9dQZF1DX0smYrA8MsOG'} style="color: var(--accent-green);">🎻 Classical</button>
             </div>
             <div style="display: flex; gap: 8px;">
               <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
@@ -1218,10 +1227,12 @@
 
               <div class="toggle-group">
                 <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}"
+                        aria-pressed={wifiSyncMode === 'pull'}
                         on:click={() => wifiSyncMode = 'pull'}>
                   <i class="fa-solid fa-download"></i> Pull from server
                 </button>
                 <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}"
+                        aria-pressed={wifiSyncMode === 'push'}
                         on:click={() => wifiSyncMode = 'push'}>
                   <i class="fa-solid fa-upload"></i> Push to server
                 </button>
