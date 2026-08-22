@@ -51,6 +51,8 @@
 
   // WiFi server state
   let wifiServerRunning = false;
+  let isStartingWifiServer = false;
+  let isStoppingWifiServer = false;
   let wifiServerIPs = [];
   let wifiServerPort = 7842;
   let wifiConnectIP = '';
@@ -258,6 +260,7 @@
       return;
     }
     try {
+      isStartingWifiServer = true;
       syncStatusMsg = "Starting server...";
       const stateJson = JSON.stringify(getFullStateObj());
       const ip = await invoke('start_sync_server', {
@@ -270,11 +273,14 @@
       syncStatusMsg = `✅ Server running — share your IP with the other device`;
     } catch(e) {
       syncStatusMsg = `⚠️ ${e}`;
+    } finally {
+      isStartingWifiServer = false;
     }
   }
 
   async function stopWifiServer() {
     if (!isTauriApp) return;
+    isStoppingWifiServer = true;
     try {
       await invoke('stop_sync_server');
       wifiServerRunning = false;
@@ -282,6 +288,8 @@
       syncStatusMsg = 'Server stopped.';
     } catch(e) {
       syncStatusMsg = `⚠️ ${e}`;
+    } finally {
+      isStoppingWifiServer = false;
     }
   }
 
@@ -827,7 +835,7 @@
                   </span>
                   {#each slot.subject.videos as vid}
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
-                      <button on:click={() => handleOpenVideo(vid)} class="lesson-link" style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
+                      <button on:click={() => handleOpenVideo(vid)} class="lesson-link" aria-label={`Play video: ${vid.title}`} style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
                         <i class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
@@ -1183,8 +1191,12 @@
               </div>
 
               {#if !wifiServerRunning}
-                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;">
-                  <i class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
+                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;" disabled={isStartingWifiServer} aria-busy={isStartingWifiServer}>
+                  {#if isStartingWifiServer}
+                    <i class="fa-solid fa-spinner fa-spin"></i> Starting...
+                  {:else}
+                    <i class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
+                  {/if}
                 </button>
               {:else}
                 <div class="card-inset" style="border-color: rgba(63,185,80,0.3);">
@@ -1202,8 +1214,12 @@
                     {/each}
                   </div>
                 </div>
-                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;">
-                  <i class="fa-solid fa-stop"></i> Stop Server
+                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;" disabled={isStoppingWifiServer} aria-busy={isStoppingWifiServer}>
+                  {#if isStoppingWifiServer}
+                    <i class="fa-solid fa-spinner fa-spin"></i> Stopping...
+                  {:else}
+                    <i class="fa-solid fa-stop"></i> Stop Server
+                  {/if}
                 </button>
               {/if}
             </div>
@@ -1226,13 +1242,11 @@
               </div>
 
               <div class="toggle-group">
-                <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}"
-                        aria-pressed={wifiSyncMode === 'pull'}
+                <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'pull'}
                         on:click={() => wifiSyncMode = 'pull'}>
                   <i class="fa-solid fa-download"></i> Pull from server
                 </button>
-                <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}"
-                        aria-pressed={wifiSyncMode === 'push'}
+                <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'push'}
                         on:click={() => wifiSyncMode = 'push'}>
                   <i class="fa-solid fa-upload"></i> Push to server
                 </button>
