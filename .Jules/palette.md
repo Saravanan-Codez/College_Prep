@@ -31,3 +31,7 @@
 ## 2024-11-20 - Toggle Buttons and aria-pressed
 **Learning:** Found an accessibility issue pattern where toggle buttons (like Theme selectors or Soundscape presets) indicated their active state visually via an `.active` class but lacked semantic meaning, leaving screen reader users unaware of which option was currently selected or "pressed".
 **Action:** When implementing toggle buttons (or buttons acting as radio/selection options), always ensure they include the `aria-pressed` attribute dynamically bound to their active state (e.g., `aria-pressed={isActive}`) to accurately announce their status to screen readers.
+
+## 2024-05-18 - Async Action Button Loading States & Icon Button A11y
+**Learning:** Found multiple instances where asynchronous action buttons lacked proper loading indicators and disabled states, and some icon-only buttons were missing essential ARIA labels. Proper loading states provide crucial feedback during operations like network syncing, preventing confusing double clicks. `aria-label`s on icon-only buttons like the Youtube play/copy link are essential to explain the action.
+**Action:** When implementing async actions, always bind a `disabled` state and `aria-busy` to an `isProcessing` flag, wrapping the actual operation in a `try...finally` block to ensure the flag is unset. Always ensure any button consisting solely of icons or ambiguous text has a clear `aria-label` describing its exact effect.
