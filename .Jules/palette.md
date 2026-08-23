@@ -35,3 +35,7 @@
 ## 2024-05-18 - Async Action Button Loading States & Icon Button A11y
 **Learning:** Found multiple instances where asynchronous action buttons lacked proper loading indicators and disabled states, and some icon-only buttons were missing essential ARIA labels. Proper loading states provide crucial feedback during operations like network syncing, preventing confusing double clicks. `aria-label`s on icon-only buttons like the Youtube play/copy link are essential to explain the action.
 **Action:** When implementing async actions, always bind a `disabled` state and `aria-busy` to an `isProcessing` flag, wrapping the actual operation in a `try...finally` block to ensure the flag is unset. Always ensure any button consisting solely of icons or ambiguous text has a clear `aria-label` describing its exact effect.
+
+## 2024-05-24 - Screen Reader Support for Dynamic Toast Notifications
+**Learning:** Found an accessibility issue pattern where dynamic toast notifications (temporary messages added to the DOM) lacked live region roles. Without `role="status"` and `aria-live="polite"`, these notifications are completely invisible to screen readers, leaving those users unaware of successful actions or errors.
+**Action:** When implementing or reviewing dynamic notification elements like toasts, always ensure they include `role="status"` (or `role="alert"` for critical messages) and an appropriate `aria-live` attribute so they are reliably announced by screen readers without interrupting the user.

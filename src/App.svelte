@@ -1312,7 +1312,7 @@
 </div>
 
 {#if toastMsg}
-  <div style="position: fixed; bottom: 85px; right: 20px; z-index: 99999; background: var(--bg-elevated); border: 1px solid var(--accent-blue); color: var(--text-main); font-size: 0.8rem; font-weight: 600; padding: 10px 18px; border-radius: var(--radius-md); box-shadow: var(--shadow-hover); display: flex; align-items: center; gap: 8px; animation: slideUp 0.25s ease;">
+  <div role="status" aria-live="polite" style="position: fixed; bottom: 85px; right: 20px; z-index: 99999; background: var(--bg-elevated); border: 1px solid var(--accent-blue); color: var(--text-main); font-size: 0.8rem; font-weight: 600; padding: 10px 18px; border-radius: var(--radius-md); box-shadow: var(--shadow-hover); display: flex; align-items: center; gap: 8px; animation: slideUp 0.25s ease;">
     {toastMsg}
   </div>
 {/if}
