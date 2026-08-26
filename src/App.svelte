@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, tick } from 'svelte';
   import { invoke } from '@tauri-apps/api/core';
   import SplashScreen from './components/SplashScreen.svelte';
   import falkonLogo from './resources/images/Falkon Labs.png';
@@ -73,6 +73,7 @@
   let chatMessages = [
     { role: 'assistant', text: "👋 Hello! I'm your Context-Aware Gemini AI Study Coach. I monitor your active day, topics, and C code to help you excel. How can I help?" }
   ];
+  let chatContainer;
 
   const sessionStartTime = Date.now();
 
@@ -230,6 +231,7 @@
 
   // ── AI Coach ───────────────────────────────────────────────────────
   async function handleSendAiChat(customPromptText) {
+    if (isAiThinking) return;
     const promptToSend = customPromptText || aiUserPrompt;
     if (!promptToSend.trim()) return;
     if (!geminiApiKey) { activeTab = 'settings'; return; }
@@ -237,6 +239,8 @@
     aiUserPrompt = '';
     isAiThinking = true;
     saveState();
+    await tick();
+    if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     try {
       const activeCode = document.getElementById('c-app-editor')?.value || '';
       const reply = await sendGeminiPrompt(promptToSend, geminiApiKey, {
@@ -244,10 +248,14 @@
       });
       chatMessages = [...chatMessages, { role: 'assistant', text: reply }];
       saveState();
+      await tick();
+      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
       addXP(20, "AI Consulted");
     } catch(err) {
       chatMessages = [...chatMessages, { role: 'assistant', text: `⚠️ Error: ${err.message}` }];
       saveState();
+      await tick();
+      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     } finally {
       isAiThinking = false;
     }
@@ -1041,7 +1049,7 @@
           </div>
 
           <!-- Chat Window -->
-          <div class="card" style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;">
+          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;">
             {#each chatMessages as msg}
               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">
                 <span class="chat-role-label">{msg.role === 'user' ? 'You' : 'Gemini AI'}</span>
@@ -1063,7 +1071,7 @@
             <input type="text" aria-label="AI Coach prompt" bind:value={aiUserPrompt}
                    on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
-                   class="field" style="flex: 1;" />
+                   class="field" style="flex: 1;" disabled={isAiThinking} />
             <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking} aria-busy={isAiThinking}>
               {#if isAiThinking}
                 <i class="fa-solid fa-spinner fa-spin"></i> Sending...
