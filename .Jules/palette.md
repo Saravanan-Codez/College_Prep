@@ -39,3 +39,7 @@
 ## 2024-05-24 - Screen Reader Support for Dynamic Toast Notifications
 **Learning:** Found an accessibility issue pattern where dynamic toast notifications (temporary messages added to the DOM) lacked live region roles. Without `role="status"` and `aria-live="polite"`, these notifications are completely invisible to screen readers, leaving those users unaware of successful actions or errors.
 **Action:** When implementing or reviewing dynamic notification elements like toasts, always ensure they include `role="status"` (or `role="alert"` for critical messages) and an appropriate `aria-live` attribute so they are reliably announced by screen readers without interrupting the user.
+
+## 2024-05-25 - Auto-scrolling and Disabling Inputs in Dynamic Chat
+**Learning:** Found that dynamically added chat messages in Svelte were sometimes hidden off-screen because the UI didn't automatically scroll, and users could accidentally submit duplicate inputs by pressing Enter or clicking "Send" repeatedly while an AI operation was already in progress.
+**Action:** As a project UX convention, always implement auto-scrolling for dynamic chat interfaces (using `tick()` and updating `scrollTop`), and explicitly disable both input fields and send buttons during asynchronous processing to prevent duplicate submissions and provide visual feedback.
