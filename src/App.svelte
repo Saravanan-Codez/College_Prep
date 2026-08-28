@@ -75,12 +75,6 @@
   ];
   let chatContainer;
 
-  function scrollToBottom() {
-    if (chatContainer) {
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    }
-  }
-
   const sessionStartTime = Date.now();
 
   // ── Derived ────────────────────────────────────────────────────────
@@ -237,6 +231,7 @@
 
   // ── AI Coach ───────────────────────────────────────────────────────
   async function handleSendAiChat(customPromptText) {
+    if (isAiThinking) return;
     const promptToSend = customPromptText || aiUserPrompt;
     if (!promptToSend.trim()) return;
     if (!geminiApiKey) { activeTab = 'settings'; return; }
@@ -245,7 +240,7 @@
     isAiThinking = true;
     saveState();
     await tick();
-    scrollToBottom();
+    if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     try {
       const activeCode = document.getElementById('c-app-editor')?.value || '';
       const reply = await sendGeminiPrompt(promptToSend, geminiApiKey, {
@@ -254,13 +249,13 @@
       chatMessages = [...chatMessages, { role: 'assistant', text: reply }];
       saveState();
       await tick();
-      scrollToBottom();
+      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
       addXP(20, "AI Consulted");
     } catch(err) {
       chatMessages = [...chatMessages, { role: 'assistant', text: `⚠️ Error: ${err.message}` }];
       saveState();
       await tick();
-      scrollToBottom();
+      if (chatContainer) chatContainer.scrollTop = chatContainer.scrollHeight;
     } finally {
       isAiThinking = false;
     }
@@ -1054,7 +1049,7 @@
           </div>
 
           <!-- Chat Window -->
-          <div class="card" style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" bind:this={chatContainer}>
+          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;">
             {#each chatMessages as msg}
               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">
                 <span class="chat-role-label">{msg.role === 'user' ? 'You' : 'Gemini AI'}</span>

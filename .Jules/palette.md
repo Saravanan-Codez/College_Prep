@@ -40,6 +40,6 @@
 **Learning:** Found an accessibility issue pattern where dynamic toast notifications (temporary messages added to the DOM) lacked live region roles. Without `role="status"` and `aria-live="polite"`, these notifications are completely invisible to screen readers, leaving those users unaware of successful actions or errors.
 **Action:** When implementing or reviewing dynamic notification elements like toasts, always ensure they include `role="status"` (or `role="alert"` for critical messages) and an appropriate `aria-live` attribute so they are reliably announced by screen readers without interrupting the user.
 
-## 2024-05-25 - Auto-scrolling and Disabling Inputs in Dynamic Chat
-**Learning:** Found that dynamically added chat messages in Svelte were sometimes hidden off-screen because the UI didn't automatically scroll, and users could accidentally submit duplicate inputs by pressing Enter or clicking "Send" repeatedly while an AI operation was already in progress.
-**Action:** As a project UX convention, always implement auto-scrolling for dynamic chat interfaces (using `tick()` and updating `scrollTop`), and explicitly disable both input fields and send buttons during asynchronous processing to prevent duplicate submissions and provide visual feedback.
+## 2026-08-26 - AI Chat Window Auto-Scrolling and Input Disabling
+**Learning:** Found that dynamic chat containers without auto-scroll force users to scroll manually after every response, degrading UX. Also, failing to disable inputs during async generation allows accidental double-submissions, leading to race conditions or duplicate AI requests.
+**Action:** When implementing dynamic chat interfaces, use Svelte's `tick()` followed by `scrollTop = scrollHeight` to ensure new messages are always visible. Additionally, always bind the `disabled` state of input fields and buttons to the `isProcessing` flag to prevent multiple submissions.
