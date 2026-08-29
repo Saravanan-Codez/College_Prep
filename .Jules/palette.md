@@ -43,3 +43,7 @@
 ## 2026-08-26 - AI Chat Window Auto-Scrolling and Input Disabling
 **Learning:** Found that dynamic chat containers without auto-scroll force users to scroll manually after every response, degrading UX. Also, failing to disable inputs during async generation allows accidental double-submissions, leading to race conditions or duplicate AI requests.
 **Action:** When implementing dynamic chat interfaces, use Svelte's `tick()` followed by `scrollTop = scrollHeight` to ensure new messages are always visible. Additionally, always bind the `disabled` state of input fields and buttons to the `isProcessing` flag to prevent multiple submissions.
+
+## 2024-11-20 - Keyboard Accessibility and Focus Visible
+**Learning:** Encountered an accessibility issue pattern where interactive elements lacked visible focus styles, primarily because custom button and generic element styles reset browser default outlines. This rendered the application nearly unusable for keyboard-only users who rely on focus indicators to navigate.
+**Action:** When creating a custom design system or resetting default styles, always ensure that `:focus-visible` styles are explicitly defined globally or per-component (e.g., using `outline: 2px solid var(--accent-blue)`) so keyboard focus remains visible without negatively impacting mouse click aesthetics.
