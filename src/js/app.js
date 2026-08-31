@@ -280,7 +280,7 @@ function renderScheduleForDay(dayNum) {
                     </ul>
                     ${slot.extra ? `<p class="mt-2 text-[11px] text-emerald-400 font-mono bg-emerald-950/40 p-2 rounded-lg border border-emerald-800/40 flex items-center gap-1.5"><i class="fa-solid fa-code"></i>${slot.extra}</p>` : ''}
                 </div>
-                <button onclick="window.app.toggleTask('${taskKey}')" class="mt-1 p-2.5 rounded-xl border transition-all ${isChecked ? 'bg-emerald-500 text-white border-emerald-400 shadow-md shadow-emerald-500/20' : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-blue-500 hover:text-white'}">
+                <button onclick="window.app.toggleTask('${taskKey}')" aria-label="${isChecked ? 'Mark task as incomplete' : 'Mark task as complete'}" class="mt-1 p-2.5 rounded-xl border transition-all ${isChecked ? 'bg-emerald-500 text-white border-emerald-400 shadow-md shadow-emerald-500/20' : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-blue-500 hover:text-white'}">
                     <i class="fa-solid ${isChecked ? 'fa-check-double text-base' : 'fa-check text-sm'}"></i>
                 </button>
             </div>
