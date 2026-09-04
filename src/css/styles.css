@@ -397,13 +397,18 @@ html.light .top-header {
   flex-shrink: 0;
 }
 
-.btn:hover {
+.btn:not(:disabled):hover {
   background: var(--bg-overlay);
   color: var(--text-main);
   border-color: var(--border-hover);
 }
 
-.btn:active { transform: scale(0.97); }
+.btn:not(:disabled):active { transform: scale(0.97); }
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 .btn.active, .btn.btn-active {
   background: linear-gradient(135deg, rgba(56,139,253,0.2), rgba(163,113,247,0.15));
@@ -419,7 +424,7 @@ html.light .top-header {
   box-shadow: var(--glow-blue);
 }
 
-.btn-primary:hover {
+.btn-primary:not(:disabled):hover {
   filter: brightness(1.1);
   color: white;
 }
@@ -432,7 +437,7 @@ html.light .top-header {
   box-shadow: var(--glow-green);
 }
 
-.btn-success:hover { filter: brightness(1.1); color: white; }
+.btn-success:not(:disabled):hover { filter: brightness(1.1); color: white; }
 
 .btn-icon {
   width: 36px;
@@ -466,6 +471,11 @@ html.light .top-header {
 .field:focus {
   border-color: var(--accent-blue);
   box-shadow: 0 0 0 3px rgba(56,139,253,0.15);
+}
+
+.field:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .field-mono {
