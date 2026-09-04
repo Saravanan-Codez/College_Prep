@@ -47,3 +47,7 @@
 ## 2024-11-20 - Keyboard Accessibility and Focus Visible
 **Learning:** Encountered an accessibility issue pattern where interactive elements lacked visible focus styles, primarily because custom button and generic element styles reset browser default outlines. This rendered the application nearly unusable for keyboard-only users who rely on focus indicators to navigate.
 **Action:** When creating a custom design system or resetting default styles, always ensure that `:focus-visible` styles are explicitly defined globally or per-component (e.g., using `outline: 2px solid var(--accent-blue)`) so keyboard focus remains visible without negatively impacting mouse click aesthetics.
+
+## 2024-05-24 - Visual Disabled States and Hover Feedback
+**Learning:** Found an accessibility issue pattern where elements (like buttons and inputs) lacked distinct visual disabled states. When async actions disabled buttons, the buttons still exhibited hover and active CSS effects, leading to a confusing UX where the application felt unresponsive despite processing a task.
+**Action:** Always ensure that disabled elements have explicit `:disabled` CSS styles (such as reduced opacity and `cursor: not-allowed`), and strictly limit interactive feedback styles (like `:hover` and `:active`) to `:not(:disabled)` to prevent false affordances.
