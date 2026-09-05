@@ -27,7 +27,7 @@
         <h1 class="splash-name">EngiPrep</h1>
         <p class="splash-sub">by Falkon Labs</p>
       </div>
-      <div class="splash-loader">
+      <div class="splash-loader" role="progressbar" aria-label="Loading...">
         <div class="loader-bar"></div>
       </div>
       <p class="splash-tagline">Your 20-Day Engineering Mastery System</p>
