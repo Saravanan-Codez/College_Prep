@@ -51,3 +51,7 @@
 ## 2024-05-24 - Visual Disabled States and Hover Feedback
 **Learning:** Found an accessibility issue pattern where elements (like buttons and inputs) lacked distinct visual disabled states. When async actions disabled buttons, the buttons still exhibited hover and active CSS effects, leading to a confusing UX where the application felt unresponsive despite processing a task.
 **Action:** Always ensure that disabled elements have explicit `:disabled` CSS styles (such as reduced opacity and `cursor: not-allowed`), and strictly limit interactive feedback styles (like `:hover` and `:active`) to `:not(:disabled)` to prevent false affordances.
+
+## 2024-11-20 - Contextual Labels for Dynamic Lists and Toggle States
+**Learning:** Encountered an accessibility anti-pattern where dynamically generated list items lacked context-specific labels (e.g., a generic "Copy video link" button repeated multiple times), and toggle buttons (like task completion markers) inappropriately changed their `aria-label` to denote state instead of using proper semantic roles.
+**Action:** When implementing dynamically generated lists, ensure interactive elements include specific contextual information in their `aria-label` (such as injecting titles like ``aria-label={`Copy link for video: ${vid.title}`}``). For toggle buttons, use `role="checkbox"` and `aria-checked={true/false}` alongside a static, descriptive `aria-label` rather than mutating the label to describe the current state.
