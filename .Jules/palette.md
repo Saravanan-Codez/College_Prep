@@ -51,3 +51,7 @@
 ## 2024-05-24 - Visual Disabled States and Hover Feedback
 **Learning:** Found an accessibility issue pattern where elements (like buttons and inputs) lacked distinct visual disabled states. When async actions disabled buttons, the buttons still exhibited hover and active CSS effects, leading to a confusing UX where the application felt unresponsive despite processing a task.
 **Action:** Always ensure that disabled elements have explicit `:disabled` CSS styles (such as reduced opacity and `cursor: not-allowed`), and strictly limit interactive feedback styles (like `:hover` and `:active`) to `:not(:disabled)` to prevent false affordances.
+
+## 2024-05-24 - Screen Reader Support for Task Toggle Checkboxes
+**Learning:** Found an accessibility issue where task completion toggle buttons mutated their `aria-label` text based on state instead of using static labels with proper roles and ARIA states. This is confusing for screen reader users as it behaves like a button changing text rather than a checkbox indicating state. Additionally, dynamic loops rendering buttons like "Copy Link" without context variables in their `aria-label`s fail to provide specific information on what item is being acted upon.
+**Action:** When creating toggle inputs, use `role="checkbox"` and `aria-checked` bindings with a static, descriptive `aria-label` to clearly present the semantic state to screen readers. For dynamically generated items in lists, ensure context-specific variables (like the item's title) are interpolated directly into the `aria-label` attribute.
