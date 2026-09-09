@@ -811,7 +811,6 @@
                         role="checkbox"
                         aria-checked={isDone}
                         aria-label={`Mark ${slot.title} task as complete`}
-                        aria-label={`Mark task as complete: ${slot.title}`}
                         style="background: none; border: none; cursor: pointer; padding: 4px; color: {isDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 1.25rem; opacity: {isDone ? 1 : 0.35}; transition: all 0.2s ease;">
                   <i class="fa-solid fa-circle-check"></i>
                 </button>
