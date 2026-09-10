@@ -811,7 +811,6 @@
                         role="checkbox"
                         aria-checked={isDone}
                         aria-label={`Mark ${slot.title} task as complete`}
-                        aria-label={`Mark task as complete: ${slot.title}`}
                         style="background: none; border: none; cursor: pointer; padding: 4px; color: {isDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 1.25rem; opacity: {isDone ? 1 : 0.35}; transition: all 0.2s ease;">
                   <i class="fa-solid fa-circle-check"></i>
                 </button>
@@ -828,6 +827,7 @@
                     <button on:click={() => toggleSubtask(subKey, taskKey, slot.subject.subtopics.length)}
                             role="checkbox"
                             aria-checked={isSubDone}
+                            aria-label={`Mark subtopic as complete: ${st}`}
                             style="display: flex; align-items: flex-start; gap: 8px; background: var(--bg-elevated); border: 1px solid {isSubDone ? 'rgba(63,185,80,0.3)' : 'var(--border)'}; padding: 6px 10px; border-radius: var(--radius-sm); text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%;">
                       <i class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
                          style="color: {isSubDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;"></i>
