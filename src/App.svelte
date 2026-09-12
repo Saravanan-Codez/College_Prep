@@ -1072,10 +1072,10 @@
           <!-- Input -->
           <div style="display: flex; gap: 10px;">
             <input type="text" aria-label="AI Coach prompt" bind:value={aiUserPrompt}
-                   on:keydown={(e) => e.key === 'Enter' && handleSendAiChat()}
+                   on:keydown={(e) => e.key === 'Enter' && aiUserPrompt.trim() && !isAiThinking && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" disabled={isAiThinking} />
-            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking} aria-busy={isAiThinking}>
+            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking || !aiUserPrompt.trim()} aria-busy={isAiThinking} title={!aiUserPrompt.trim() ? "Enter a prompt to send" : ""}>
               {#if isAiThinking}
                 <i class="fa-solid fa-spinner fa-spin"></i> Sending...
               {:else}
@@ -1151,8 +1151,8 @@
               <button on:click={() => setSpotifyPlaylist('37i9dQZF1DX0smYrA8MsOG')} class="btn btn-sm {spotifyPlaylistId === '37i9dQZF1DX0smYrA8MsOG' ? 'active' : ''}" aria-pressed={spotifyPlaylistId === '37i9dQZF1DX0smYrA8MsOG'} style="color: var(--accent-green);">🎻 Classical</button>
             </div>
             <div style="display: flex; gap: 8px;">
-              <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
-              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);">Load</button>
+              <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} on:keydown={(e) => e.key === 'Enter' && customSpotifyUrl.trim() && parseAndSetCustomSpotify()} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
+              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : ""}>Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
               <iframe title="Spotify Player" style="border-radius: 10px;"
@@ -1273,7 +1273,7 @@
                 {/if}
               </div>
 
-              <button on:click={connectToDevice} disabled={isSyncing} class="btn btn-primary" aria-busy={isSyncing}>
+              <button on:click={connectToDevice} disabled={isSyncing || !wifiConnectIP.trim() || !wifiConnectPort} class="btn btn-primary" aria-busy={isSyncing} title={!wifiConnectIP.trim() || !wifiConnectPort ? "Enter an IP address and port to sync" : ""}>
                 {#if isSyncing}
                   <i class="fa-solid fa-spinner fa-spin"></i> Syncing...
                 {:else}
@@ -1383,7 +1383,7 @@
       </div>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <button on:click={() => showImportModal = false} class="btn">Cancel</button>
-        <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary">
+        <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : ""}>
           <i class="fa-solid fa-file-import"></i> Load Backup
         </button>
       </div>

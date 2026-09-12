@@ -61,3 +61,7 @@
 ## 2024-05-24 - Duplicate ARIA Labels on Buttons
 **Learning:** Found that a task completion toggle button accidentally contained two `aria-label` attributes. This creates invalid HTML/Svelte markup and can cause screen readers to either ignore the labels, read the wrong one, or fail entirely depending on the browser parsing. Additionally, subtask markers (functioning as custom checkboxes) were missing explicit `aria-label`s, rendering them inaccessible when their visual context is stripped away.
 **Action:** Ensure elements never have multiple or duplicate `aria-label` attributes to prevent conflicting semantics, and ensure that all interactive toggles, especially dynamically generated ones, provide an accurate and unique `aria-label` to provide proper screen reader context.
+
+## 2026-09-12 - Interactive Disabled States and Tooltips
+**Learning:** Found an interaction issue where form submission buttons were left enabled even when required input fields were empty. This could lead to confusing silent failures or unintended API requests. Furthermore, simply disabling the buttons wasn't enough, as users might not understand *why* the action is unavailable without clear feedback.
+**Action:** Always pair disabled states on form actions with clear validation logic (disabling the button when inputs are empty/invalid) and include a helpful `title` attribute to explain to users exactly what input is needed to enable the action.
