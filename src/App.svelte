@@ -910,7 +910,7 @@
 
           <!-- Flashcard -->
           <div class="perspective-1000" style="width: 100%; min-height: 240px; cursor: pointer;"
-               role="button" tabindex="0"
+               role="button" tabindex="0" aria-expanded={isFlashcardFlipped} aria-live="polite"
                on:click={flipCard} on:keypress={(e) => e.key === 'Enter' && flipCard()}>
             <div class="card transform-style-3d"
                  style="min-height: 240px; align-items: center; justify-content: center; text-align: center; gap: 16px; padding: 32px; background: linear-gradient(135deg, var(--bg-surface), var(--bg-elevated));">
