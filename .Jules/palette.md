@@ -65,3 +65,11 @@
 ## 2026-09-12 - Interactive Disabled States and Tooltips
 **Learning:** Found an interaction issue where form submission buttons were left enabled even when required input fields were empty. This could lead to confusing silent failures or unintended API requests. Furthermore, simply disabling the buttons wasn't enough, as users might not understand *why* the action is unavailable without clear feedback.
 **Action:** Always pair disabled states on form actions with clear validation logic (disabling the button when inputs are empty/invalid) and include a helpful `title` attribute to explain to users exactly what input is needed to enable the action.
+
+## 2024-06-05 - Semantic Attributes for Animated Flashcards
+**Learning:** Found that custom 3D animated flip cards (like Anki Flashcards) lacked clear ARIA states denoting when the card was flipped. This means screen reader users couldn't determine the current visual state of the card (question vs answer) or when the flip occurred.
+**Action:** When implementing custom visual toggle states (like a card flip), ensure `aria-expanded` (or a similarly appropriate ARIA attribute) is dynamically bound to the state, and use `aria-live="polite"` so screen readers can announce the content change without user interaction.
+
+## 2024-06-05 - Semantic Attributes for Loading Progress Bars
+**Learning:** Found that custom loading progress bars (like the Splash Screen loader) lacked clear ARIA states denoting when the application was busy loading. This means screen reader users wouldn't know why they are waiting.
+**Action:** When implementing custom loading screens, ensure `aria-busy="true"` is set on the loader element so screen readers can properly indicate the busy state.
