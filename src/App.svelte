@@ -887,7 +887,7 @@
               <i class="fa-solid fa-square-terminal" style="color: var(--accent-green);"></i> Terminal Output
             </div>
             <div class="card-inset" style="min-height: 120px;">
-              <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;">$ ready.</code></pre>
+              <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;" role="log" aria-live="polite">$ ready.</code></pre>
             </div>
           </div>
           <div class="card" style="gap: 10px;">
@@ -1052,7 +1052,7 @@
           </div>
 
           <!-- Chat Window -->
-          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;">
+          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions text">
             {#each chatMessages as msg}
               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">
                 <span class="chat-role-label">{msg.role === 'user' ? 'You' : 'Gemini AI'}</span>
@@ -1062,8 +1062,8 @@
               </div>
             {/each}
             {#if isAiThinking}
-              <div class="chat-msg-ai" style="color: var(--accent-purple);">
-                <i class="fa-solid fa-circle-notch" style="animation: spin 1s linear infinite; margin-right: 8px;"></i>
+              <div class="chat-msg-ai" style="color: var(--accent-purple);" role="status" aria-live="polite">
+                <i class="fa-solid fa-circle-notch" style="animation: spin 1s linear infinite; margin-right: 8px;" aria-hidden="true"></i>
                 Gemini is thinking...
               </div>
             {/if}
