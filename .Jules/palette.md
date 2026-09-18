@@ -73,3 +73,7 @@
 ## 2024-06-05 - Semantic Attributes for Loading Progress Bars
 **Learning:** Found that custom loading progress bars (like the Splash Screen loader) lacked clear ARIA states denoting when the application was busy loading. This means screen reader users wouldn't know why they are waiting.
 **Action:** When implementing custom loading screens, ensure `aria-busy="true"` is set on the loader element so screen readers can properly indicate the busy state.
+
+## 2024-11-20 - Dynamic Chat and Terminal Output Accessibility
+**Learning:** Found an accessibility issue pattern where dynamic chat windows (like the AI Coach) and terminal outputs (like the C Playground) appended text without proper live region attributes. Without these, new messages or execution results were invisible to screen reader users until manually navigated to.
+**Action:** When implementing or reviewing dynamic text containers (like chat boxes or terminals), always verify they include `role="log"` and `aria-live="polite"` (and optionally `aria-atomic="false"` or `aria-relevant="additions text"`) so that new content is reliably and automatically announced by screen readers.
