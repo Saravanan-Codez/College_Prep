@@ -1038,15 +1038,18 @@
           <!-- Quick Prompts -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
-                    class="btn btn-sm" style="color: var(--accent-blue);">
+                    class="btn btn-sm" style="color: var(--accent-blue);"
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
               💡 Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
-                    class="btn btn-sm" style="color: var(--accent-green);">
+                    class="btn btn-sm" style="color: var(--accent-green);"
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
               🐞 Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
-                    class="btn btn-sm" style="color: var(--accent-amber);">
+                    class="btn btn-sm" style="color: var(--accent-amber);"
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
               🏆 Evaluate Progress
             </button>
           </div>
