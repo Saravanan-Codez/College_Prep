@@ -894,7 +894,7 @@
             <div class="card-title" style="margin-bottom: 4px;">
               <i class="fa-solid fa-memory" style="color: var(--accent-purple);"></i> Stack RAM Inspector
             </div>
-            <div class="card-inset" style="min-height: 120px;">
+            <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
               <div id="c-app-table"></div>
             </div>
           </div>
