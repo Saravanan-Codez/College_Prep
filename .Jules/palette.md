@@ -80,3 +80,7 @@
 ## 2024-11-20 - Dynamic Chat and Terminal Output Accessibility
 **Learning:** Found an accessibility issue pattern where dynamic chat windows (like the AI Coach) and terminal outputs (like the C Playground) appended text without proper live region attributes. Without these, new messages or execution results were invisible to screen reader users until manually navigated to.
 **Action:** When implementing or reviewing dynamic text containers (like chat boxes or terminals), always verify they include `role="log"` and `aria-live="polite"` (and optionally `aria-atomic="false"` or `aria-relevant="additions text"`) so that new content is reliably and automatically announced by screen readers.
+
+## 2026-09-18 - Disabling Auxiliary Action Buttons During Async Operations
+**Learning:** Found an interactive issue where auxiliary quick action buttons (like AI quick prompts) were not disabled while the main asynchronous operation (AI generation) was running. This can lead to race conditions, duplicate API requests, and a confusing UX where users might think clicking again will interrupt or queue the request. Furthermore, failing to explain the disabled state makes the interface less intuitive.
+**Action:** When implementing async operations (like chat generation), ensure that not only the primary input and submit buttons are disabled, but also any auxiliary action buttons (such as quick prompts or templates) that trigger the same pipeline. Always include a `title` attribute to explain the disabled state (e.g., "AI is currently thinking").
