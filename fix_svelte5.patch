@@ -1,0 +1,10 @@
+--- src/App.svelte
++++ src/App.svelte
+@@ -1055,7 +1055,6 @@
+           </div>
+
+           <!-- Chat Window -->
+-          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite">
+           <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions text">
+             {#each chatMessages as msg}
+               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">
