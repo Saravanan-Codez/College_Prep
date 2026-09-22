@@ -84,7 +84,3 @@
 ## 2026-09-18 - Disabling Auxiliary Action Buttons During Async Operations
 **Learning:** Found an interactive issue where auxiliary quick action buttons (like AI quick prompts) were not disabled while the main asynchronous operation (AI generation) was running. This can lead to race conditions, duplicate API requests, and a confusing UX where users might think clicking again will interrupt or queue the request. Furthermore, failing to explain the disabled state makes the interface less intuitive.
 **Action:** When implementing async operations (like chat generation), ensure that not only the primary input and submit buttons are disabled, but also any auxiliary action buttons (such as quick prompts or templates) that trigger the same pipeline. Always include a `title` attribute to explain the disabled state (e.g., "AI is currently thinking").
-
-## 2024-05-19 - Accessible Emoji Rating Buttons
-**Learning:** Rating buttons that mix emojis with shorthand text (like "😖 Again 1d") result in confusing, fragmented screen reader announcements (e.g., "Confounded face, Again, one d").
-**Action:** Always provide an explicit, human-readable `aria-label` (e.g., "Rate flashcard: Again, review in 1 day") to overwrite disjointed emoji/text mixtures and provide clear context.

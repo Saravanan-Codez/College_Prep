@@ -888,8 +888,6 @@
             </div>
             <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
               <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;">$ ready.</code></pre>
-            <div class="card-inset" style="min-height: 120px;">
-              <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;" role="log" aria-live="polite">$ ready.</code></pre>
             </div>
           </div>
           <div class="card" style="gap: 10px;">
@@ -1057,7 +1055,6 @@
           </div>
 
           <!-- Chat Window -->
-          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite">
           <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions text">
             {#each chatMessages as msg}
               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">

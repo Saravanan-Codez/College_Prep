@@ -1,0 +1,11 @@
+--- src/App.svelte
++++ src/App.svelte
+@@ -888,8 +888,6 @@
+             </div>
+             <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
+               <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;">$ ready.</code></pre>
+-            <div class="card-inset" style="min-height: 120px;">
+-              <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;" role="log" aria-live="polite">$ ready.</code></pre>
+             </div>
+           </div>
+           <div class="card" style="gap: 10px;">
