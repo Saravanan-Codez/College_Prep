@@ -84,3 +84,7 @@
 ## 2026-09-18 - Disabling Auxiliary Action Buttons During Async Operations
 **Learning:** Found an interactive issue where auxiliary quick action buttons (like AI quick prompts) were not disabled while the main asynchronous operation (AI generation) was running. This can lead to race conditions, duplicate API requests, and a confusing UX where users might think clicking again will interrupt or queue the request. Furthermore, failing to explain the disabled state makes the interface less intuitive.
 **Action:** When implementing async operations (like chat generation), ensure that not only the primary input and submit buttons are disabled, but also any auxiliary action buttons (such as quick prompts or templates) that trigger the same pipeline. Always include a `title` attribute to explain the disabled state (e.g., "AI is currently thinking").
+
+## 2024-05-24 - Contextual Aria Labels for Action Icons
+**Learning:** Buttons consisting of emojis and fragmented shorthand text (like flashcard intervals '😖 Again 1d') can be confusing when announced literally by screen readers. Providing an explicit aria-label that spells out the action is better UX.
+**Action:** When implementing or modifying such interactive buttons, always ensure an `aria-label` attribute is added that clearly explains the specific action and result to screen readers.
