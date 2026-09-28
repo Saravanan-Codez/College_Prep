@@ -888,8 +888,6 @@
             </div>
             <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
               <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;">$ ready.</code></pre>
-            <div class="card-inset" style="min-height: 120px;">
-              <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;" role="log" aria-live="polite">$ ready.</code></pre>
             </div>
           </div>
           <div class="card" style="gap: 10px;">
@@ -930,17 +928,17 @@
 
           {#if isFlashcardFlipped}
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-              <button on:click={() => rateFlashcard(1)} class="btn" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
+              <button aria-label="Rate flashcard as Again, interval 1 day" on:click={() => rateFlashcard(1)} class="btn" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;" aria-hidden="true">😖</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">1d</span>
               </button>
-              <button on:click={() => rateFlashcard(2)} class="btn" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
+              <button aria-label="Rate flashcard as Hard, interval 2 days" on:click={() => rateFlashcard(2)} class="btn" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;" aria-hidden="true">😐</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">2d</span>
               </button>
-              <button on:click={() => rateFlashcard(3)} class="btn" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
+              <button aria-label="Rate flashcard as Good, interval 4 days" on:click={() => rateFlashcard(3)} class="btn" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;" aria-hidden="true">🙂</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">4d</span>
               </button>
-              <button on:click={() => rateFlashcard(4)} class="btn" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😄</span><span style="font-size: 0.7rem; font-weight: 700;">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);">7d</span>
+              <button aria-label="Rate flashcard as Easy, interval 7 days" on:click={() => rateFlashcard(4)} class="btn" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;" aria-hidden="true">😄</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">7d</span>
               </button>
             </div>
           {:else}
@@ -1057,7 +1055,6 @@
           </div>
 
           <!-- Chat Window -->
-          <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite">
           <div class="card" bind:this={chatContainer} style="gap: 12px; max-height: 460px; overflow-y: auto; padding: 16px;" role="log" aria-live="polite" aria-atomic="false" aria-relevant="additions text">
             {#each chatMessages as msg}
               <div style="display: flex; flex-direction: column; gap: 3px; align-items: {msg.role === 'user' ? 'flex-end' : 'flex-start'};">
