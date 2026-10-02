@@ -928,17 +928,27 @@
 
           {#if isFlashcardFlipped}
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-              <button aria-label="Rate flashcard as Again, interval 1 day" on:click={() => rateFlashcard(1)} class="btn" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;" aria-hidden="true">😖</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">1d</span>
+              <button on:click={() => rateFlashcard(1)} aria-label="Rate flashcard as Again, review in 1 day" class="btn" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
               </button>
-              <button aria-label="Rate flashcard as Hard, interval 2 days" on:click={() => rateFlashcard(2)} class="btn" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;" aria-hidden="true">😐</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">2d</span>
+              <button on:click={() => rateFlashcard(2)} aria-label="Rate flashcard as Hard, review in 2 days" class="btn" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
               </button>
-              <button aria-label="Rate flashcard as Good, interval 4 days" on:click={() => rateFlashcard(3)} class="btn" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;" aria-hidden="true">🙂</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">4d</span>
+              <button on:click={() => rateFlashcard(3)} aria-label="Rate flashcard as Good, review in 4 days" class="btn" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
               </button>
-              <button aria-label="Rate flashcard as Easy, interval 7 days" on:click={() => rateFlashcard(4)} class="btn" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;" aria-hidden="true">😄</span><span style="font-size: 0.7rem; font-weight: 700;" aria-hidden="true">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);" aria-hidden="true">7d</span>
+              <button on:click={() => rateFlashcard(4)} aria-label="Rate flashcard as Easy, review in 7 days" class="btn" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+              <button on:click={() => rateFlashcard(1)} class="btn" aria-label="Rate flashcard: Again, review in 1 day" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
+              </button>
+              <button on:click={() => rateFlashcard(2)} class="btn" aria-label="Rate flashcard: Hard, review in 2 days" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
+              </button>
+              <button on:click={() => rateFlashcard(3)} class="btn" aria-label="Rate flashcard: Good, review in 4 days" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
+              </button>
+              <button on:click={() => rateFlashcard(4)} class="btn" aria-label="Rate flashcard: Easy, review in 7 days" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
+                <span style="font-size: 1rem;">😄</span><span style="font-size: 0.7rem; font-weight: 700;">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);">7d</span>
               </button>
             </div>
           {:else}
