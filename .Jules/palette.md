@@ -85,6 +85,6 @@
 **Learning:** Found an interactive issue where auxiliary quick action buttons (like AI quick prompts) were not disabled while the main asynchronous operation (AI generation) was running. This can lead to race conditions, duplicate API requests, and a confusing UX where users might think clicking again will interrupt or queue the request. Furthermore, failing to explain the disabled state makes the interface less intuitive.
 **Action:** When implementing async operations (like chat generation), ensure that not only the primary input and submit buttons are disabled, but also any auxiliary action buttons (such as quick prompts or templates) that trigger the same pipeline. Always include a `title` attribute to explain the disabled state (e.g., "AI is currently thinking").
 
-## 2026-09-30 - Fragmented text with emojis in buttons
-**Learning:** When buttons mix emojis, text labels, and fragmented shorthand (like '😖 Again 1d'), screen readers announce the literal and disjointed parts, confusing users.
-**Action:** Add a cohesive `aria-label` to the button explaining the action and outcome clearly, and hide the internal disjointed parts using `aria-hidden="true"` on their container tags.
+## 2024-05-24 - Screen Reader Support for Flashcard Rating Buttons
+**Learning:** Found an accessibility issue where flashcard rating buttons contained mixed emojis and shorthand text (e.g., '😖 Again 1d'). Without descriptive labels, screen readers announce these disjointed fragments, creating a confusing experience for visually impaired users.
+**Action:** When implementing buttons that rely on emojis mixed with fragmented shorthand text, always provide an explicitly descriptive `aria-label` attribute (e.g., `aria-label="Rate flashcard: Again, review in 1 day"`) to ensure screen readers announce clear and meaningful context.
