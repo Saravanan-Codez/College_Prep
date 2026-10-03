@@ -88,3 +88,10 @@
 ## 2024-05-24 - Screen Reader Support for Flashcard Rating Buttons
 **Learning:** Found an accessibility issue where flashcard rating buttons contained mixed emojis and shorthand text (e.g., '😖 Again 1d'). Without descriptive labels, screen readers announce these disjointed fragments, creating a confusing experience for visually impaired users.
 **Action:** When implementing buttons that rely on emojis mixed with fragmented shorthand text, always provide an explicitly descriptive `aria-label` attribute (e.g., `aria-label="Rate flashcard: Again, review in 1 day"`) to ensure screen readers announce clear and meaningful context.
+## 2024-05-24 - Duplicate ARIA Labels on Buttons
+**Learning:** Found that a task completion toggle button accidentally contained two `aria-label` attributes. This creates invalid HTML/Svelte markup and can cause screen readers to either ignore the labels, read the wrong one, or fail entirely depending on the browser parsing. Additionally, subtask markers (functioning as custom checkboxes) were missing explicit `aria-label`s, rendering them inaccessible when their visual context is stripped away.
+**Action:** Ensure elements never have multiple or duplicate `aria-label` attributes to prevent conflicting semantics, and ensure that all interactive toggles, especially dynamically generated ones, provide an accurate and unique `aria-label` to provide proper screen reader context.
+
+## 2026-10-03 - Duplicate flashcard rating buttons in UI
+**Learning:** Found an issue where the flashcard rating buttons in `src/App.svelte` were duplicated. This would likely cause confusion and possible layout breakage, with two sets of 'Again', 'Hard', 'Good', 'Easy' buttons appearing one after another inside the flashcard UI. This duplication might have been the result of a previous incomplete refactoring where an attempt was made to modify the `aria-label`s but the original buttons weren't removed.
+**Action:** When updating or refactoring repeating UI elements, ensure old versions are removed to prevent duplication. Cleaned up the Svelte file by removing the duplicated button lines.
