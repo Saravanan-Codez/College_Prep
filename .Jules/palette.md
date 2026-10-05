@@ -95,3 +95,7 @@
 ## 2026-10-03 - Duplicate flashcard rating buttons in UI
 **Learning:** Found an issue where the flashcard rating buttons in `src/App.svelte` were duplicated. This would likely cause confusion and possible layout breakage, with two sets of 'Again', 'Hard', 'Good', 'Easy' buttons appearing one after another inside the flashcard UI. This duplication might have been the result of a previous incomplete refactoring where an attempt was made to modify the `aria-label`s but the original buttons weren't removed.
 **Action:** When updating or refactoring repeating UI elements, ensure old versions are removed to prevent duplication. Cleaned up the Svelte file by removing the duplicated button lines.
+
+## 2024-11-20 - Nullifying Unused Svelte Attributes
+**Learning:** Found an issue where setting conditional attributes to an empty string (`""`) in Svelte resulted in empty attributes lingering in the DOM (e.g., `title=""`), which can be suboptimal or slightly confusing for screen readers and DOM inspectors.
+**Action:** In Svelte templates, when an attribute should only be present under certain conditions, bind it to `null` or `undefined` instead of an empty string (e.g., `title={condition ? "Reason" : null}`) to completely omit the attribute from the DOM when not needed.
