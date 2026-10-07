@@ -868,7 +868,7 @@
             <div class="card-title">
               <i class="fa-solid fa-terminal"></i> {currentSnippet.title}
             </div>
-            <button on:click={handleRunCCode} class="btn btn-success" disabled={isRunningCCode} aria-busy={isRunningCCode}>
+            <button on:click={handleRunCCode} class="btn btn-success" disabled={isRunningCCode} aria-busy={isRunningCCode} title={isRunningCCode ? "C code is currently running" : null}>
               {#if isRunningCCode}
                 <i class="fa-solid fa-spinner fa-spin"></i> Running...
               {:else}
@@ -1205,7 +1205,7 @@
               </div>
 
               {#if !wifiServerRunning}
-                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;" disabled={isStartingWifiServer} aria-busy={isStartingWifiServer}>
+                <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;" disabled={isStartingWifiServer} aria-busy={isStartingWifiServer} title={isStartingWifiServer ? "Starting sync server..." : null}>
                   {#if isStartingWifiServer}
                     <i class="fa-solid fa-spinner fa-spin"></i> Starting...
                   {:else}
@@ -1228,7 +1228,7 @@
                     {/each}
                   </div>
                 </div>
-                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;" disabled={isStoppingWifiServer} aria-busy={isStoppingWifiServer}>
+                <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;" disabled={isStoppingWifiServer} aria-busy={isStoppingWifiServer} title={isStoppingWifiServer ? "Stopping sync server..." : null}>
                   {#if isStoppingWifiServer}
                     <i class="fa-solid fa-spinner fa-spin"></i> Stopping...
                   {:else}
