@@ -563,34 +563,34 @@
     <nav aria-label="Main Navigation" class="sidebar-nav-items">
       <button class="nav-item {activeTab === 'home' ? 'active' : ''}" aria-current={activeTab === 'home' ? 'page' : undefined}
               on:click={() => activeTab = 'home'}>
-        <i class="fa-solid fa-house"></i> Dashboard
+        <i aria-hidden="true" class="fa-solid fa-house"></i> Dashboard
       </button>
 
       <span class="nav-section-label">Study</span>
 
       <button class="nav-item {activeTab === 'dashboard' ? 'active' : ''}" aria-current={activeTab === 'dashboard' ? 'page' : undefined}
               on:click={() => activeTab = 'dashboard'}>
-        <i class="fa-solid fa-calendar-day"></i> 20-Day Schedule
+        <i aria-hidden="true" class="fa-solid fa-calendar-day"></i> 20-Day Schedule
       </button>
 
       <button class="nav-item {activeTab === 'snippets' ? 'active' : ''}" aria-current={activeTab === 'snippets' ? 'page' : undefined}
               on:click={() => activeTab = 'snippets'}>
-        <i class="fa-solid fa-terminal"></i> C Playground
+        <i aria-hidden="true" class="fa-solid fa-terminal"></i> C Playground
       </button>
 
       <button class="nav-item {activeTab === 'flashcards' ? 'active' : ''}" aria-current={activeTab === 'flashcards' ? 'page' : undefined}
               on:click={() => activeTab = 'flashcards'}>
-        <i class="fa-solid fa-layer-group"></i> Anki SM-2
+        <i aria-hidden="true" class="fa-solid fa-layer-group"></i> Anki SM-2
       </button>
 
       <button class="nav-item {activeTab === 'gamification' ? 'active' : ''}" aria-current={activeTab === 'gamification' ? 'page' : undefined}
               on:click={() => activeTab = 'gamification'}>
-        <i class="fa-solid fa-trophy"></i> XP & Achievements
+        <i aria-hidden="true" class="fa-solid fa-trophy"></i> XP & Achievements
       </button>
 
       <button class="nav-item {activeTab === 'ai-mentor' ? 'active' : ''}" aria-current={activeTab === 'ai-mentor' ? 'page' : undefined}
               on:click={() => activeTab = 'ai-mentor'}>
-        <i class="fa-solid fa-robot"></i> AI Study Coach
+        <i aria-hidden="true" class="fa-solid fa-robot"></i> AI Study Coach
       </button>
 
       <div class="divider" style="margin: 8px 0;"></div>
@@ -598,14 +598,14 @@
 
       <button class="nav-item {activeTab === 'settings' ? 'active' : ''}" aria-current={activeTab === 'settings' ? 'page' : undefined}
               on:click={() => activeTab = 'settings'}>
-        <i class="fa-solid fa-gear"></i> Settings
+        <i aria-hidden="true" class="fa-solid fa-gear"></i> Settings
       </button>
     </nav>
 
     <!-- XP Box -->
     <div class="sidebar-xp-box">
       <div class="xp-label">
-        <i class="fa-solid fa-medal"></i> {levelInfo.title}
+        <i aria-hidden="true" class="fa-solid fa-medal"></i> {levelInfo.title}
       </div>
       <div class="xp-bar-track" role="progressbar" aria-label="XP to next level" aria-valuenow={xp % 200} aria-valuemin="0" aria-valuemax="200">
         <div class="xp-bar-fill" style="width: {(xp % 200) / 2}%"></div>
@@ -623,16 +623,16 @@
     <!-- Top Header -->
     <header class="top-header">
       <div class="header-page-title">
-        <i class="fa-solid {currentTabMeta.icon}"></i>
+        <i aria-hidden="true" class="fa-solid {currentTabMeta.icon}"></i>
         {currentTabMeta.label}
       </div>
       <div class="header-right">
         <span class="header-chip">
-          <i class="fa-solid fa-star" style="color: var(--accent-amber);"></i>
+          <i aria-hidden="true" class="fa-solid fa-star" style="color: var(--accent-amber);"></i>
           {xp} XP
         </span>
         <span class="header-chip">
-          <i class="fa-solid fa-fire" style="color: var(--accent-red);"></i>
+          <i aria-hidden="true" class="fa-solid fa-fire" style="color: var(--accent-red);"></i>
           {streakCount}d
         </span>
         <span class="header-chip" style="color: var(--accent-blue);">
@@ -690,7 +690,7 @@
           ] as s}
             <div class="card" style="align-items: center; text-align: center; gap: 8px; padding: 18px 12px; cursor: default;">
               <div style="width: 36px; height: 36px; border-radius: 10px; background: color-mix(in srgb, {s.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {s.color};">
-                <i class="fa-solid {s.icon}"></i>
+                <i aria-hidden="true" class="fa-solid {s.icon}"></i>
               </div>
               <div style="font-size: 1.3rem; font-weight: 800; color: var(--text-main); {s.mono ? "font-family: 'JetBrains Mono', monospace;" : ''}">{s.value}</div>
               <div style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">{s.label}</div>
@@ -702,11 +702,11 @@
         <div class="card" style="gap: 16px;">
           <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
             <div class="card-title">
-              <i class="fa-solid fa-calendar-day" style="color: var(--accent-blue);"></i>
+              <i aria-hidden="true" class="fa-solid fa-calendar-day" style="color: var(--accent-blue);"></i>
               Today's Focus — Day {currentDay}
             </div>
             <button on:click={() => activeTab = 'dashboard'} class="btn btn-sm btn-primary">
-              Open Schedule <i class="fa-solid fa-arrow-right"></i>
+              Open Schedule <i aria-hidden="true" class="fa-solid fa-arrow-right"></i>
             </button>
           </div>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
@@ -719,13 +719,13 @@
               {@const done = !!completedTasks[`day${currentDay}_slot${s.id}`]}
               <div class="card-inset" style="display: flex; align-items: center; gap: 10px; padding: 12px; opacity: {done ? 0.5 : 1};">
                 <div style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; background: color-mix(in srgb, {s.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {s.color}; font-size: 0.85rem;">
-                  <i class="fa-solid {s.icon}"></i>
+                  <i aria-hidden="true" class="fa-solid {s.icon}"></i>
                 </div>
                 <div style="min-width: 0;">
                   <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{s.label}</div>
                   <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
                 </div>
-                {#if done}<i class="fa-solid fa-circle-check" style="color: var(--accent-green); flex-shrink: 0; margin-left: auto;"></i>{/if}
+                {#if done}<i aria-hidden="true" class="fa-solid fa-circle-check" style="color: var(--accent-green); flex-shrink: 0; margin-left: auto;"></i>{/if}
               </div>
             {/each}
           </div>
@@ -744,13 +744,13 @@
                     on:mouseenter={(e) => e.currentTarget.style.borderColor = a.color.replace('var(', '').replace(')', '')}
                     on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}>
               <div style="width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, {a.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {a.color}; font-size: 1rem;">
-                <i class="fa-solid {a.icon}"></i>
+                <i aria-hidden="true" class="fa-solid {a.icon}"></i>
               </div>
               <div>
                 <div style="font-size: 0.875rem; font-weight: 700; color: var(--text-main);">{a.label}</div>
                 <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 2px;">{a.sub}</div>
               </div>
-              <i class="fa-solid fa-arrow-right" style="color: var(--text-muted); font-size: 0.75rem; margin-left: auto; margin-top: auto;"></i>
+              <i aria-hidden="true" class="fa-solid fa-arrow-right" style="color: var(--text-muted); font-size: 0.75rem; margin-left: auto; margin-top: auto;"></i>
             </button>
           {/each}
         </div>
@@ -803,7 +803,7 @@
               <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--bg-elevated); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent-blue); font-size: 0.8rem;">
-                    <i class="fa-solid {slot.icon}"></i>
+                    <i aria-hidden="true" class="fa-solid {slot.icon}"></i>
                   </div>
                   <span style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{slot.title}</span>
                 </div>
@@ -812,7 +812,7 @@
                         aria-checked={isDone}
                         aria-label={`Mark ${slot.title} task as complete`}
                         style="background: none; border: none; cursor: pointer; padding: 4px; color: {isDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 1.25rem; opacity: {isDone ? 1 : 0.35}; transition: all 0.2s ease;">
-                  <i class="fa-solid fa-circle-check"></i>
+                  <i aria-hidden="true" class="fa-solid fa-circle-check"></i>
                 </button>
               </div>
 
@@ -829,7 +829,7 @@
                             aria-checked={isSubDone}
                             aria-label={`Mark subtopic as complete: ${st}`}
                             style="display: flex; align-items: flex-start; gap: 8px; background: var(--bg-elevated); border: 1px solid {isSubDone ? 'rgba(63,185,80,0.3)' : 'var(--border)'}; padding: 6px 10px; border-radius: var(--radius-sm); text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%;">
-                      <i class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
+                      <i aria-hidden="true" class="fa-solid {isSubDone ? 'fa-square-check' : 'fa-square'}"
                          style="color: {isSubDone ? 'var(--accent-green)' : 'var(--text-muted)'}; font-size: 0.9rem; margin-top: 2px; flex-shrink: 0;"></i>
                       <span style="font-size: 0.775rem; color: {isSubDone ? 'var(--text-muted)' : 'var(--text-main)'}; {isSubDone ? 'text-decoration: line-through;' : ''} line-height: 1.4;">
                         {st}
@@ -842,16 +842,16 @@
               {#if slot.subject.videos && slot.subject.videos.length > 0}
                 <div style="border-top: 1px solid var(--border); padding-top: 10px; display: flex; flex-direction: column; gap: 6px;">
                   <span style="font-size: 0.6rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; display: flex; align-items: center; gap: 5px;">
-                    <i class="fa-brands fa-youtube" style="color: #f85149;"></i> Video Lessons
+                    <i aria-hidden="true" class="fa-brands fa-youtube" style="color: #f85149;"></i> Video Lessons
                   </span>
                   {#each slot.subject.videos as vid}
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
                       <button on:click={() => handleOpenVideo(vid)} class="lesson-link" aria-label={`Play video: ${vid.title}`} style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
-                        <i class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
+                        <i aria-hidden="true" class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
                       <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" aria-label={`Copy link for video: ${vid.title}`} style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
-                        <i class="fa-solid fa-copy"></i> Copy
+                        <i aria-hidden="true" class="fa-solid fa-copy"></i> Copy
                       </button>
                     </div>
                   {/each}
@@ -866,13 +866,13 @@
         <div class="card" style="gap: 14px;">
           <div class="card-header" style="margin-bottom: 0;">
             <div class="card-title">
-              <i class="fa-solid fa-terminal"></i> {currentSnippet.title}
+              <i aria-hidden="true" class="fa-solid fa-terminal"></i> {currentSnippet.title}
             </div>
             <button on:click={handleRunCCode} class="btn btn-success" disabled={isRunningCCode} aria-busy={isRunningCCode} title={isRunningCCode ? "C code is currently running" : null}>
               {#if isRunningCCode}
-                <i class="fa-solid fa-spinner fa-spin"></i> Running...
+                <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Running...
               {:else}
-                <i class="fa-solid fa-play"></i> Run C Code
+                <i aria-hidden="true" class="fa-solid fa-play"></i> Run C Code
               {/if}
             </button>
           </div>
@@ -884,7 +884,7 @@
         <div class="dashboard-grid">
           <div class="card" style="gap: 10px;">
             <div class="card-title" style="margin-bottom: 4px;">
-              <i class="fa-solid fa-square-terminal" style="color: var(--accent-green);"></i> Terminal Output
+              <i aria-hidden="true" class="fa-solid fa-square-terminal" style="color: var(--accent-green);"></i> Terminal Output
             </div>
             <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
               <pre><code id="c-app-output" style="font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; color: var(--accent-green); white-space: pre-wrap;">$ ready.</code></pre>
@@ -892,7 +892,7 @@
           </div>
           <div class="card" style="gap: 10px;">
             <div class="card-title" style="margin-bottom: 4px;">
-              <i class="fa-solid fa-memory" style="color: var(--accent-purple);"></i> Stack RAM Inspector
+              <i aria-hidden="true" class="fa-solid fa-memory" style="color: var(--accent-purple);"></i> Stack RAM Inspector
             </div>
             <div class="card-inset" style="min-height: 120px;" role="log" aria-live="polite">
               <div id="c-app-table"></div>
@@ -958,7 +958,7 @@
                border-color: rgba(227,179,65,0.2);">
             <div style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
               <span class="pill pill-amber" style="width: fit-content;">
-                <i class="fa-solid fa-medal"></i> Level {levelInfo.level}
+                <i aria-hidden="true" class="fa-solid fa-medal"></i> Level {levelInfo.level}
               </span>
               <h2 style="font-size: 1.5rem; font-weight: 900; color: var(--text-main);">{levelInfo.title}</h2>
               <div class="progress-track" role="progressbar" aria-label="XP to next level" aria-valuenow={xp % 200} aria-valuemin="0" aria-valuemax="200">
@@ -981,7 +981,7 @@
               { label: 'Badges',     value: `${unlockedBadges.length}/${ACHIEVEMENTS.length}`,   icon: 'fa-award',        color: 'var(--accent-amber)' },
             ] as stat}
               <div class="card" style="align-items: center; text-align: center; gap: 6px; padding: 16px;">
-                <i class="fa-solid {stat.icon}" style="font-size: 1.25rem; color: {stat.color};"></i>
+                <i aria-hidden="true" class="fa-solid {stat.icon}" style="font-size: 1.25rem; color: {stat.color};"></i>
                 <div style="font-size: 1.25rem; font-weight: 800; color: var(--text-main); font-family: 'JetBrains Mono', monospace;">{stat.value}</div>
                 <div style="font-size: 0.65rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{stat.label}</div>
               </div>
@@ -991,14 +991,14 @@
           <!-- Badges -->
           <div class="card" style="gap: 16px;">
             <div class="card-title">
-              <i class="fa-solid fa-award" style="color: var(--accent-amber);"></i> Achievement Badges
+              <i aria-hidden="true" class="fa-solid fa-award" style="color: var(--accent-amber);"></i> Achievement Badges
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px;">
               {#each ACHIEVEMENTS as badge}
                 {@const isUnlocked = xp >= badge.xpRequired}
                 <div class="card-inset" style="display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; padding: 16px; opacity: {isUnlocked ? 1 : 0.35}; transition: opacity 0.3s ease;">
                   <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--bg-overlay); border: 1px solid {isUnlocked ? 'rgba(227,179,65,0.4)' : 'var(--border)'}; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: {isUnlocked ? 'var(--accent-amber)' : 'var(--text-muted)'};">
-                    <i class="fa-solid {badge.icon}"></i>
+                    <i aria-hidden="true" class="fa-solid {badge.icon}"></i>
                   </div>
                   <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-main);">{badge.name}</div>
                   <div style="font-size: 0.65rem; color: var(--text-muted); line-height: 1.4;">{badge.desc}</div>
@@ -1019,7 +1019,7 @@
                border-color: rgba(163,113,247,0.2);">
             <div style="display: flex; align-items: center; gap: 12px;">
               <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(163,113,247,0.15); border: 1px solid rgba(163,113,247,0.3); display: flex; align-items: center; justify-content: center; color: var(--accent-purple); font-size: 1.2rem;">
-                <i class="fa-solid fa-robot"></i>
+                <i aria-hidden="true" class="fa-solid fa-robot"></i>
               </div>
               <div>
                 <div style="font-size: 0.9375rem; font-weight: 700; color: var(--text-main);">Gemini AI Study Coach</div>
@@ -1028,10 +1028,10 @@
             </div>
             {#if !geminiApiKey}
               <button on:click={() => activeTab = 'settings'} class="btn" style="color: var(--accent-purple); border-color: rgba(163,113,247,0.3);">
-                <i class="fa-solid fa-key"></i> Set API Key in Settings
+                <i aria-hidden="true" class="fa-solid fa-key"></i> Set API Key in Settings
               </button>
             {:else}
-              <span class="pill pill-purple"><i class="fa-solid fa-circle-check"></i> Key Active</span>
+              <span class="pill pill-purple"><i aria-hidden="true" class="fa-solid fa-circle-check"></i> Key Active</span>
             {/if}
           </div>
 
@@ -1066,7 +1066,7 @@
             {/each}
             {#if isAiThinking}
               <div class="chat-msg-ai" style="color: var(--accent-purple);" role="status" aria-live="polite">
-                <i class="fa-solid fa-circle-notch" style="animation: spin 1s linear infinite; margin-right: 8px;" aria-hidden="true"></i>
+                <i aria-hidden="true" class="fa-solid fa-circle-notch" style="animation: spin 1s linear infinite; margin-right: 8px;"></i>
                 Gemini is thinking...
               </div>
             {/if}
@@ -1080,9 +1080,9 @@
                    class="field" style="flex: 1;" disabled={isAiThinking} />
             <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking || !aiUserPrompt.trim()} aria-busy={isAiThinking} title={!aiUserPrompt.trim() ? "Enter a prompt to send" : ""}>
               {#if isAiThinking}
-                <i class="fa-solid fa-spinner fa-spin"></i> Sending...
+                <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Sending...
               {:else}
-                <i class="fa-solid fa-paper-plane"></i> Send
+                <i aria-hidden="true" class="fa-solid fa-paper-plane"></i> Send
               {/if}
             </button>
           </div>
@@ -1115,10 +1115,10 @@
               </div>
               <div class="toggle-group">
                 <button class="btn {theme === 'dark' ? 'active' : ''}" aria-pressed={theme === 'dark'} on:click={() => { theme = 'dark'; saveState(); }}>
-                  <i class="fa-solid fa-moon"></i> Dark
+                  <i aria-hidden="true" class="fa-solid fa-moon"></i> Dark
                 </button>
                 <button class="btn {theme === 'light' ? 'active' : ''}" aria-pressed={theme === 'light'} on:click={() => { theme = 'light'; saveState(); }}>
-                  <i class="fa-solid fa-sun"></i> Light
+                  <i aria-hidden="true" class="fa-solid fa-sun"></i> Light
                 </button>
               </div>
             </div>
@@ -1145,7 +1145,7 @@
               <div class="settings-section-title" style="border: none; padding: 0;">🎵 Spotify Focus Player</div>
               <a href="https://open.spotify.com/playlist/{spotifyPlaylistId}" target="_blank" rel="noopener noreferrer"
                  class="btn btn-sm" style="color: var(--accent-green); border-color: rgba(63,185,80,0.3);">
-                <i class="fa-brands fa-spotify"></i> Open in Spotify App
+                <i aria-hidden="true" class="fa-brands fa-spotify"></i> Open in Spotify App
               </a>
             </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -1179,11 +1179,11 @@
               <input id="gemini-key-input" type="password" bind:value={geminiApiKey}
                      placeholder="AIzaSy..." class="field field-mono" style="color: var(--accent-purple);" />
               <button on:click={saveState} class="btn btn-sm" style="color: var(--accent-purple); white-space: nowrap;">
-                <i class="fa-solid fa-floppy-disk"></i> Save
+                <i aria-hidden="true" class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
             {#if geminiApiKey}
-              <span class="pill pill-purple" style="width: fit-content;"><i class="fa-solid fa-circle-check"></i> Key Saved</span>
+              <span class="pill pill-purple" style="width: fit-content;"><i aria-hidden="true" class="fa-solid fa-circle-check"></i> Key Saved</span>
             {/if}
           </div>
 
@@ -1207,15 +1207,15 @@
               {#if !wifiServerRunning}
                 <button on:click={startWifiServer} class="btn btn-success" style="height: 44px;" disabled={isStartingWifiServer} aria-busy={isStartingWifiServer} title={isStartingWifiServer ? "Starting sync server..." : null}>
                   {#if isStartingWifiServer}
-                    <i class="fa-solid fa-spinner fa-spin"></i> Starting...
+                    <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Starting...
                   {:else}
-                    <i class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
+                    <i aria-hidden="true" class="fa-solid fa-server"></i> Start Sync Server (port {wifiServerPort})
                   {/if}
                 </button>
               {:else}
                 <div class="card-inset" style="border-color: rgba(63,185,80,0.3);">
                   <div style="font-size: 0.65rem; font-weight: 700; color: var(--accent-green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px;">
-                    <i class="fa-solid fa-circle"></i> Server Running on port {wifiServerPort}
+                    <i aria-hidden="true" class="fa-solid fa-circle"></i> Server Running on port {wifiServerPort}
                   </div>
                   <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">Share one of these IPs with the other device:</div>
                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
@@ -1223,16 +1223,16 @@
                       <button on:click={() => navigator.clipboard?.writeText(ip)}
                               aria-label="Copy IP address {ip} to clipboard"
                               class="btn btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
-                        <i class="fa-solid fa-copy"></i> {ip}
+                        <i aria-hidden="true" class="fa-solid fa-copy"></i> {ip}
                       </button>
                     {/each}
                   </div>
                 </div>
                 <button on:click={stopWifiServer} class="btn btn-sm" style="color: var(--accent-red); border-color: rgba(248,81,73,0.3); width: fit-content;" disabled={isStoppingWifiServer} aria-busy={isStoppingWifiServer} title={isStoppingWifiServer ? "Stopping sync server..." : null}>
                   {#if isStoppingWifiServer}
-                    <i class="fa-solid fa-spinner fa-spin"></i> Stopping...
+                    <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Stopping...
                   {:else}
-                    <i class="fa-solid fa-stop"></i> Stop Server
+                    <i aria-hidden="true" class="fa-solid fa-stop"></i> Stop Server
                   {/if}
                 </button>
               {/if}
@@ -1258,29 +1258,29 @@
               <div class="toggle-group">
                 <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'pull'}
                         on:click={() => wifiSyncMode = 'pull'}>
-                  <i class="fa-solid fa-download"></i> Pull from server
+                  <i aria-hidden="true" class="fa-solid fa-download"></i> Pull from server
                 </button>
                 <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'push'}
                         on:click={() => wifiSyncMode = 'push'}>
-                  <i class="fa-solid fa-upload"></i> Push to server
+                  <i aria-hidden="true" class="fa-solid fa-upload"></i> Push to server
                 </button>
               </div>
 
               <div class="card-inset" style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.5;">
                 {#if wifiSyncMode === 'pull'}
-                  <i class="fa-solid fa-download" style="color: var(--accent-blue); margin-right: 5px;"></i>
+                  <i aria-hidden="true" class="fa-solid fa-download" style="color: var(--accent-blue); margin-right: 5px;"></i>
                   <strong>Pull</strong>: Downloads and merges the server state into this device. XP keeps the higher value.
                 {:else}
-                  <i class="fa-solid fa-upload" style="color: var(--accent-amber); margin-right: 5px;"></i>
+                  <i aria-hidden="true" class="fa-solid fa-upload" style="color: var(--accent-amber); margin-right: 5px;"></i>
                   <strong>Push</strong>: Uploads this device state to the server, overwriting it.
                 {/if}
               </div>
 
               <button on:click={connectToDevice} disabled={isSyncing || !wifiConnectIP.trim() || !wifiConnectPort} class="btn btn-primary" aria-busy={isSyncing} title={!wifiConnectIP.trim() || !wifiConnectPort ? "Enter an IP address and port to sync" : ""}>
                 {#if isSyncing}
-                  <i class="fa-solid fa-spinner fa-spin"></i> Syncing...
+                  <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Syncing...
                 {:else}
-                  <i class="fa-solid fa-bolt"></i>
+                  <i aria-hidden="true" class="fa-solid fa-bolt"></i>
                   {wifiSyncMode === 'pull' ? 'Pull State' : 'Push State'}
                 {/if}
               </button>
@@ -1306,10 +1306,10 @@
             <div class="settings-section-title">💾 Data Management</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               <button on:click={exportJSON} class="btn" style="color: var(--accent-amber); border-color: rgba(227,179,65,0.3); height: 48px;">
-                <i class="fa-solid fa-download"></i> Export State JSON
+                <i aria-hidden="true" class="fa-solid fa-download"></i> Export State JSON
               </button>
               <button on:click={() => showImportModal = true} class="btn" style="color: var(--accent-blue); border-color: rgba(56,139,253,0.3); height: 48px;">
-                <i class="fa-solid fa-upload"></i> Import State JSON
+                <i aria-hidden="true" class="fa-solid fa-upload"></i> Import State JSON
               </button>
             </div>
             <div class="card-inset" style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.6;">
@@ -1336,31 +1336,31 @@
 <nav aria-label="Mobile Navigation" class="mobile-nav">
   <button class="mobile-nav-item {activeTab === 'home' ? 'active' : ''}" aria-current={activeTab === 'home' ? 'page' : undefined}
           on:click={() => activeTab = 'home'}>
-    <i class="fa-solid fa-house"></i> Home
+    <i aria-hidden="true" class="fa-solid fa-house"></i> Home
   </button>
   <button class="mobile-nav-item {activeTab === 'dashboard' ? 'active' : ''}" aria-current={activeTab === 'dashboard' ? 'page' : undefined}
           on:click={() => activeTab = 'dashboard'}>
-    <i class="fa-solid fa-calendar-day"></i> Schedule
+    <i aria-hidden="true" class="fa-solid fa-calendar-day"></i> Schedule
   </button>
   <button class="mobile-nav-item {activeTab === 'snippets' ? 'active' : ''}" aria-current={activeTab === 'snippets' ? 'page' : undefined}
           on:click={() => activeTab = 'snippets'}>
-    <i class="fa-solid fa-terminal"></i> C Code
+    <i aria-hidden="true" class="fa-solid fa-terminal"></i> C Code
   </button>
   <button class="mobile-nav-item {activeTab === 'flashcards' ? 'active' : ''}" aria-current={activeTab === 'flashcards' ? 'page' : undefined}
           on:click={() => activeTab = 'flashcards'}>
-    <i class="fa-solid fa-layer-group"></i> Anki
+    <i aria-hidden="true" class="fa-solid fa-layer-group"></i> Anki
   </button>
   <button class="mobile-nav-item {activeTab === 'gamification' ? 'active' : ''}" aria-current={activeTab === 'gamification' ? 'page' : undefined}
           on:click={() => activeTab = 'gamification'}>
-    <i class="fa-solid fa-trophy"></i> XP
+    <i aria-hidden="true" class="fa-solid fa-trophy"></i> XP
   </button>
   <button class="mobile-nav-item {activeTab === 'ai-mentor' ? 'active' : ''}" aria-current={activeTab === 'ai-mentor' ? 'page' : undefined}
           on:click={() => activeTab = 'ai-mentor'}>
-    <i class="fa-solid fa-robot"></i> AI
+    <i aria-hidden="true" class="fa-solid fa-robot"></i> AI
   </button>
   <button class="mobile-nav-item {activeTab === 'settings' ? 'active' : ''}" aria-current={activeTab === 'settings' ? 'page' : undefined}
           on:click={() => activeTab = 'settings'}>
-    <i class="fa-solid fa-gear"></i> Settings
+    <i aria-hidden="true" class="fa-solid fa-gear"></i> Settings
   </button>
 </nav>
 
@@ -1369,9 +1369,9 @@
   <div class="modal-overlay">
     <div class="modal-box">
       <div class="modal-header">
-        <div class="modal-title"><i class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
+        <div class="modal-title"><i aria-hidden="true" class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
         <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
-          <i class="fa-solid fa-xmark"></i>
+          <i aria-hidden="true" class="fa-solid fa-xmark"></i>
         </button>
       </div>
       <input type="file" aria-label="Select state JSON file" accept=".json" on:change={handleFileSelect}
@@ -1387,7 +1387,7 @@
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <button on:click={() => showImportModal = false} class="btn">Cancel</button>
         <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : ""}>
-          <i class="fa-solid fa-file-import"></i> Load Backup
+          <i aria-hidden="true" class="fa-solid fa-file-import"></i> Load Backup
         </button>
       </div>
     </div>
