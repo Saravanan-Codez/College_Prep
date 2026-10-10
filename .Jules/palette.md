@@ -99,3 +99,7 @@
 ## 2024-11-20 - Nullifying Unused Svelte Attributes
 **Learning:** Found an issue where setting conditional attributes to an empty string (`""`) in Svelte resulted in empty attributes lingering in the DOM (e.g., `title=""`), which can be suboptimal or slightly confusing for screen readers and DOM inspectors.
 **Action:** In Svelte templates, when an attribute should only be present under certain conditions, bind it to `null` or `undefined` instead of an empty string (e.g., `title={condition ? "Reason" : null}`) to completely omit the attribute from the DOM when not needed.
+
+## 2025-02-12 - Fixing Multi-Condition Tooltip Logic
+**Learning:** Found an interaction issue where complex disabled buttons (e.g., an AI chat button disabled when thinking OR when input is empty) had incomplete tooltips that only explained one of the disabled states.
+**Action:** Always write out compound ternary conditions for conditional `title` attributes on buttons to ensure users know exactly why a button is disabled, and ensure the fallback is `null` to avoid empty attribute linting or screen reader clutter (e.g., `title={isAiThinking ? "Thinking..." : (!input ? "Enter prompt" : null)}`).

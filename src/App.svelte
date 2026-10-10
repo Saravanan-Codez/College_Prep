@@ -1039,17 +1039,17 @@
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
                     class="btn btn-sm" style="color: var(--accent-blue);"
-                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               💡 Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
                     class="btn btn-sm" style="color: var(--accent-green);"
-                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🐞 Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
                     class="btn btn-sm" style="color: var(--accent-amber);"
-                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : ""}>
+                    disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🏆 Evaluate Progress
             </button>
           </div>
@@ -1078,7 +1078,7 @@
                    on:keydown={(e) => e.key === 'Enter' && aiUserPrompt.trim() && !isAiThinking && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
                    class="field" style="flex: 1;" disabled={isAiThinking} />
-            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking || !aiUserPrompt.trim()} aria-busy={isAiThinking} title={!aiUserPrompt.trim() ? "Enter a prompt to send" : ""}>
+            <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking || !aiUserPrompt.trim()} aria-busy={isAiThinking} title={isAiThinking ? "AI is currently thinking" : (!aiUserPrompt.trim() ? "Enter a prompt to send" : null)}>
               {#if isAiThinking}
                 <i class="fa-solid fa-spinner fa-spin"></i> Sending...
               {:else}
@@ -1155,7 +1155,7 @@
             </div>
             <div style="display: flex; gap: 8px;">
               <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} on:keydown={(e) => e.key === 'Enter' && customSpotifyUrl.trim() && parseAndSetCustomSpotify()} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
-              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : ""}>Load</button>
+              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : null}>Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
               <iframe title="Spotify Player" style="border-radius: 10px;"
@@ -1276,7 +1276,7 @@
                 {/if}
               </div>
 
-              <button on:click={connectToDevice} disabled={isSyncing || !wifiConnectIP.trim() || !wifiConnectPort} class="btn btn-primary" aria-busy={isSyncing} title={!wifiConnectIP.trim() || !wifiConnectPort ? "Enter an IP address and port to sync" : ""}>
+              <button on:click={connectToDevice} disabled={isSyncing || !wifiConnectIP.trim() || !wifiConnectPort} class="btn btn-primary" aria-busy={isSyncing} title={isSyncing ? "Syncing in progress..." : (!wifiConnectIP.trim() || !wifiConnectPort ? "Enter an IP address and port to sync" : null)}>
                 {#if isSyncing}
                   <i class="fa-solid fa-spinner fa-spin"></i> Syncing...
                 {:else}
@@ -1386,7 +1386,7 @@
       </div>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <button on:click={() => showImportModal = false} class="btn">Cancel</button>
-        <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : ""}>
+        <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : null}>
           <i class="fa-solid fa-file-import"></i> Load Backup
         </button>
       </div>
