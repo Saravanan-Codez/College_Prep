@@ -99,3 +99,7 @@
 ## 2024-11-20 - Nullifying Unused Svelte Attributes
 **Learning:** Found an issue where setting conditional attributes to an empty string (`""`) in Svelte resulted in empty attributes lingering in the DOM (e.g., `title=""`), which can be suboptimal or slightly confusing for screen readers and DOM inspectors.
 **Action:** In Svelte templates, when an attribute should only be present under certain conditions, bind it to `null` or `undefined` instead of an empty string (e.g., `title={condition ? "Reason" : null}`) to completely omit the attribute from the DOM when not needed.
+
+## 2024-05-24 - Nullifying Unused Svelte Attributes
+**Learning:** Found an issue where setting conditional attributes to an empty string (`""`) in Svelte resulted in empty attributes lingering in the DOM (e.g., `title=""`), which can be suboptimal or slightly confusing for screen readers and DOM inspectors.
+**Action:** In Svelte templates, when an attribute should only be present under certain conditions, bind it to `null` or `undefined` instead of an empty string (e.g., `title={condition ? "Reason" : null}`) to completely omit the attribute from the DOM when not needed. Additionally, use compound ternary logic to provide detailed explanations for buttons with multiple disabled states (e.g. `title={isAiThinking ? "Thinking..." : (!input ? "Enter prompt" : null)}`).
