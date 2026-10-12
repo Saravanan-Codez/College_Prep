@@ -103,3 +103,7 @@
 ## 2025-02-12 - Fixing Multi-Condition Tooltip Logic
 **Learning:** Found an interaction issue where complex disabled buttons (e.g., an AI chat button disabled when thinking OR when input is empty) had incomplete tooltips that only explained one of the disabled states.
 **Action:** Always write out compound ternary conditions for conditional `title` attributes on buttons to ensure users know exactly why a button is disabled, and ensure the fallback is `null` to avoid empty attribute linting or screen reader clutter (e.g., `title={isAiThinking ? "Thinking..." : (!input ? "Enter prompt" : null)}`).
+
+## 2024-11-20 - Context-Rich Labels for Short-Text Action Buttons
+**Learning:** Found an accessibility issue where action buttons with short visual text (like 'Save', 'Load', or 'Cancel') lacked context-rich `aria-label` attributes. While visually apparent in their surrounding UI section, screen reader users navigating by button list or tabbing might hear just "Save button," leaving them unsure of what they are saving or loading.
+**Action:** Always provide explicitly descriptive, context-rich `aria-label` attributes (e.g., `aria-label="Save Gemini API Key"`) to short-text action buttons, especially in dense UI sections, to clarify their specific purpose and target for screen reader users.
