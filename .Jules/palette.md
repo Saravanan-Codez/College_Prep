@@ -103,3 +103,7 @@
 ## 2025-02-12 - Fixing Multi-Condition Tooltip Logic
 **Learning:** Found an interaction issue where complex disabled buttons (e.g., an AI chat button disabled when thinking OR when input is empty) had incomplete tooltips that only explained one of the disabled states.
 **Action:** Always write out compound ternary conditions for conditional `title` attributes on buttons to ensure users know exactly why a button is disabled, and ensure the fallback is `null` to avoid empty attribute linting or screen reader clutter (e.g., `title={isAiThinking ? "Thinking..." : (!input ? "Enter prompt" : null)}`).
+
+## 2026-10-13 - Semantic Attributes for Modal Dialogs
+**Learning:** Found an accessibility issue where custom modal dialogs (like the Import Modal) lacked the `role="dialog"` and `aria-modal="true"` attributes. Without these, screen readers may not trap the user's focus inside the modal and might continue reading background content, which is confusing and disorienting.
+**Action:** When implementing custom modal overlays, always ensure the modal container element uses `role="dialog"` and `aria-modal="true"`. Also, provide an `aria-labelledby` attribute that points to the `id` of the modal's title element to ensure the modal's purpose is announced clearly when it opens.
