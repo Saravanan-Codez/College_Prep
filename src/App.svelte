@@ -1367,9 +1367,9 @@
 <!-- ════════════════════════════════════════ IMPORT MODAL -->
 {#if showImportModal}
   <div class="modal-overlay">
-    <div class="modal-box">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="import-modal-title">
       <div class="modal-header">
-        <div class="modal-title"><i aria-hidden="true" class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
+        <div class="modal-title" id="import-modal-title"><i aria-hidden="true" class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
         <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
           <i aria-hidden="true" class="fa-solid fa-xmark"></i>
         </button>
