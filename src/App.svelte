@@ -742,7 +742,7 @@
             <button on:click={() => activeTab = a.tab}
                     class="card" style="text-align: left; cursor: pointer; gap: 10px; padding: 18px; border: none; background: var(--bg-surface); transition: all 0.2s ease;"
                     on:mouseenter={(e) => e.currentTarget.style.borderColor = a.color.replace('var(', '').replace(')', '')}
-                    on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}>
+                    on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'} aria-label={a.label}>
               <div style="width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, {a.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {a.color}; font-size: 1rem;">
                 <i aria-hidden="true" class="fa-solid {a.icon}"></i>
               </div>
@@ -1038,17 +1038,17 @@
           <!-- Quick Prompts -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
-                    class="btn btn-sm" style="color: var(--accent-blue);"
+                    class="btn btn-sm" aria-label="Explain today's math topic" style="color: var(--accent-blue);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               💡 Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
-                    class="btn btn-sm" style="color: var(--accent-green);"
+                    class="btn btn-sm" aria-label="Debug my C code" style="color: var(--accent-green);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🐞 Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
-                    class="btn btn-sm" style="color: var(--accent-amber);"
+                    class="btn btn-sm" aria-label="Evaluate my progress" style="color: var(--accent-amber);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🏆 Evaluate Progress
             </button>
@@ -1178,7 +1178,7 @@
               <label for="gemini-key-input" style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap;">API Key:</label>
               <input id="gemini-key-input" type="password" bind:value={geminiApiKey}
                      placeholder="AIzaSy..." class="field field-mono" style="color: var(--accent-purple);" />
-              <button on:click={saveState} class="btn btn-sm" style="color: var(--accent-purple); white-space: nowrap;">
+              <button on:click={saveState} class="btn btn-sm" aria-label="Save Gemini API Key" style="color: var(--accent-purple); white-space: nowrap;">
                 <i aria-hidden="true" class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
