@@ -1155,7 +1155,7 @@
             </div>
             <div style="display: flex; gap: 8px;">
               <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} on:keydown={(e) => e.key === 'Enter' && customSpotifyUrl.trim() && parseAndSetCustomSpotify()} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
-              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : null}>Load</button>
+              <button aria-label="Load Custom Spotify Playlist" on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : null}>Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
               <iframe title="Spotify Player" style="border-radius: 10px;"
@@ -1385,7 +1385,7 @@
         </label>
       </div>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
-        <button on:click={() => showImportModal = false} class="btn">Cancel</button>
+        <button aria-label="Cancel JSON Import" on:click={() => showImportModal = false} class="btn">Cancel</button>
         <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : null}>
           <i class="fa-solid fa-file-import"></i> Load Backup
         </button>
