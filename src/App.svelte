@@ -742,7 +742,7 @@
             <button on:click={() => activeTab = a.tab}
                     class="card" style="text-align: left; cursor: pointer; gap: 10px; padding: 18px; border: none; background: var(--bg-surface); transition: all 0.2s ease;"
                     on:mouseenter={(e) => e.currentTarget.style.borderColor = a.color.replace('var(', '').replace(')', '')}
-                    on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'}>
+                    on:mouseleave={(e) => e.currentTarget.style.borderColor = 'var(--border)'} aria-label={a.label}>
               <div style="width: 40px; height: 40px; border-radius: 11px; background: color-mix(in srgb, {a.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {a.color}; font-size: 1rem;">
                 <i aria-hidden="true" class="fa-solid {a.icon}"></i>
               </div>
@@ -929,16 +929,24 @@
           {#if isFlashcardFlipped}
             <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
               <button on:click={() => rateFlashcard(1)} class="btn" aria-label="Rate flashcard: Again, review in 1 day" style="color: var(--accent-red); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
+                <div aria-hidden="true" style="display: contents;">
+                  <span style="font-size: 1rem;">😖</span><span style="font-size: 0.7rem; font-weight: 700;">Again</span><span style="font-size: 0.6rem; color: var(--text-muted);">1d</span>
+                </div>
               </button>
               <button on:click={() => rateFlashcard(2)} class="btn" aria-label="Rate flashcard: Hard, review in 2 days" style="color: var(--accent-amber); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
+                <div aria-hidden="true" style="display: contents;">
+                  <span style="font-size: 1rem;">😐</span><span style="font-size: 0.7rem; font-weight: 700;">Hard</span><span style="font-size: 0.6rem; color: var(--text-muted);">2d</span>
+                </div>
               </button>
               <button on:click={() => rateFlashcard(3)} class="btn" aria-label="Rate flashcard: Good, review in 4 days" style="color: var(--accent-blue); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
+                <div aria-hidden="true" style="display: contents;">
+                  <span style="font-size: 1rem;">🙂</span><span style="font-size: 0.7rem; font-weight: 700;">Good</span><span style="font-size: 0.6rem; color: var(--text-muted);">4d</span>
+                </div>
               </button>
               <button on:click={() => rateFlashcard(4)} class="btn" aria-label="Rate flashcard: Easy, review in 7 days" style="color: var(--accent-green); flex-direction: column; height: auto; padding: 10px 0; gap: 3px;">
-                <span style="font-size: 1rem;">😄</span><span style="font-size: 0.7rem; font-weight: 700;">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);">7d</span>
+                <div aria-hidden="true" style="display: contents;">
+                  <span style="font-size: 1rem;">😄</span><span style="font-size: 0.7rem; font-weight: 700;">Easy</span><span style="font-size: 0.6rem; color: var(--text-muted);">7d</span>
+                </div>
               </button>
             </div>
           {:else}
@@ -1038,17 +1046,17 @@
           <!-- Quick Prompts -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
-                    class="btn btn-sm" style="color: var(--accent-blue);"
+                    class="btn btn-sm" aria-label="Explain today's math topic" style="color: var(--accent-blue);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               💡 Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
-                    class="btn btn-sm" style="color: var(--accent-green);"
+                    class="btn btn-sm" aria-label="Debug my C code" style="color: var(--accent-green);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🐞 Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
-                    class="btn btn-sm" style="color: var(--accent-amber);"
+                    class="btn btn-sm" aria-label="Evaluate my progress" style="color: var(--accent-amber);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
               🏆 Evaluate Progress
             </button>
@@ -1155,7 +1163,7 @@
             </div>
             <div style="display: flex; gap: 8px;">
               <input type="text" aria-label="Custom Spotify playlist URL" bind:value={customSpotifyUrl} on:keydown={(e) => e.key === 'Enter' && customSpotifyUrl.trim() && parseAndSetCustomSpotify()} placeholder="Paste Spotify playlist URL..." class="field" style="flex: 1;" />
-              <button on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : null}>Load</button>
+              <button aria-label="Load Custom Spotify Playlist" on:click={parseAndSetCustomSpotify} class="btn" style="color: var(--accent-green);" disabled={!customSpotifyUrl.trim()} title={!customSpotifyUrl.trim() ? "Enter a Spotify playlist URL to load" : null}>Load</button>
             </div>
             <div class="card-inset" style="padding: 4px; border-radius: 14px; overflow: hidden;">
               <iframe title="Spotify Player" style="border-radius: 10px;"
@@ -1178,7 +1186,7 @@
               <label for="gemini-key-input" style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap;">API Key:</label>
               <input id="gemini-key-input" type="password" bind:value={geminiApiKey}
                      placeholder="AIzaSy..." class="field field-mono" style="color: var(--accent-purple);" />
-              <button on:click={saveState} class="btn btn-sm" style="color: var(--accent-purple); white-space: nowrap;">
+              <button on:click={saveState} class="btn btn-sm" aria-label="Save Gemini API Key" style="color: var(--accent-purple); white-space: nowrap;">
                 <i aria-hidden="true" class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
@@ -1385,7 +1393,7 @@
         </label>
       </div>
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
-        <button on:click={() => showImportModal = false} class="btn">Cancel</button>
+        <button aria-label="Cancel JSON Import" on:click={() => showImportModal = false} class="btn">Cancel</button>
         <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : null}>
           <i class="fa-solid fa-file-import"></i> Load Backup
         </button>
