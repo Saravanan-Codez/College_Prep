@@ -107,3 +107,7 @@
 ## 2026-10-11 - Add Contextual ARIA Labels to Action Buttons
 **Learning:** Found multiple interactive action buttons (e.g., the 'Save Gemini API Key' button, AI Quick Prompts, and Dashboard quick action buttons) that had some visual text but lacked explicit, context-rich `aria-label` attributes. Even when text like "Save" is visually present, an `aria-label` providing complete context (like "Save Gemini API Key") greatly improves accessibility for screen reader users by clearly defining the specific target of the action.
 **Action:** When implementing or reviewing action buttons in complex interfaces, always verify they contain an `aria-label` that clearly describes their specific contextual purpose (e.g. "Save Gemini API Key" instead of just "Save") to maintain full screen reader accessibility.
+
+## 2026-10-17 - Visual Feedback for Silent Configuration Actions
+**Learning:** Found an interaction issue where several configuration actions (like saving an API key, loading a custom Spotify URL, copying an IP address, or importing state JSON) were completed silently without changing the main UI. Users had no immediate visual confirmation that their action succeeded, which can lead to confusion or repeated clicks.
+**Action:** When implementing silent or background configuration actions, always pair them with a temporary visual feedback mechanism (like a toast notification) to clearly confirm success to the user.
