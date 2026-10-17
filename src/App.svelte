@@ -378,6 +378,7 @@
       spotifyPlaylistId = (match && match[1]) ? match[1] : customSpotifyUrl.trim();
       customSpotifyUrl = '';
       saveState();
+      showToast("Spotify playlist loaded! 🎧");
     } catch(e) {}
   }
 
@@ -527,6 +528,7 @@
     saveState();
     showImportModal = false;
     pendingImportData = null;
+    showToast("Data imported successfully! 📥");
   }
 
   // ── Page meta per tab ──────────────────────────────────────────────
@@ -1186,7 +1188,7 @@
               <label for="gemini-key-input" style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap;">API Key:</label>
               <input id="gemini-key-input" type="password" bind:value={geminiApiKey}
                      placeholder="AIzaSy..." class="field field-mono" style="color: var(--accent-purple);" />
-              <button on:click={saveState} class="btn btn-sm" aria-label="Save Gemini API Key" style="color: var(--accent-purple); white-space: nowrap;">
+              <button on:click={() => { saveState(); showToast("API Key saved! 🔐"); }} class="btn btn-sm" aria-label="Save Gemini API Key" style="color: var(--accent-purple); white-space: nowrap;">
                 <i aria-hidden="true" class="fa-solid fa-floppy-disk"></i> Save
               </button>
             </div>
@@ -1228,7 +1230,7 @@
                   <div style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 10px;">Share one of these IPs with the other device:</div>
                   <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                     {#each wifiServerIPs as ip}
-                      <button on:click={() => navigator.clipboard?.writeText(ip)}
+                      <button on:click={() => { navigator.clipboard?.writeText(ip); showToast(`Copied IP: ${ip} 📋`); }}
                               aria-label="Copy IP address {ip} to clipboard"
                               class="btn btn-sm" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-cyan); letter-spacing: 0.05em; border-color: rgba(57,208,216,0.3);">
                         <i aria-hidden="true" class="fa-solid fa-copy"></i> {ip}
