@@ -488,6 +488,7 @@
     a.setAttribute("href", dataStr);
     a.setAttribute("download", "engi_prep_state.json");
     document.body.appendChild(a); a.click(); a.remove();
+    showToast("State JSON exported! 💾");
   }
 
   function handleFileSelect(e) {
