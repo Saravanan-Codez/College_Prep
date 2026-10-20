@@ -1316,10 +1316,10 @@
           <div class="card" style="gap: 18px;">
             <div class="settings-section-title">💾 Data Management</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-              <button on:click={exportJSON} class="btn" style="color: var(--accent-amber); border-color: rgba(227,179,65,0.3); height: 48px;">
+              <button on:click={exportJSON} class="btn" aria-label="Export State JSON backup" style="color: var(--accent-amber); border-color: rgba(227,179,65,0.3); height: 48px;">
                 <i aria-hidden="true" class="fa-solid fa-download"></i> Export State JSON
               </button>
-              <button on:click={() => showImportModal = true} class="btn" style="color: var(--accent-blue); border-color: rgba(56,139,253,0.3); height: 48px;">
+              <button on:click={() => showImportModal = true} class="btn" aria-label="Import State JSON backup" style="color: var(--accent-blue); border-color: rgba(56,139,253,0.3); height: 48px;">
                 <i aria-hidden="true" class="fa-solid fa-upload"></i> Import State JSON
               </button>
             </div>
