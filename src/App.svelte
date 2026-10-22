@@ -1398,7 +1398,7 @@
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <button aria-label="Cancel JSON Import" on:click={() => showImportModal = false} class="btn">Cancel</button>
         <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : null}>
-          <i class="fa-solid fa-file-import"></i> Load Backup
+          <i aria-hidden="true" class="fa-solid fa-file-import"></i> Load Backup
         </button>
       </div>
     </div>
