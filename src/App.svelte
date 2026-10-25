@@ -1395,6 +1395,16 @@
           <input type="radio" bind:group={importStrategy} value="merge" /> Merge with current
         </label>
       </div>
+
+      {#if importStrategy === 'overwrite'}
+        <div role="alert" aria-live="polite" class="card-inset" style="display: flex; align-items: flex-start; gap: 10px; border-color: rgba(248,81,73,0.3); background: rgba(248,81,73,0.05); padding: 12px;">
+          <i aria-hidden="true" class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red); font-size: 1rem; margin-top: 2px;"></i>
+          <div style="font-size: 0.75rem; color: var(--text-sub); line-height: 1.5;">
+            <strong style="color: var(--accent-red);">Warning:</strong> This will erase and replace all your current progress, XP, and settings with the imported file. This action cannot be undone.
+          </div>
+        </div>
+      {/if}
+
       <div style="display: flex; gap: 8px; justify-content: flex-end;">
         <button aria-label="Cancel JSON Import" on:click={() => showImportModal = false} class="btn">Cancel</button>
         <button on:click={executeImport} disabled={!pendingImportData} class="btn btn-primary" title={!pendingImportData ? "Select a JSON backup file first" : null}>
