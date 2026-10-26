@@ -111,6 +111,7 @@
 ## 2026-10-17 - Visual Feedback for Silent Configuration Actions
 **Learning:** Found an interaction issue where several configuration actions (like saving an API key, loading a custom Spotify URL, copying an IP address, or importing state JSON) were completed silently without changing the main UI. Users had no immediate visual confirmation that their action succeeded, which can lead to confusion or repeated clicks.
 **Action:** When implementing silent or background configuration actions, always pair them with a temporary visual feedback mechanism (like a toast notification) to clearly confirm success to the user.
-## 2024-05-24 - Visual Warnings for Destructive Actions
-**Learning:** Found that the "Overwrite all" import strategy, which completely replaces the user's data, did not have a clear visual warning when selected. Destructive actions without obvious warnings can lead to accidental data loss and a poor user experience.
-**Action:** When implementing visual warnings for destructive actions, conditionally render an inline warning block using semantic ARIA attributes (`role="alert"`, `aria-live="polite"`) and existing theme variables (e.g., `--accent-red`) to ensure both screen reader announcement and UI consistency.
+
+## 2026-10-23 - Contextual Warnings for Destructive Actions
+**Learning:** Found an interaction issue where destructive configuration actions (like the 'Overwrite all' import strategy) lacked an explicit visual warning. Users could accidentally replace their entire progress without realizing the permanence of the action, as the standard radio button selection doesn't convey the severity.
+**Action:** When implementing destructive configuration actions, always pair them with a conditionally rendered inline warning. Use semantic ARIA attributes (`role="alert"`, `aria-live="polite"`) and appropriate styling (e.g. red/warning colors) to ensure the user understands the consequences before proceeding.
