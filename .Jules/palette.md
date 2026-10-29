@@ -115,3 +115,7 @@
 ## 2026-10-25 - Visual Warnings for Destructive Actions
 **Learning:** Found an interaction issue where users performing a destructive action (specifically the "Overwrite all" import strategy which erases current unsaved state) were not provided with clear visual warnings outlining the consequences. This lacked a safety net against accidental data loss.
 **Action:** When implementing destructive actions (e.g., 'overwrite all' import strategies), ensure they include a confirmation mechanism or clear visual warning. Render an inline warning block using semantic ARIA attributes (`role="alert"`, `aria-live="polite"`) and existing theme variables (like `--accent-red`) to ensure screen reader announcement and clear UI feedback.
+
+## 2024-11-20 - Adding titles to truncated text
+**Learning:** Found an accessibility issue pattern where elements with CSS text truncation (`text-overflow: ellipsis`) lacked native HTML `title` attributes. Without this, users (especially on desktop) cannot hover to read the full content when it is visually truncated.
+**Action:** When using `text-overflow: ellipsis` for elements (like topic names or video titles), always include a native HTML `title` attribute dynamically bound to the content (e.g., `title={vid.title}`) to ensure users can access the full, un-truncated text on hover.
