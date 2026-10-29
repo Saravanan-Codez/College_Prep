@@ -726,7 +726,7 @@
                 </div>
                 <div style="min-width: 0;">
                   <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{s.label}</div>
-                  <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
+                  <div title={s.topic || null} style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
                 </div>
                 {#if done}<i aria-hidden="true" class="fa-solid fa-circle-check" style="color: var(--accent-green); flex-shrink: 0; margin-left: auto;"></i>{/if}
               </div>
@@ -851,7 +851,7 @@
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
                       <button on:click={() => handleOpenVideo(vid)} class="lesson-link" aria-label={`Play video: ${vid.title}`} style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
                         <i aria-hidden="true" class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
-                        <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
+                        <span title={vid.title} style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
                       <button on:click={() => handleCopyVideoLink(vid)} class="btn btn-sm" aria-label={`Copy link for video: ${vid.title}`} style="font-size: 0.65rem; height: 26px; padding: 0 8px; color: var(--text-muted);">
                         <i aria-hidden="true" class="fa-solid fa-copy"></i> Copy
