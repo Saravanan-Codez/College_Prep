@@ -115,3 +115,7 @@
 ## 2026-10-25 - Visual Warnings for Destructive Actions
 **Learning:** Found an interaction issue where users performing a destructive action (specifically the "Overwrite all" import strategy which erases current unsaved state) were not provided with clear visual warnings outlining the consequences. This lacked a safety net against accidental data loss.
 **Action:** When implementing destructive actions (e.g., 'overwrite all' import strategies), ensure they include a confirmation mechanism or clear visual warning. Render an inline warning block using semantic ARIA attributes (`role="alert"`, `aria-live="polite"`) and existing theme variables (like `--accent-red`) to ensure screen reader announcement and clear UI feedback.
+
+## 2024-11-20 - WCAG 2.5.3 (Label in Name) and Truncation Tooltips
+**Learning:** Found an accessibility and UX issue where action buttons with visible text (like AI Quick Prompts) had `aria-label`s that didn't contain the exact visible string, breaking speech-to-text navigation (WCAG 2.5.3 "Label in Name"). Additionally, elements relying on CSS truncation (`text-overflow: ellipsis`) lacked native `title` tooltips, meaning users could never read the full text.
+**Action:** Always ensure that `aria-label`s on buttons with visible text contain the exact visible string alongside any extra context, and always add native `title` attributes to elements that use text truncation to reveal the full content on hover.

@@ -724,7 +724,7 @@
                 <div style="width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px; background: color-mix(in srgb, {s.color} 15%, transparent); display: flex; align-items: center; justify-content: center; color: {s.color}; font-size: 0.85rem;">
                   <i aria-hidden="true" class="fa-solid {s.icon}"></i>
                 </div>
-                <div style="min-width: 0;">
+                <div style="min-width: 0;" title={s.topic || null}>
                   <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{s.label}</div>
                   <div style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
                 </div>
@@ -849,7 +849,7 @@
                   </span>
                   {#each slot.subject.videos as vid}
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
-                      <button on:click={() => handleOpenVideo(vid)} class="lesson-link" aria-label={`Play video: ${vid.title}`} style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;">
+                      <button on:click={() => handleOpenVideo(vid)} class="lesson-link" aria-label={`Play video: ${vid.title}`} style="background: none; border: none; cursor: pointer; text-align: left; padding: 0; flex: 1; min-width: 0;" title={vid.title}>
                         <i aria-hidden="true" class="fa-brands fa-youtube" style="font-size: 0.85rem; color: #f85149; margin-right: 4px;"></i>
                         <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: inline-block; max-width: 100%;">{vid.title}</span>
                       </button>
@@ -1049,19 +1049,19 @@
           <!-- Quick Prompts -->
           <div style="display: flex; gap: 8px; flex-wrap: wrap;">
             <button on:click={() => handleSendAiChat(`Explain Day ${currentDay} ${currentDayData.math.topic} with a simple step-by-step example.`)}
-                    class="btn btn-sm" aria-label="Explain today's math topic" style="color: var(--accent-blue);"
+                    class="btn btn-sm" aria-label="Explain Today's Math topic" style="color: var(--accent-blue);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
-              💡 Explain Today's Math
+              <span aria-hidden="true">💡</span> Explain Today's Math
             </button>
             <button on:click={() => handleSendAiChat('Debug my C playground code and suggest memory optimization tips.')}
-                    class="btn btn-sm" aria-label="Debug my C code" style="color: var(--accent-green);"
+                    class="btn btn-sm" aria-label="Debug My C Code and suggest memory optimization tips" style="color: var(--accent-green);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
-              🐞 Debug My C Code
+              <span aria-hidden="true">🐞</span> Debug My C Code
             </button>
             <button on:click={() => handleSendAiChat('Evaluate my 20-day preparation progress and suggest high-yield revision topics.')}
-                    class="btn btn-sm" aria-label="Evaluate my progress" style="color: var(--accent-amber);"
+                    class="btn btn-sm" aria-label="Evaluate Progress and suggest high-yield revision topics" style="color: var(--accent-amber);"
                     disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking" : null}>
-              🏆 Evaluate Progress
+              <span aria-hidden="true">🏆</span> Evaluate Progress
             </button>
           </div>
 
@@ -1381,7 +1381,7 @@
     <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="import-modal-title">
       <div class="modal-header">
         <div class="modal-title" id="import-modal-title"><i aria-hidden="true" class="fa-solid fa-upload" style="color: var(--accent-blue);"></i> Import State JSON</div>
-        <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal">
+        <button on:click={() => showImportModal = false} class="btn btn-icon" aria-label="Close import modal" title="Close">
           <i aria-hidden="true" class="fa-solid fa-xmark"></i>
         </button>
       </div>
