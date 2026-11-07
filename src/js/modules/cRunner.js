@@ -42,7 +42,7 @@ export function extractAndRenderMemoryTable(env, tableContainer) {
                         <td style="padding: 6px; color: var(--accent-purple); font-weight: 600;">${escapeHtml(v.addr)}</td>
                         <td style="padding: 6px; color: var(--accent-blue);">${escapeHtml(v.type)}</td>
                         <td style="padding: 6px; color: var(--accent-green); font-weight: 700;">${escapeHtml(v.name)}</td>
-                        <td style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(v.val !== undefined ? v.val : v.displayValue)}</td>
+                        <td title="${escapeHtml(v.val !== undefined ? v.val : v.displayValue)}" style="padding: 6px; color: var(--text-main); font-weight: 600; max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${escapeHtml(v.val !== undefined ? v.val : v.displayValue)}</td>
                     </tr>
                 `).join('')}
             </tbody>
