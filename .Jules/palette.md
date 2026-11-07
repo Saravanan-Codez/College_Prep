@@ -116,6 +116,6 @@
 **Learning:** Found an interaction issue where users performing a destructive action (specifically the "Overwrite all" import strategy which erases current unsaved state) were not provided with clear visual warnings outlining the consequences. This lacked a safety net against accidental data loss.
 **Action:** When implementing destructive actions (e.g., 'overwrite all' import strategies), ensure they include a confirmation mechanism or clear visual warning. Render an inline warning block using semantic ARIA attributes (`role="alert"`, `aria-live="polite"`) and existing theme variables (like `--accent-red`) to ensure screen reader announcement and clear UI feedback.
 
-## 2026-11-10 - Full Text Visibility for Truncated Elements
-**Learning:** Found an interaction issue where elements utilizing CSS text truncation (`text-overflow: ellipsis`) did not provide a way for users to view the full, un-truncated text. This hindered readability and usability, especially for long topics or video titles.
-**Action:** When implementing or reviewing elements that use `text-overflow: ellipsis`, always ensure a native HTML `title` attribute is included so users can hover to reveal the complete content.
+## 2026-11-06 - Tooltips for Truncated Text Elements
+**Learning:** Elements that use CSS text truncation (`text-overflow: ellipsis`) obscure part of their text from users, especially on smaller viewports or with longer content like topics and video titles. Without a way to view the full text, this creates a frustrating UX gap.
+**Action:** As a project UX/accessibility convention, elements that use CSS text truncation must include native HTML `title` attributes (e.g., `title={text}`) to ensure users can hover to reveal the full, un-truncated content.
