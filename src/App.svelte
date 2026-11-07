@@ -726,7 +726,7 @@
                 </div>
                 <div style="min-width: 0;" title={s.topic || null}>
                   <div style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em;">{s.label}</div>
-                  <div title={s.topic || null} style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
+                  <div title={s.topic || '—'} style="font-size: 0.8rem; font-weight: 600; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; {done ? 'text-decoration: line-through;' : ''}">{s.topic || '—'}</div>
                 </div>
                 {#if done}<i aria-hidden="true" class="fa-solid fa-circle-check" style="color: var(--accent-green); flex-shrink: 0; margin-left: auto;"></i>{/if}
               </div>
