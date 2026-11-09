@@ -881,6 +881,7 @@
           </div>
           <textarea id="c-app-editor" aria-label="C code editor" rows="14" class="field field-mono"
                     style="height: auto; resize: vertical; color: var(--accent-green); line-height: 1.6;"
+                    disabled={isRunningCCode} title={isRunningCCode ? "C code is currently running..." : null}
           >{currentSnippet.code}</textarea>
         </div>
 
@@ -1088,7 +1089,7 @@
             <input type="text" aria-label="AI Coach prompt" bind:value={aiUserPrompt}
                    on:keydown={(e) => e.key === 'Enter' && aiUserPrompt.trim() && !isAiThinking && handleSendAiChat()}
                    placeholder="Ask about Calculus, Physics, C pointers, DSA, or study strategy..."
-                   class="field" style="flex: 1;" disabled={isAiThinking} />
+                   class="field" style="flex: 1;" disabled={isAiThinking} title={isAiThinking ? "AI is currently thinking..." : null} />
             <button on:click={() => handleSendAiChat()} class="btn btn-primary" disabled={isAiThinking || !aiUserPrompt.trim()} aria-busy={isAiThinking} title={isAiThinking ? "AI is currently thinking" : (!aiUserPrompt.trim() ? "Enter a prompt to send" : null)}>
               {#if isAiThinking}
                 <i aria-hidden="true" class="fa-solid fa-spinner fa-spin"></i> Sending...
@@ -1260,19 +1261,21 @@
               <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
                 <input type="text" aria-label="WiFi Connect IP" bind:value={wifiConnectIP}
                        placeholder="Enter IP (e.g. 192.168.43.5)"
-                       class="field field-mono" style="flex: 1; min-width: 160px;" />
+                       class="field field-mono" style="flex: 1; min-width: 160px;"
+                       disabled={isSyncing} title={isSyncing ? "Syncing in progress..." : null} />
                 <span style="font-size: 0.8rem; color: var(--text-muted);">:</span>
                 <input type="number" aria-label="WiFi Connect Port" bind:value={wifiConnectPort}
-                       class="field field-mono" style="width: 80px;" min="1024" max="65535" />
+                       class="field field-mono" style="width: 80px;" min="1024" max="65535"
+                       disabled={isSyncing} title={isSyncing ? "Syncing in progress..." : null} />
               </div>
 
               <div class="toggle-group">
                 <button class="btn {wifiSyncMode === 'pull' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'pull'}
-                        on:click={() => wifiSyncMode = 'pull'}>
+                        on:click={() => wifiSyncMode = 'pull'} disabled={isSyncing} title={isSyncing ? "Syncing in progress..." : null}>
                   <i aria-hidden="true" class="fa-solid fa-download"></i> Pull from server
                 </button>
                 <button class="btn {wifiSyncMode === 'push' ? 'active' : ''}" aria-pressed={wifiSyncMode === 'push'}
-                        on:click={() => wifiSyncMode = 'push'}>
+                        on:click={() => wifiSyncMode = 'push'} disabled={isSyncing} title={isSyncing ? "Syncing in progress..." : null}>
                   <i aria-hidden="true" class="fa-solid fa-upload"></i> Push to server
                 </button>
               </div>

@@ -119,3 +119,7 @@
 ## 2023-11-01 - Title attributes for truncated text
 **Learning:** Elements using CSS text truncation (`text-overflow: ellipsis`) hide part of their content, making it inaccessible to users. This can be frustrating when the truncated text is important information.
 **Action:** Always add a native HTML `title` attribute to elements with `text-overflow: ellipsis` so that users can hover over the element to reveal the full, un-truncated content.
+
+## 2026-10-30 - Interactive Disabled States on Associated Inputs
+**Learning:** Found an interaction issue where main submit buttons (like 'Send' in AI Coach, or 'Pull/Push' in WiFi Sync) were properly disabled during async operations, but their associated input fields (text inputs, textareas, number fields) were left enabled. This allows users to continue typing while an operation is processing, potentially leading to confusion when their new input isn't included in the current action, or causing race conditions if they manage to trigger another action before the UI updates.
+**Action:** When implementing asynchronous operations that rely on form inputs (e.g., textareas, IP inputs, toggles), always disable the associated form inputs alongside their submit buttons and provide a conditional `title` attribute to clearly explain to users why the input is disabled (e.g., `title={isSyncing ? "Syncing in progress..." : null}`).
