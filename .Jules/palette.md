@@ -119,3 +119,7 @@
 ## 2023-11-01 - Title attributes for truncated text
 **Learning:** Elements using CSS text truncation (`text-overflow: ellipsis`) hide part of their content, making it inaccessible to users. This can be frustrating when the truncated text is important information.
 **Action:** Always add a native HTML `title` attribute to elements with `text-overflow: ellipsis` so that users can hover over the element to reveal the full, un-truncated content.
+
+## 2024-11-20 - Disable Form Inputs During Async Operations
+**Learning:** Found an interaction issue where form inputs (like textareas, IP inputs, and toggles) remained enabled during asynchronous operations (like running C code or syncing via WiFi). This can lead to race conditions, duplicate API requests, or user confusion if they try to edit inputs while a process is ongoing.
+**Action:** Always disable form inputs associated with an asynchronous action (using `disabled={isProcessing}`) alongside their submit buttons, and include a conditional `title` attribute to explain to users why the input is disabled (e.g., `title={isSyncing ? "Syncing in progress..." : null}`).
